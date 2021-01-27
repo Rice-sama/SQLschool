@@ -29,6 +29,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class ConnectionSQLite {
 
@@ -38,6 +39,7 @@ public class ConnectionSQLite {
 	private Connection connection = null;
 	private Statement statement = null;
 	private String errorMessage = "";
+	private ResultSet result;
 
 	public ConnectionSQLite(String dBPath) {
 		dBPathOrigin = dBPath;
@@ -84,6 +86,75 @@ public class ConnectionSQLite {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public boolean existTable(String table) throws Exception { //verification de l'existence de la table 
+		
+		try {		
+				result = statement.executeQuery("select * from "+table);
+				return true;
+				
+		}catch(Exception e) {
+				System.out.println("Table n'existe pas ");
+				return false;
+		}
+
+	}
+		 
+	public ArrayList<String> getResult(String request) throws SQLException{
+		
+		ArrayList<String>data=new ArrayList<String>();	
+		String donnee="";
+		result = statement.executeQuery(request);
+
+		
+		System.out.println("Le nom de la table est : "+result.getMetaData().getTableName(1));
+		int n=result.getMetaData().getColumnCount();//pour recuperer le nombre de colonnes 
+		System.out.println("Le nombre de colonnes est : "+n );
+	
+		
+		while(result.next()) {//on boucle par rapport aux tuples		
+			for(int i=1;i<=n;i++) {//boucle par rapport par rapport aux attributs	
+				
+				donnee += result.getString(i)+" "; //concat
+			}					
+		    data.add(donnee);
+			donnee="";
+		}
+		return data;
+
+	}
+	
+	public int getResultNb(String requete) throws SQLException {
+		int n=getResult(requete).size();
+		System.out.println("Nombre de tuple est : "+n);
+		return n;
+		}
+	/**
+	 * 
+	 * @param requete
+	 * @return
+	 * @throws SQLException
+	 */
+	public String requestTable(String requete) throws SQLException {
+		try {
+			result =statement.executeQuery(requete);
+		return result.getMetaData().getTableName(1);
+		} catch(Exception e) {
+			return "Table n'existe pas";
+			}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * Executes a query and returns the result as a ResultSet object.
@@ -147,4 +218,5 @@ public class ConnectionSQLite {
 		return dBPathOrigin;
 	}
 
+	
 }

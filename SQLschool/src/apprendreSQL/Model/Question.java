@@ -20,6 +20,8 @@
  *******************************************************************************/
 package apprendreSQL.Model;
 
+import java.util.Map;
+
 /**
  * This class represents a Question object.
  *
@@ -31,14 +33,17 @@ public class Question {
 	private String answer;
 	private String subject;
 	private String database;
+	private TestSet testSet;
+	private boolean acceptOrder;
 
 	public Question(String database, String subject, String title_Question, String content_Question,
-			String right_answer) {
+			String right_answer, Map<String,String> testList) {
 		this.titleQuestion = title_Question;
 		this.contentQuestion = content_Question;
 		this.answer = right_answer;
 		this.subject = subject;
 		this.database = database;
+		this.testSet = new TestSet(testList);
 	}
 
 
@@ -80,6 +85,15 @@ public class Question {
 
 	public void setDatabase(String database) {
 		this.database = database;
+	}
+	
+	public boolean hasTest() {
+		if(testSet.isEmpty()) return false;
+		return true;
+	}
+	
+	public Map<String,String> getTestList(){
+		return testSet.getTestList();
 	}
 	
 	@Override

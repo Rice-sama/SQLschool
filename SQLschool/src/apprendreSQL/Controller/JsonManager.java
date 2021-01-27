@@ -25,6 +25,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -147,8 +148,8 @@ public class JsonManager {
 	 * @param bonne_reponse
 	 * @return
 	 */
-	public boolean addQuestion(String database, String subject, String titre, String contenu, String bonne_reponse) {
-		Question q = new Question(database, subject, titre, contenu, bonne_reponse);
+	public boolean addQuestion(String database, String subject, String titre, String contenu, String bonne_reponse, Map<String,String> testList) {
+		Question q = new Question(database, subject, titre, contenu, bonne_reponse, testList);
 		if (listQuestions.size() + 1 > MAX) {
 			JOptionPane.showMessageDialog(null, "Il y a trop de question (MAX=" + MAX + ") dans ce fichier JSON.",
 					"Attention", JOptionPane.WARNING_MESSAGE);

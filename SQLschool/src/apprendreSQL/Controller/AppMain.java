@@ -30,7 +30,7 @@ public class AppMain {
 
 	public static void main(String[] args) throws SQLException {
 		EventManager.printNotice();
-		UtilitiesFactory.createJsonTemp();
+		//UtilitiesFactory.createJsonTemp();
 		new EventManager();
 
 	}

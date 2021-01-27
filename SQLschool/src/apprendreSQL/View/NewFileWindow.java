@@ -244,7 +244,7 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 				sujet = textField_sujet.getText();
 
 			if (jsonManager.addQuestion(comboBoxBD.getSelectedItem().toString(), sujet, textField_titre.getText(),
-					textAreaQ.getText(), textAreaR.getText())) {
+					textAreaQ.getText(), textAreaR.getText(), null)) { //tochange
 				JOptionPane.showMessageDialog(frmNouveauExercice, "La nouvelle question est ajoutée.",
 						"Nouvelle Question", JOptionPane.INFORMATION_MESSAGE);
 				textAreaQ.setText("");

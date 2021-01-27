@@ -90,17 +90,22 @@ public class EventManager implements GetInformation {
 	private static String ifCorrect(String query) {
 		String output_answer = null;
 		if (answer != null) {
-			if (!corrector.correction(query, answer, selectedConnection)) {
+			try {
+				if (!corrector.correction(query, answer, selectedConnection)) {
 
-				output_answer = corrector.getCommentaire();
-				compteurrep++;
+					output_answer = corrector.getCommentaire();
+					compteurrep++;
 
-			} else {
+				} else {
 
-				output_answer = "Réponse correcte:";
-				compteurrep = 1;
-				System.out.println(query);
-				output_answer = output_answer + "<br>" + submit(query, selectedConnection);
+					output_answer = "Réponse correcte:";
+					compteurrep = 1;
+					System.out.println(query);
+					output_answer = output_answer + "<br>" + submit(query, selectedConnection);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		}

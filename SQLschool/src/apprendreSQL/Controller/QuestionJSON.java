@@ -22,6 +22,8 @@ package apprendreSQL.Controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -45,6 +47,14 @@ public class QuestionJSON {
 		objQuestion.put("titre", question.getTitleQuestion());
 		objQuestion.put("contenu", question.getContentQuestion());
 		objQuestion.put("bonne_reponse", question.getAnswer());
+		if(question.hasTest()) {
+			JSONObject testList = new JSONObject();
+			testList.putAll(question.getTestList());
+			/*for (Map.Entry<String, String> entry : question.getTestList().entrySet()) {
+			    testList.put(entry.getKey(),entry.getValue());
+			}*/
+			objQuestion.put("liste_test", testList);
+		}
 
 		return objQuestion;
 	}
@@ -55,14 +65,19 @@ public class QuestionJSON {
 	 * @param jsonObjectA
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public Question readQinJSON(JSONObject jsonObjectA) {
 		String bd = (String) jsonObjectA.get("bd");
 		String sujet = (String) jsonObjectA.get("sujet");
 		String titre = (String) jsonObjectA.get("titre");
 		String contenu = (String) jsonObjectA.get("contenu");
 		String bonn_reponse = (String) jsonObjectA.get("bonne_reponse");
+		Map<String,String> tl = new TreeMap<String,String>();
+ 		if(jsonObjectA.containsKey("liste_test")) {
+ 			tl = (Map<String, String>) jsonObjectA.get("liste_test");
+ 		}
 
-		return new Question(bd, sujet, titre, contenu, bonn_reponse);
+		return new Question(bd, sujet, titre, contenu, bonn_reponse, tl);
 
 	}
 

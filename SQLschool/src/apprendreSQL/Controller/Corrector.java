@@ -20,16 +20,23 @@
  *******************************************************************************/
 package apprendreSQL.Controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import apprendreSQL.Controller.ConnectionSQLite;
+import apprendreSQL.Model.ParseException;
+import apprendreSQL.Model.ParserSQL;
 
 public class Corrector {
 
 	ArrayList<String> listType = new ArrayList<>();
+	
+	
 
 	String hint = "";
 
@@ -55,6 +62,57 @@ public class Corrector {
 		return comment;
 	}
 
+	public boolean correction(String inputUser, String right_Answer, ConnectionSQLite connection) {
+		/*
+		 try
+		 	typereq = parser inputUser
+		 catch error
+		
+		switch typereq
+			case select
+			case etc
+		
+		compare les getresult
+		
+		*/
+		
+		ParserSQL parser = new ParserSQL(new ByteArrayInputStream(inputUser.getBytes(StandardCharsets.UTF_8)));
+		try {
+			parser.sqlStmt();
+		} catch (ParseException e1) {
+			comment = e1.getMessage();
+			return false;
+		}
+		//parser.;
+		
+		if(inputUser.equalsIgnoreCase(right_Answer)) return true;
+		else
+			try {
+				if(connection.connect() && connection.existTable(connection.requestTable(inputUser))){
+						ArrayList<String> r1= new ArrayList<String>();
+						ArrayList<String> r2= new ArrayList<String>();
+									 
+						r1= connection.getResult(inputUser);
+						r2= connection.getResult(right_Answer);
+							
+						if(connection.getResultNb(inputUser)==connection.getResultNb(right_Answer)) {
+							if(r2.containsAll(r1)) {
+								comment = "correct"+ "<br>";
+								return true;
+							}
+							else return false;
+						}
+						else return false;
+				} else return false;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return false;		
+	}	
+	
+	
+	
 	/**
 	 * This method verifies the presence of a semicolon at the end of a query along
 	 * with other syntactic verifications
@@ -64,6 +122,7 @@ public class Corrector {
 	 * @param connection
 	 * @return
 	 */
+	/*
 	public boolean correction(String inputUser, String right_Answer, ConnectionSQLite connection) {
 		type = "none";
 		comment = "";
@@ -107,7 +166,7 @@ public class Corrector {
 		}
 		return false;
 	}
-
+*/
 	/**
 	 * determined the type (select, insert ...) verify if "inputUser" uses the same
 	 * key words as for "right_Answer"
@@ -248,7 +307,33 @@ public class Corrector {
 
 		ArrayList<String> arrayListUser;
 		ArrayList<String> arrayListAnswer;
-
+		
+		String[] reqTable = inputUser.split(" ");
+		
+		String table_name;
+		for(int i = 0; i<reqTable.length; i++) {
+			if(reqTable[i].toLowerCase().equals("from")) table_name = reqTable[i+1];
+		}
+		
+		
+		/*select c1,c2,c3, 
+	       count(src1) CNT1, 
+	       count(src2) CNT2
+		  from (select a.*, 
+		               1 src1, 
+		               to_number(null) src2 
+		          from a
+		        union all
+		        select b.*, 
+		               to_number(null) src1, 
+		               2 src2 
+		          from b
+		       )
+		group by c1,c2,c3
+		
+		having count(src1) <> count(src2);*/
+		
+		
 		if (!type.equals(listType.get(0))) { // not Select
 			connection.resetDatabase();
 			connection.connect();
@@ -709,5 +794,4 @@ public class Corrector {
 	public void setHint(String hint) {
 		this.hint = hint;
 	}
-
 }

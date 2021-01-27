@@ -47,6 +47,7 @@ public class UtilitiesFactory {
 	/**
 	 * A method that creates the questions in filmExercises.json
 	 */
+	/*
 	protected static void createJsonTemp() {
 		JsonManager jsonManager = new JsonManager();
 
@@ -182,5 +183,6 @@ public class UtilitiesFactory {
 		jsonManager.createJSON("resource/filmExercises.json");
 
 	}
+	*/
 
 }
