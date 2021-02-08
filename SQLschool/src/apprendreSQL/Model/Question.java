@@ -20,7 +20,8 @@
  *******************************************************************************/
 package apprendreSQL.Model;
 
-import java.util.Map;
+import java.util.ArrayList;
+
 
 /**
  * This class represents a Question object.
@@ -34,16 +35,17 @@ public class Question {
 	private String subject;
 	private String database;
 	private TestSet testSet;
-	private boolean acceptOrder;
+	private boolean mustOrder;
 
 	public Question(String database, String subject, String title_Question, String content_Question,
-			String right_answer, Map<String,String> testList) {
+			String right_answer, ArrayList<Test> testList, boolean mustOrder) {
 		this.titleQuestion = title_Question;
 		this.contentQuestion = content_Question;
 		this.answer = right_answer;
 		this.subject = subject;
 		this.database = database;
 		this.testSet = new TestSet(testList);
+		this.mustOrder = mustOrder;
 	}
 
 
@@ -92,8 +94,12 @@ public class Question {
 		return true;
 	}
 	
-	public Map<String,String> getTestList(){
+	public ArrayList<Test> getTestList(){
 		return testSet.getTestList();
+	}
+	
+	public boolean isMustOrder() {
+		return mustOrder;
 	}
 	
 	@Override
@@ -106,7 +112,4 @@ public class Question {
 		}
 		return false;
 	}
-
-	
-
 }

@@ -40,7 +40,7 @@ public class EventManager implements GetInformation {
 
 	private static MainWindow mainWindow;
 	private static Corrector corrector;
-	private static String answer = null;
+	private static Question currentQuestion;
 	private static int compteurrep = 1;
 	private ArrayList<String> answerColumns = new ArrayList<String>();
 	private TreeMap<String, ConnectionSQLite> connectionsMap = new TreeMap<String, ConnectionSQLite>();
@@ -88,10 +88,11 @@ public class EventManager implements GetInformation {
 	 * @return a string that represent the result in the output jText
 	 */
 	private static String ifCorrect(String query) {
+		if(currentQuestion == null) return null;
 		String output_answer = null;
-		if (answer != null) {
+		if (currentQuestion.getAnswer() != null) {
 			try {
-				if (!corrector.correction(query, answer, selectedConnection)) {
+				if (!corrector.correction(query, currentQuestion.getAnswer(), currentQuestion.getTestList(), currentQuestion.isMustOrder(), selectedConnection)) {
 
 					output_answer = corrector.getCommentaire();
 					compteurrep++;
@@ -120,7 +121,7 @@ public class EventManager implements GetInformation {
 	public static String callHint() {
 		if (!mainWindow.getInput().isEmpty())
 
-			return corrector.definehint(answer);
+			return ""; //corrector.definehint(currentQuestion.getAnswer());
 
 		return "Il faut d'abord essayer d'écrire une requête et de l'exécuter ;";
 	}
@@ -129,7 +130,7 @@ public class EventManager implements GetInformation {
 	 * This method is called when the "Exécuter" button is clicked.
 	 */
 	public static void callExecute() {
-
+		if(currentQuestion == null) return;
 		clearOutput();
 		String query = mainWindow.getInput();
 		query = query.replaceAll("\n", " ");
@@ -137,7 +138,7 @@ public class EventManager implements GetInformation {
 		String text = ifCorrect(query);
 
 		if (compteurrep == 4) {
-			mainWindow.setOutPut("Vous avez fait 3 tentatives. Voilà la bonne réponse <br> " + answer.replaceAll("<","&lt;")
+			mainWindow.setOutPut("Vous avez fait 3 tentatives. Voilà la bonne réponse <br> " + currentQuestion.getAnswer().replaceAll("<","&lt;")
 					+ " <br> Essayez de l'écrire et de l'exécuter");
 			compteurrep = 1;
 
@@ -162,22 +163,18 @@ public class EventManager implements GetInformation {
 		corrector.setHint(callHint());
 		int id = getIdExercise(dbName, sujetName, exerciceName, jsonManager);
 
-		String content = "";
-		String solution = "no sush id";
-
 		if (id < getQuestionsList().size() && id >= 0) {
-			Question question = getQuestionsList().get(id);
-			content = question.getContentQuestion();
-			solution = question.getAnswer();
+			currentQuestion = getQuestionsList().get(id);
+			
+			
 		}
-		mainWindow.setDescription(content, exerciceName);
+		mainWindow.setDescription(currentQuestion.getContentQuestion(), exerciceName);
 		selectedConnection = connectionsMap.get(dbName);
-		answer = solution;
 
 		answerColumns.clear();
 		for (int i = 0; i < checkQuery.getTableColumns().size(); i++) {
 			String column = checkQuery.getTableColumns().get(i);
-			if (answer.contains(column)) {
+			if (currentQuestion.getAnswer().contains(column)) {
 				answerColumns.add(column);
 				System.out.println(column);
 			}

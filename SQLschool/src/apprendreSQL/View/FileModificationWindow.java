@@ -47,10 +47,10 @@ public class FileModificationWindow implements ActionListener, GetInformation, S
 
 	private List<String> questionInfo;
 	private JFrame frmModificationDexercice;
-	private JLabel lblBd, lblSujet, lblEnoncé, lblRponse, lblQuestion, lblTitre;
+	private JLabel lblBd, lblSujet, lblEnoncé, lblRponse, lblQuestion, lblTitre, lblPreScript, lvlPostScript;
 	private JComboBox<String> comboBoxJsonFile, comboBoxSubject, comboBoxDB;
 	private JComboBox<Integer> comboBoxIdQuestion;
-	private JTextArea textAreaQuestion, textAreaAnswer;
+	private JTextArea textAreaQuestion, textAreaAnswer, textAreaPreScript, textAreaPostScript;
 	private JButton btnSupprimer, btnModifierQuestion, btnAjouterNouvelleQuestion, buttonNvSujet;
 	private static JsonManager jsonManager;
 	private ArrayList<String> subjects;
@@ -82,7 +82,7 @@ public class FileModificationWindow implements ActionListener, GetInformation, S
 		subjects = new ArrayList<String>();
 		jsonManager = new JsonManager();
 		frmModificationDexercice = new JFrame();
-		frmModificationDexercice.setBounds(100, 100, 877, 664);
+		frmModificationDexercice.setBounds(100, 100, 877, 750);
 		frmModificationDexercice.getContentPane().setLayout(null);
 
 		lblBd = new JLabel("Fichier :");
@@ -154,18 +154,18 @@ public class FileModificationWindow implements ActionListener, GetInformation, S
 
 		btnSupprimer = new JButton("Supprimer");
 		btnSupprimer.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnSupprimer.setBounds(489, 571, 123, 36);
+		btnSupprimer.setBounds(489, 643, 123, 36);
 		frmModificationDexercice.getContentPane().add(btnSupprimer);
 
 		btnModifierQuestion = new JButton("Modifier");
 		btnModifierQuestion.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnModifierQuestion.setBounds(262, 571, 150, 36);
+		btnModifierQuestion.setBounds(262, 643, 150, 36);
 		frmModificationDexercice.getContentPane().add(btnModifierQuestion);
 
 
 		btnAjouterNouvelleQuestion = new JButton("Ajouter nouvelle question");
 		btnAjouterNouvelleQuestion.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnAjouterNouvelleQuestion.setBounds(652, 571, 196, 36);
+		btnAjouterNouvelleQuestion.setBounds(652, 643, 196, 36);
 		frmModificationDexercice.getContentPane().add(btnAjouterNouvelleQuestion);
 
 		buttonNvSujet = new JButton("Nouveau sujet");
@@ -183,6 +183,14 @@ public class FileModificationWindow implements ActionListener, GetInformation, S
 		lblBd_1.setBounds(104, 110, 69, 28);
 		frmModificationDexercice.getContentPane().add(lblBd_1);
 
+		
+		textAreaPreScript = new JTextArea();
+		textAreaPreScript.setBounds(262, 541, 170, 73);
+		frmModificationDexercice.getContentPane().add(textAreaPreScript);
+		
+		textAreaPostScript = new JTextArea();
+		textAreaPostScript.setBounds(442, 541, 170, 73);
+		frmModificationDexercice.getContentPane().add(textAreaPostScript);
 		
 		buttonListeners();
 		
@@ -289,7 +297,7 @@ public class FileModificationWindow implements ActionListener, GetInformation, S
 
 		jsonManager.readFileQuestion("resource/" + fileName);
 		if (jsonManager.addQuestion(comboBoxDB.getSelectedItem().toString(), comboSujet.getSelectedItem().toString(),
-				txtFldTitre.getText(), textAreaQuestion.getText(), textAreaAnswer.getText(), null)) { //tochange
+				txtFldTitre.getText(), textAreaQuestion.getText(), textAreaAnswer.getText(), null, true)) { //tochange
 			jsonManager.createJSON("resource/" + fileName);
 			System.out.println("Ajouter Question");
 		} else {
@@ -339,7 +347,7 @@ public class FileModificationWindow implements ActionListener, GetInformation, S
 
 		if ((!question.getSubject().contentEquals(sujet) || !question.getTitleQuestion().contentEquals(titre))
 				&& jsonManager.getListQuestion().contains(new Question(dbname,
-						sujet, titre, null, null, null))) { //tochange
+						sujet, titre, null, null, null, true))) { //tochange
 			JOptionPane.showMessageDialog(null,
 					"la modification rentre en confie avec une autre question.\n(changer de titre)", "Attention",
 					JOptionPane.WARNING_MESSAGE);

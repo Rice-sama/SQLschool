@@ -1,24 +1,26 @@
 package apprendreSQL.Model;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 public class TestSet {
 	
-	private Map<String,String> testList;
+	private ArrayList<Test> testList;
 	
-	public TestSet(Map<String, String> testList) {
+	public TestSet(ArrayList<Test> testList) {
 		this.testList = testList;
 	}
 
-	public void addTest(String name, String content) {
-		testList.put(name, content);
+	public void addTest(String name, String pre, String post) {
+		testList.add(new Test(name, pre, post));
 	}
 	
 	public void removeTest(String name) {
-		testList.remove(name);
+		for(int i = 0; i < testList.size(); i++) {
+			if(testList.get(i).getName().equals(name)) testList.remove(i);
+		}
 	}
 	
-	public Map<String,String> getTestList(){
+	public ArrayList<Test> getTestList(){
 		return testList;
 	}
 

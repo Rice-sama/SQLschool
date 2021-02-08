@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 
 
-public final class ParserSQL {
+public  class ParserSQL {
 }
 
 PARSER_END(ParserSQL)
@@ -64,6 +64,7 @@ TOKEN :
 |   <AND: "AND">
 |   <AS: "AS">
 |   <ASC: "ASC">
+|   < OLD:"old" >
 |   <ATTACH: "ATTACH">
 |   <AUTOINCREMENT: "AUTOINCREMENT">
 |   <BEFORE: "BEFORE">
@@ -309,7 +310,7 @@ void name() :
 }
 {
     (
-        <ID>
+          <ID>
     |   <STRING>
     ) 
 }
@@ -864,13 +865,12 @@ void createVirtualTableStmt() :
     [
         "IF" "NOT" "EXISTS" 
     ]
+
     [   
         LOOKAHEAD(2) // Anticipate the occurrence of a dot.
         name() "."
     ]
-     name()
-    "USING"
-    name()
+      name()  "USING"  name()
     [
         "(" moduleArgument() 
         (
@@ -1435,7 +1435,7 @@ void stringLiteral() :
 {
 }
 {
-    <STRING> 
+   <STRING> 
 }
 
 void blobLiteral() :
@@ -1573,18 +1573,10 @@ void selectCore() :
 {
     "SELECT" 
     [
-        "DISTINCT" 
-    |   "ALL" 
+        "DISTINCT" |   "ALL" 
     ]
-    resultColumn() 
-    (
-        ","
-        resultColumn() 
-    )*
-    [
-        "FROM"
-        joinSource()
-    ]
+    resultColumn() ( "," resultColumn())* "FROM" joinSource()
+    
     [
         "WHERE"
         expr()

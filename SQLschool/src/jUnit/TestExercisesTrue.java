@@ -51,7 +51,7 @@ public class TestExercisesTrue {
 
 		for (Question q : jsonManager.getListQuestion()) {
 
-			Boolean b = c.correction(q.getAnswer(), q.getAnswer(), moviesConnection);
+			Boolean b = c.correction(q.getAnswer(), q.getAnswer(), null, true, moviesConnection);
 			if (!b) {
 				System.out.println("==================================================>" + q.getTitleQuestion());
 				System.out.println(c.getCommentaire().replaceAll("<br>", "\n"));

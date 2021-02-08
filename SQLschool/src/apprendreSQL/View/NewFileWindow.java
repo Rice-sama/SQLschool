@@ -45,10 +45,10 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 	private ArrayList<String> subjects = new ArrayList<>();
 	private JsonManager jsonManager;
 	private JFrame frmNouveauExercice;
-	private JLabel lblNo, lblBd, lblTitre, lblSujet, lblQuestion, lblRponse;
+	private JLabel lblNo, lblBd, lblTitre, lblSujet, lblQuestion, lblRponse, lblPre, lblPost;
 	private JTextField textFieldNoExo, textField_sujet, textField_titre;
 	private JComboBox<String> comboBoxBD, comboBoxSujet;
-	private JTextArea textAreaQ, textAreaR;
+	private JTextArea textAreaQ, textAreaR, textAreaPre, textAreaPost;
 	private JButton btnEnregistrer, btnAjouterQuestion, btnNouveauSujet;
 	private EventManager eventManager;
 
@@ -77,7 +77,7 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		}
 
 		frmNouveauExercice = new JFrame();
-		frmNouveauExercice.setBounds(100, 100, 840, 679);
+		frmNouveauExercice.setBounds(100, 100, 840, 750);
 		frmNouveauExercice.getContentPane().setLayout(null);
 
 		lblNo = new JLabel("Nom du fichier :");
@@ -176,7 +176,7 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 			}
 		});
 		btnEnregistrer.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnEnregistrer.setBounds(664, 582, 139, 36);
+		btnEnregistrer.setBounds(664, 650, 139, 36);
 		frmNouveauExercice.getContentPane().add(btnEnregistrer);
 
 		btnAjouterQuestion = new JButton("Ajouter Question");
@@ -188,7 +188,7 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		});
 
 		btnAjouterQuestion.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnAjouterQuestion.setBounds(342, 582, 150, 36);
+		btnAjouterQuestion.setBounds(342, 650, 150, 36);
 		frmNouveauExercice.getContentPane().add(btnAjouterQuestion);
 
 		btnNouveauSujet = new JButton("Nouveau sujet");
@@ -201,6 +201,14 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		btnNouveauSujet.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnNouveauSujet.setBounds(276, 275, 139, 26);
 		frmNouveauExercice.getContentPane().add(btnNouveauSujet);
+		
+		textAreaPre = new JTextArea();
+		textAreaPre.setBounds(262, 580, 170, 73);
+		frmNouveauExercice.getContentPane().add(textAreaPre);
+		
+		textAreaPost = new JTextArea();
+		textAreaPost.setBounds(442, 580, 170, 73);
+		frmNouveauExercice.getContentPane().add(textAreaPost);
 
 		frmNouveauExercice.setVisible(true);
 		frmNouveauExercice.setResizable(false);
@@ -244,7 +252,7 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 				sujet = textField_sujet.getText();
 
 			if (jsonManager.addQuestion(comboBoxBD.getSelectedItem().toString(), sujet, textField_titre.getText(),
-					textAreaQ.getText(), textAreaR.getText(), null)) { //tochange
+					textAreaQ.getText(), textAreaR.getText(), null, true)) { //tochange
 				JOptionPane.showMessageDialog(frmNouveauExercice, "La nouvelle question est ajoutée.",
 						"Nouvelle Question", JOptionPane.INFORMATION_MESSAGE);
 				textAreaQ.setText("");

@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -101,60 +102,60 @@ public class ConnectionSQLite {
 
 	}
 		 
-	public ArrayList<String> getResult(String request) throws SQLException{
+	public ArrayList<String> getSelectResult(String request) throws SQLException{
 		
-		ArrayList<String>data=new ArrayList<String>();	
-		String donnee="";
+		ArrayList<String> data = new ArrayList<String>();	
 		result = statement.executeQuery(request);
 
-		
-		System.out.println("Le nom de la table est : "+result.getMetaData().getTableName(1));
-		int n=result.getMetaData().getColumnCount();//pour recuperer le nombre de colonnes 
-		System.out.println("Le nombre de colonnes est : "+n );
-	
-		
-		while(result.next()) {//on boucle par rapport aux tuples		
-			for(int i=1;i<=n;i++) {//boucle par rapport par rapport aux attributs	
-				
-				donnee += result.getString(i)+" "; //concat
-			}					
-		    data.add(donnee);
-			donnee="";
+		int n = result.getMetaData().getColumnCount();
+		while(result.next()) {	
+			String row = "";
+			for(int i=1;i<=n;i++) {
+				row += result.getString(i)+" ";
+			}				
+		    data.add(row);
 		}
 		return data;
 
 	}
 	
-	public int getResultNb(String requete) throws SQLException {
-		int n=getResult(requete).size();
-		System.out.println("Nombre de tuple est : "+n);
-		return n;
+	public ArrayList<String> getUpdateResult(String request, String table) throws SQLException{
+		statement.executeUpdate(request);
+		return getResultFromTable(table);
+	}
+
+	public ArrayList<String> getResultFromTable(String tableName) throws SQLException{
+		ArrayList<String> data = new ArrayList<String>();	
+		result = statement.executeQuery("select * from "+tableName);
+		int n = result.getMetaData().getColumnCount();
+		while(result.next()) {
+			String row = "";
+			for(int i=1;i<=n;i++) {
+				row += result.getString(i)+" ";
+			}
+		    data.add(row);
 		}
+		return data;
+	}
+
 	/**
 	 * 
 	 * @param requete
 	 * @return
 	 * @throws SQLException
 	 */
+	
 	public String requestTable(String requete) throws SQLException {
 		try {
-			result =statement.executeQuery(requete);
-		return result.getMetaData().getTableName(1);
+			PreparedStatement ps = connection.prepareStatement(requete);
+			ps.executeUpdate();
+			result = ps.getGeneratedKeys();
+			return result.getMetaData().getTableName(1);
 		} catch(Exception e) {
-			return "Table n'existe pas";
-			}
+			System.out.println(e);
+			return "";
+		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	/**
 	 * Executes a query and returns the result as a ResultSet object.

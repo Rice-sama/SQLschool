@@ -47,12 +47,10 @@ public class QuestionJSON {
 		objQuestion.put("titre", question.getTitleQuestion());
 		objQuestion.put("contenu", question.getContentQuestion());
 		objQuestion.put("bonne_reponse", question.getAnswer());
+		objQuestion.put("respect_ordre", question.isMustOrder());
 		if(question.hasTest()) {
 			JSONObject testList = new JSONObject();
-			testList.putAll(question.getTestList());
-			/*for (Map.Entry<String, String> entry : question.getTestList().entrySet()) {
-			    testList.put(entry.getKey(),entry.getValue());
-			}*/
+			for(Test t : question.getTestList()) ;//testList.put(t.getName(),t.getPreExecutionScript());
 			objQuestion.put("liste_test", testList);
 		}
 
@@ -72,12 +70,12 @@ public class QuestionJSON {
 		String titre = (String) jsonObjectA.get("titre");
 		String contenu = (String) jsonObjectA.get("contenu");
 		String bonn_reponse = (String) jsonObjectA.get("bonne_reponse");
-		Map<String,String> tl = new TreeMap<String,String>();
+		ArrayList<Test> tl = new ArrayList<>();
  		if(jsonObjectA.containsKey("liste_test")) {
- 			tl = (Map<String, String>) jsonObjectA.get("liste_test");
+ 			tl = (ArrayList<Test>) jsonObjectA.get("liste_test");
  		}
-
-		return new Question(bd, sujet, titre, contenu, bonn_reponse, tl);
+ 		boolean mustOrder = (jsonObjectA.get("respect_ordre")!=null) ? (boolean)jsonObjectA.get("respect_ordre") : true;
+		return new Question(bd, sujet, titre, contenu, bonn_reponse, tl, mustOrder);
 
 	}
 

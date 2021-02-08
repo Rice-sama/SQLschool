@@ -32,7 +32,11 @@ import javax.swing.JOptionPane;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import com.sun.tools.javac.util.Pair;
+
 import apprendreSQL.Model.Question;
+import apprendreSQL.Model.Test;
 
 public class JsonManager {
 
@@ -148,8 +152,8 @@ public class JsonManager {
 	 * @param bonne_reponse
 	 * @return
 	 */
-	public boolean addQuestion(String database, String subject, String titre, String contenu, String bonne_reponse, Map<String,String> testList) {
-		Question q = new Question(database, subject, titre, contenu, bonne_reponse, testList);
+	public boolean addQuestion(String database, String subject, String titre, String contenu, String bonne_reponse, ArrayList<Test> testList, boolean mustOrder) {
+		Question q = new Question(database, subject, titre, contenu, bonne_reponse, testList, mustOrder);
 		if (listQuestions.size() + 1 > MAX) {
 			JOptionPane.showMessageDialog(null, "Il y a trop de question (MAX=" + MAX + ") dans ce fichier JSON.",
 					"Attention", JOptionPane.WARNING_MESSAGE);

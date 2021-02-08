@@ -56,7 +56,7 @@ public class JUnitCorrector {
 
 	public Boolean test(String inputUser, String bonne_Reponse) {
 		setUP();
-		Boolean b = c.correction(inputUser, bonne_Reponse, moviesConnection);
+		Boolean b = c.correction(inputUser, bonne_Reponse, null, true, moviesConnection);
 		if (!b) {
 			System.out.println(c.getCommentaire().replaceAll("<br>", "\n"));
 		} else {
