@@ -81,8 +81,8 @@ public class ConnectionSQLite {
 	 */
 	public void close() {
 		try {
-			connection.close();
 			statement.close();
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -179,6 +179,7 @@ public class ConnectionSQLite {
 	 * Creates a backup file of the database.
 	 */
 	public void resetDatabase() {
+		if(connection!=null && statement!=null) close();
 
 		FileInputStream sourceDirectory = null;
 		FileOutputStream targetDirectory = null;
@@ -217,6 +218,10 @@ public class ConnectionSQLite {
 	
 	public String getdBPathOrigin() {
 		return dBPathOrigin;
+	}
+
+	public Connection getConnection() {
+		return connection;
 	}
 
 	

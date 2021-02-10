@@ -23,9 +23,9 @@ public class SQLExecutionManager {
 		
 		Statement stmt = conn.createStatement();
 		for(String sql : executionQueue) stmt.addBatch(sql);
+		clearQueue();
 		int[] res = stmt.executeBatch();
 		// get errors from res
-		clearQueue();
 	}
 	
 	public ResultSet executeSelect(Connection conn, String sql) throws SQLException {

@@ -24,4 +24,8 @@ public class Test {
 	public String getPostExecutionScript() {
 		return postExec;
 	}	
+	
+	public String toString() {
+		return name;
+	}
 }

@@ -66,7 +66,7 @@ public class Corrector {
 		return comment;
 	}
 
-	public boolean correction(String inputUser, String right_Answer, ArrayList<Test> arrayList, boolean mustOrder, ConnectionSQLite dbconnection) {
+	public boolean correction(String inputUser, String right_Answer, ArrayList<Test> testList, boolean mustOrder, ConnectionSQLite dbconnection) {
 		comment = "";
 		parser.ReInit(new ByteArrayInputStream(inputUser.getBytes()));
 		int reqType;
@@ -76,43 +76,96 @@ public class Corrector {
 			comment = e1.getMessage();
 			return false;
 		}
-		
+
 		try {
-			if(dbconnection.connect() && dbconnection.existTable(parser.idTokens.get(0))){
+			if(dbconnection.connect()){
 				
-				ArrayList<String> r1= new ArrayList<String>();
-				ArrayList<String> r2= new ArrayList<String>();
+				if(!dbconnection.existTable(parser.idTokens.get(0))) {
+					comment = "La table "+parser.idTokens.get(0)+" n'existe pas.";
+					return false;
+				}
 				
-				switch(reqType) {
-				case ParserSQLConstants.SELECT:
-					r1= dbconnection.getSelectResult(inputUser);
-					r2= dbconnection.getSelectResult(right_Answer);
-					break;
-				case ParserSQLConstants.INSERT:
-				case ParserSQLConstants.UPDATE:
-				case ParserSQLConstants.DELETE:
-					r1= dbconnection.getUpdateResult(inputUser, parser.idTokens.get(0));
-					r2= dbconnection.getUpdateResult(right_Answer, parser.idTokens.get(0));
-					break;
+				/*
+				ArrayList<ArrayList<ResultSet>> rsList = new ArrayList<>();
+				rsList.add(new ArrayList<ResultSet>());
+				rsList.add(new ArrayList<ResultSet>());
+				*/
 				
-				case ParserSQLConstants.TRIGGER:
+				String[] inputs = {inputUser, right_Answer};
+				String select = "SELECT * FROM " + parser.idTokens.get(0);
+				
+				boolean test = true;//test bool
+
+				for(Test t : testList) {
 					
-					break;
-				}
-				//execManager.executeQueueOnDB(dbconnection.getConnection());
-				System.out.println(r1);
-				System.out.println(r2);
-				if(r1.size()==r2.size()) {
-					if(mustOrder) {
-						for(int i = 0; i < r1.size(); i++) {
-							if(!r1.get(i).equals(r2.get(i))) return false;
+					ArrayList<ArrayList<String>> sl = new ArrayList<>();
+					sl.add(new ArrayList<String>());
+					sl.add(new ArrayList<String>());
+					
+					for(int i = 0; i < inputs.length; i++) {
+						
+						execManager.addToQueue(t.getPreExecutionScript());
+						
+						switch(reqType) {
+						
+						case ParserSQLConstants.SELECT:
+							select = inputs[i];
+							break;
+							
+						case ParserSQLConstants.INSERT:
+						case ParserSQLConstants.UPDATE:
+						case ParserSQLConstants.DELETE:
+							System.out.println(inputs[i]);
+							execManager.addToQueue(inputs[i]);
+							break;
+						
+						case ParserSQLConstants.TRIGGER:
+							
+							break;
 						}
-					} else for(int i=0; i<r1.size();i++) if(Collections.frequency(r1,r1.get(i))!=Collections.frequency(r2,r1.get(i))) return false;
-					return true;
+						
+						execManager.addToQueue(t.getPostExecutionScript());
+						
+						try {
+							execManager.executeQueueOnDB(dbconnection.getConnection());
+						} catch(SQLException e) {
+							comment+= t.getName()+" : "+e+"<br>";
+							test = false;
+						}
+						
+						ResultSet rs = execManager.executeSelect(dbconnection.getConnection(), select);
+						//rsList.get(i).add(rs);
+						
+						int n = rs.getMetaData().getColumnCount();
+						while(rs.next()) {
+							String row = "";
+							for(int j=1;j<=n;j++) {
+								row += rs.getString(j)+" ";
+							}
+						    sl.get(i).add(row);
+						} 
+						
+						dbconnection.resetDatabase();
+						dbconnection.connect();
+					}
+					
+					//System.out.println(sl.size());
+					
+					if(sl.get(0).size()==sl.get(1).size() && test) {
+						if(mustOrder) {
+							for(int i = 0; i < sl.get(0).size(); i++) {
+								if(!sl.get(0).get(i).equals(sl.get(1).get(i))) /*return false;*/ {comment+=t.getName()+" : not equal<br>";  test=false;break;}
+							}
+						} else for(int i=0; i<sl.get(0).size();i++) if(Collections.frequency(sl.get(0),sl.get(0).get(i))!=Collections.frequency(sl.get(1),sl.get(0).get(i))) return false;
+					}else test = false;
+					if(test)comment+=t.getName()+" : ok<br>";
+					else comment+=t.getName()+" : false<br>";
 				}
+				//return true;
 			}
 		} catch (Exception e) {
-			comment = e.getMessage();
+			comment += e.getMessage();
+			System.out.println(e);
 		}
 		return false;
 	}	

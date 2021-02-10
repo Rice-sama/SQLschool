@@ -22,8 +22,7 @@ package apprendreSQL.Controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -50,7 +49,12 @@ public class QuestionJSON {
 		objQuestion.put("respect_ordre", question.isMustOrder());
 		if(question.hasTest()) {
 			JSONObject testList = new JSONObject();
-			for(Test t : question.getTestList()) ;//testList.put(t.getName(),t.getPreExecutionScript());
+			for(Test t : question.getTestList()) {
+				JSONObject test = new JSONObject();
+				test.put("script1", t.getPreExecutionScript());
+				test.put("script2", t.getPostExecutionScript());
+				testList.put(t.getName(), test);
+			}
 			objQuestion.put("liste_test", testList);
 		}
 
@@ -72,7 +76,19 @@ public class QuestionJSON {
 		String bonn_reponse = (String) jsonObjectA.get("bonne_reponse");
 		ArrayList<Test> tl = new ArrayList<>();
  		if(jsonObjectA.containsKey("liste_test")) {
- 			tl = (ArrayList<Test>) jsonObjectA.get("liste_test");
+ 			 JSONObject l = (JSONObject) jsonObjectA.get("liste_test");
+ 			for(Object o : l.entrySet()) {
+ 				Entry<String,JSONObject> entry = (Entry<String,JSONObject>) o;
+ 				
+ 			    String name =  entry.getKey();
+ 			    JSONObject scripts =  entry.getValue();
+ 			    
+ 			    String s1 = (String) scripts.get("script1");
+ 			    String s2 = (String) scripts.get("script2");
+
+ 			    tl.add(new Test(name,s1,s2)); 			    
+ 			}
+ 			 
  		}
  		boolean mustOrder = (jsonObjectA.get("respect_ordre")!=null) ? (boolean)jsonObjectA.get("respect_ordre") : true;
 		return new Question(bd, sujet, titre, contenu, bonn_reponse, tl, mustOrder);

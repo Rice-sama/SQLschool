@@ -41,6 +41,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import apprendreSQL.Controller.EventManager;
 import apprendreSQL.Controller.JsonManager;
+import apprendreSQL.Model.Test;
 
 public class NewFileWindow implements ActionListener, GetInformation, SimilarFunctions {
 
@@ -49,7 +50,8 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 	private JFrame frmNouveauExercice;
 	private JLabel lblNo, lblBd, lblTitre, lblSujet, lblQuestion, lblRponse,lblTest, lblNom, lblPre, lblPost;
 	private JTextField textFieldNoExo, textField_sujet, textField_titre, textField_nomTest, textField_Test;
-	private JComboBox<String> comboBoxBD, comboBoxSujet, comboBoxTest;
+	private JComboBox<String> comboBoxBD, comboBoxSujet;
+	private JComboBox<Test> comboBoxTest;
 	private JTextArea textAreaQ, textAreaR, textAreaPre, textAreaPost;
 	private JButton btnEnregistrer, btnAjouterQuestion, btnNouveauSujet, btnAddTest;
 	private EventManager eventManager;
@@ -160,7 +162,7 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		lblTest.setBounds(104, 493, 69, 28);
 		frmNouveauExercice.getContentPane().add(lblTest);
 		
-		comboBoxTest = new JComboBox<String>();
+		comboBoxTest = new JComboBox<Test>();
 		comboBoxTest.setBounds(276, 495, 336, 26);
 		frmNouveauExercice.getContentPane().add(comboBoxTest);
 		
@@ -224,10 +226,11 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		btnNouveauSujet.setBounds(276, 275, 139, 26);
 		frmNouveauExercice.getContentPane().add(btnNouveauSujet);
 		
-		textAreaPre = new JTextArea("Script 1");
+		textAreaPre = new JTextArea();
 		textAreaPre.setBounds(276, 570, 155, 73);
 		frmNouveauExercice.getContentPane().add(textAreaPre);
 		
+		/*
 		textAreaPre.addFocusListener(new FocusListener() {
 		    public void focusGained(FocusEvent e) {
 		    	textAreaPre.setText("");
@@ -237,11 +240,13 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		        // nothing
 		    }
 		});
+		*/
 		
-		textAreaPost = new JTextArea("Script 2");
+		textAreaPost = new JTextArea();
 		textAreaPost.setBounds(450, 570, 158, 73);
 		frmNouveauExercice.getContentPane().add(textAreaPost);
 		
+		/*
 		textAreaPost.addFocusListener(new FocusListener() {
 		    public void focusGained(FocusEvent e) {
 		    	textAreaPost.setText("");
@@ -251,13 +256,18 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		        // nothing
 		    }
 		});
+		*/
 		
 		btnAddTest = new JButton("Ajout test");
 		btnAddTest.addActionListener(new ActionListener(){
 		    @Override
 		    public void actionPerformed(ActionEvent e){
-		         if (!textField_nomTest.getText().trim().isEmpty())
-		        	 comboBoxTest.addItem(textField_nomTest.getText());
+		    	if (!textField_nomTest.getText().trim().isEmpty()) {
+		    		comboBoxTest.addItem(new Test(textField_nomTest.getText(), textAreaPre.getText(), textAreaPost.getText()));
+		    		textField_nomTest.setText("");
+		    		textAreaPre.setText("");
+		    		textAreaPost.setText("");
+		    	}
 		    }
 		});
 		
@@ -305,9 +315,10 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 				sujet = comboBoxSujet.getSelectedItem().toString();
 			else
 				sujet = textField_sujet.getText();
-
+			ArrayList<Test> tList = new ArrayList<>();
+			for(int i = 0 ; i < comboBoxTest.getItemCount() ; i++) tList.add(comboBoxTest.getItemAt(i));
 			if (jsonManager.addQuestion(comboBoxBD.getSelectedItem().toString(), sujet, textField_titre.getText(),
-					textAreaQ.getText(), textAreaR.getText(), null, true)) { //tochange
+					textAreaQ.getText(), textAreaR.getText(), tList, true)) { //tochange
 				JOptionPane.showMessageDialog(frmNouveauExercice, "La nouvelle question est ajoutée.",
 						"Nouvelle Question", JOptionPane.INFORMATION_MESSAGE);
 				textAreaQ.setText("");
