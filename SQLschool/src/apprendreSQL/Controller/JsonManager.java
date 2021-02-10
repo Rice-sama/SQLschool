@@ -33,7 +33,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import com.sun.tools.javac.util.Pair;
+
 
 import apprendreSQL.Model.Question;
 import apprendreSQL.Model.Test;
@@ -173,8 +173,7 @@ public class JsonManager {
 	 * @return ArrayList<Question>
 	 */
 	public ArrayList<Question> getListQuestion() {
-		return listQuestions;
-	}
+		return listQuestions;}
 
 	/**
 	 * clear the Question List .

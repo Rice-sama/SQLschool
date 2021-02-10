@@ -69,6 +69,32 @@ public interface GetInformation {
 		}
 		return subjects;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public default ArrayList<String> getTests(String nameFile) {
+		JSONParser jsonParser = new JSONParser();
+		ArrayList<String> tests = new ArrayList<>();
+		System.out.println(nameFile);
+	try {
+			FileReader reader = new FileReader(new File("resource/" + nameFile));
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+			JSONArray questions = (JSONArray) jsonObject.get("listeQuestion");
+			JSONObject temp;
+			Iterator<JSONObject> iterator = questions.iterator();
+			while (iterator.hasNext()) {
+				temp = iterator.next();
+				String test = temp.get("test").toString();
+				System.out.println(test);
+				if (!tests.contains(test))
+					tests.add(test);
+			}
+		} catch (Exception ex) {
+			System.out.println("Le fichier spécifié est introuvable.");
+			JOptionPane.showMessageDialog(null, "Le fichier spécifié est introuvable.", "Attention",
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return tests;
+	}
 
 	/**
 	 * A function that gets the available json files

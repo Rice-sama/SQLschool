@@ -23,6 +23,8 @@ package apprendreSQL.View;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -45,11 +47,11 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 	private ArrayList<String> subjects = new ArrayList<>();
 	private JsonManager jsonManager;
 	private JFrame frmNouveauExercice;
-	private JLabel lblNo, lblBd, lblTitre, lblSujet, lblQuestion, lblRponse, lblPre, lblPost;
-	private JTextField textFieldNoExo, textField_sujet, textField_titre;
-	private JComboBox<String> comboBoxBD, comboBoxSujet;
+	private JLabel lblNo, lblBd, lblTitre, lblSujet, lblQuestion, lblRponse,lblTest, lblNom, lblPre, lblPost;
+	private JTextField textFieldNoExo, textField_sujet, textField_titre, textField_nomTest, textField_Test;
+	private JComboBox<String> comboBoxBD, comboBoxSujet, comboBoxTest;
 	private JTextArea textAreaQ, textAreaR, textAreaPre, textAreaPost;
-	private JButton btnEnregistrer, btnAjouterQuestion, btnNouveauSujet;
+	private JButton btnEnregistrer, btnAjouterQuestion, btnNouveauSujet, btnAddTest;
 	private EventManager eventManager;
 
 	public NewFileWindow(EventManager manager) {
@@ -77,7 +79,7 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		}
 
 		frmNouveauExercice = new JFrame();
-		frmNouveauExercice.setBounds(100, 100, 840, 750);
+		frmNouveauExercice.setBounds(100, 100, 840, 725);
 		frmNouveauExercice.getContentPane().setLayout(null);
 
 		lblNo = new JLabel("Nom du fichier :");
@@ -141,18 +143,38 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		frmNouveauExercice.getContentPane().add(lblQuestion);
 
 		textAreaQ = new JTextArea();
-		textAreaQ.setBounds(276, 318, 336, 113);
+		textAreaQ.setBounds(276, 318, 336, 75);
 		frmNouveauExercice.getContentPane().add(textAreaQ);
 
 		lblRponse = new JLabel("R\u00E9ponse :");
 		lblRponse.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblRponse.setBounds(104, 444, 69, 28);
+		lblRponse.setBounds(104, 400, 69, 28);
 		frmNouveauExercice.getContentPane().add(lblRponse);
 
 		textAreaR = new JTextArea();
-		textAreaR.setBounds(276, 447, 336, 113);
+		textAreaR.setBounds(276, 407, 336, 75);
 		frmNouveauExercice.getContentPane().add(textAreaR);
+		
+		lblTest = new JLabel("Tests :");
+		lblTest.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblTest.setBounds(104, 493, 69, 28);
+		frmNouveauExercice.getContentPane().add(lblTest);
+		
+		comboBoxTest = new JComboBox<String>();
+		comboBoxTest.setBounds(276, 495, 336, 26);
+		frmNouveauExercice.getContentPane().add(comboBoxTest);
+		
+		lblNom = new JLabel("Nom :");
+		lblNom.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNom.setBounds(104, 530, 122, 28);
+		frmNouveauExercice.getContentPane().add(lblNom);
 
+		textField_nomTest = new JTextField();
+		textField_nomTest.setColumns(10);
+		textField_nomTest.setBounds(276, 533, 336, 26);
+		frmNouveauExercice.getContentPane().add(textField_nomTest);
+
+		
 		btnEnregistrer = new JButton("Cr\u00E9er fichier JSON");
 		btnEnregistrer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -176,7 +198,7 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 			}
 		});
 		btnEnregistrer.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnEnregistrer.setBounds(664, 650, 139, 36);
+		btnEnregistrer.setBounds(455, 650, 138, 36);
 		frmNouveauExercice.getContentPane().add(btnEnregistrer);
 
 		btnAjouterQuestion = new JButton("Ajouter Question");
@@ -188,7 +210,7 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		});
 
 		btnAjouterQuestion.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnAjouterQuestion.setBounds(342, 650, 150, 36);
+		btnAjouterQuestion.setBounds(285, 650, 138, 36);
 		frmNouveauExercice.getContentPane().add(btnAjouterQuestion);
 
 		btnNouveauSujet = new JButton("Nouveau sujet");
@@ -202,13 +224,46 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 		btnNouveauSujet.setBounds(276, 275, 139, 26);
 		frmNouveauExercice.getContentPane().add(btnNouveauSujet);
 		
-		textAreaPre = new JTextArea();
-		textAreaPre.setBounds(262, 580, 170, 73);
+		textAreaPre = new JTextArea("Script 1");
+		textAreaPre.setBounds(276, 570, 155, 73);
 		frmNouveauExercice.getContentPane().add(textAreaPre);
 		
-		textAreaPost = new JTextArea();
-		textAreaPost.setBounds(442, 580, 170, 73);
+		textAreaPre.addFocusListener(new FocusListener() {
+		    public void focusGained(FocusEvent e) {
+		    	textAreaPre.setText("");
+		    }
+
+		    public void focusLost(FocusEvent e) {
+		        // nothing
+		    }
+		});
+		
+		textAreaPost = new JTextArea("Script 2");
+		textAreaPost.setBounds(450, 570, 158, 73);
 		frmNouveauExercice.getContentPane().add(textAreaPost);
+		
+		textAreaPost.addFocusListener(new FocusListener() {
+		    public void focusGained(FocusEvent e) {
+		    	textAreaPost.setText("");
+		    }
+
+		    public void focusLost(FocusEvent e) {
+		        // nothing
+		    }
+		});
+		
+		btnAddTest = new JButton("Ajout test");
+		btnAddTest.addActionListener(new ActionListener(){
+		    @Override
+		    public void actionPerformed(ActionEvent e){
+		         if (!textField_nomTest.getText().trim().isEmpty())
+		        	 comboBoxTest.addItem(textField_nomTest.getText());
+		    }
+		});
+		
+		btnAddTest.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnAddTest.setBounds(640, 600, 100, 40);
+		frmNouveauExercice.getContentPane().add(btnAddTest);
 
 		frmNouveauExercice.setVisible(true);
 		frmNouveauExercice.setResizable(false);
