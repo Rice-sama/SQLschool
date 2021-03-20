@@ -28,6 +28,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import apprendreSQL.Controller.ConnectionSQLite;
@@ -35,10 +36,11 @@ import apprendreSQL.Model.ParseException;
 import apprendreSQL.Model.ParserSQL;
 import apprendreSQL.Model.ParserSQLConstants;
 import apprendreSQL.Model.Test;
+import apprendreSQL.Model.TestCorrection;
+import apprendreSQL.Model.TestResult;
 
 public class Corrector {
 
-	ArrayList<String> listType = new ArrayList<>();
 	String hint = "";
 
 	String type = "none";
@@ -49,12 +51,10 @@ public class Corrector {
 	
 	ParserSQL parser = new ParserSQL(new ByteArrayInputStream("".getBytes()));
 	SQLExecutionManager execManager = new SQLExecutionManager();
+	
+	ArrayList<TestCorrection> tclist = new ArrayList<>();
 
 	public Corrector() {
-		listType.add("select");
-		listType.add("insert into");
-		listType.add("update");
-		listType.add("delete");
 
 	}
 
@@ -85,22 +85,22 @@ public class Corrector {
 					return false;
 				}
 				
-				/*
-				ArrayList<ArrayList<ResultSet>> rsList = new ArrayList<>();
-				rsList.add(new ArrayList<ResultSet>());
-				rsList.add(new ArrayList<ResultSet>());
-				*/
-				
 				String[] inputs = {inputUser, right_Answer};
 				String select = "SELECT * FROM " + parser.idTokens.get(0);
 				
-				boolean test = true;//test bool
-
+				tclist.clear();
+				
 				for(Test t : testList) {
 					
 					ArrayList<ArrayList<String>> sl = new ArrayList<>();
 					sl.add(new ArrayList<String>());
 					sl.add(new ArrayList<String>());
+					
+					TestCorrection tc = new TestCorrection();
+					
+					TestResult[] trlist= {new TestResult(),new TestResult()};
+					
+					boolean test = true;
 					
 					for(int i = 0; i < inputs.length; i++) {
 						
@@ -129,39 +129,56 @@ public class Corrector {
 						try {
 							execManager.executeQueueOnDB(dbconnection.getConnection());
 						} catch(SQLException e) {
-							comment+= t.getName()+" : "+e+"<br>";
-							test = false;
+							trlist[i].setMessage(e.getMessage());
 						}
 						
 						ResultSet rs = execManager.executeSelect(dbconnection.getConnection(), select);
-						//rsList.get(i).add(rs);
+						trlist[i].setResult(rs);
+						rs.close();
 						
-						int n = rs.getMetaData().getColumnCount();
-						while(rs.next()) {
+						for(LinkedHashMap<String, Object> map : trlist[i].getResult()) {
 							String row = "";
-							for(int j=1;j<=n;j++) {
-								row += rs.getString(j)+" ";
+							ArrayList<Object> l = new ArrayList<Object>(map.values());
+							for(Object o : l) {
+								row += o.toString()+" ";
 							}
 						    sl.get(i).add(row);
-						} 
+						}
 						
 						dbconnection.resetDatabase();
 						dbconnection.connect();
 					}
-					
-					//System.out.println(sl.size());
-					
-					if(sl.get(0).size()==sl.get(1).size() && test) {
+										
+					tc.setTestResults(trlist[0], trlist[1]);
+										
+					if(sl.get(0).size()==sl.get(1).size()) {
 						if(mustOrder) {
-							for(int i = 0; i < sl.get(0).size(); i++) {
-								if(!sl.get(0).get(i).equals(sl.get(1).get(i))) /*return false;*/ {comment+=t.getName()+" : not equal<br>";  test=false;break;}
+							for(int i = 0; i < sl.get(0).size() && test; i++) {
+								if(!sl.get(0).get(i).equals(sl.get(1).get(i))) {
+									test = false;
+									boolean orderTest = true;
+									for(int j=0; j<sl.get(0).size() && orderTest; j++) 
+										if(Collections.frequency(sl.get(0),sl.get(0).get(i))!=Collections.frequency(sl.get(1),sl.get(0).get(i))) {
+											tc.setMessage("Ordre des tuples incorrect.");
+											orderTest = false;
+										}
+									else tc.setMessage("Les tuples ne correspondent pas.");
+								}
 							}
-						} else for(int i=0; i<sl.get(0).size();i++) if(Collections.frequency(sl.get(0),sl.get(0).get(i))!=Collections.frequency(sl.get(1),sl.get(0).get(i))) return false;
-					}else test = false;
-					if(test)comment+=t.getName()+" : ok<br>";
-					else comment+=t.getName()+" : false<br>";
+						}
+					} else {
+						test = false;
+						tc.setMessage("Nombre de tuples incorrect.");
+					}
+					
+					tc.setCorrect(test);
+					tclist.add(tc);
 				}
-				//return true;
+				
+				for(TestCorrection tcRes : tclist) {
+					if(!tcRes.isCorrect()) return false;
+				}
+				return true;
 			}
 		} catch (Exception e) {
 			comment += e.getMessage();
@@ -170,6 +187,9 @@ public class Corrector {
 		return false;
 	}	
 	
+	public ArrayList<TestCorrection> getCorrectionList(){
+		return tclist;
+	}
 
 	public void setHint(String hint) {
 		this.hint = hint;

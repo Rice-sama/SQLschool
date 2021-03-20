@@ -30,6 +30,7 @@ import java.util.TreeMap;
 import apprendreSQL.Model.DataBase;
 import apprendreSQL.Model.Question;
 import apprendreSQL.Model.Table;
+import apprendreSQL.Model.TestCorrection;
 import apprendreSQL.View.GetInformation;
 import apprendreSQL.View.MainWindow;
 
@@ -95,14 +96,21 @@ public class EventManager implements GetInformation {
 				if (!corrector.correction(query, currentQuestion.getAnswer(), currentQuestion.getTestList(), currentQuestion.isMustOrder(), selectedConnection)) {
 
 					output_answer = corrector.getCommentaire();
-					compteurrep++;
+
+					//compteurrep++;
 
 				} else {
-
+					/*
 					output_answer = "Réponse correcte:";
 					compteurrep = 1;
 					System.out.println(query);
-					output_answer = output_answer + "<br>" + submit(query, selectedConnection);
+					output_answer = output_answer + "<br>" + submit(query, selectedConnection);*/
+					
+					
+				}
+				for(TestCorrection tc : corrector.getCorrectionList()) {
+					output_answer += tc.getCompiledMessage();
+					System.out.println(tc.getCompiledMessage());
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
