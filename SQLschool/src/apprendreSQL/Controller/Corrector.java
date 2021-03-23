@@ -32,12 +32,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import apprendreSQL.Controller.ConnectionSQLite;
-import apprendreSQL.Model.ParseException;
-import apprendreSQL.Model.ParserSQL;
-import apprendreSQL.Model.ParserSQLConstants;
-import apprendreSQL.Model.Test;
-import apprendreSQL.Model.TestCorrection;
-import apprendreSQL.Model.TestResult;
+import apprendreSQL.Model.analysisTypeMetier.semantique.Test;
+import apprendreSQL.Model.analysisTypeMetier.semantique.TestCorrection;
+import apprendreSQL.Model.analysisTypeMetier.semantique.TestResult;
+import apprendreSQL.Model.analysisTypeMetier.syntax.general.ParserSQL;
+import apprendreSQL.Model.analysisTypeMetier.syntax.general.ParserSQL1;
+import apprendreSQL.Model.analysisTypeMetier.syntax.particular.ParserSQL2;
 
 public class Corrector {
 
@@ -48,14 +48,16 @@ public class Corrector {
 
 	String comment = "";
 	String commentO = "";
+	private ParserSQL parserSQLParticulier;
+	private ParserSQL parserSQLGeneral;
 	
-	ParserSQL parser = new ParserSQL(new ByteArrayInputStream("".getBytes()));
 	SQLExecutionManager execManager = new SQLExecutionManager();
 	
 	ArrayList<TestCorrection> tclist = new ArrayList<>();
 
-	public Corrector() {
-
+	public Corrector(ParserSQL parser1, ParserSQL parser2) {
+		parserSQLParticulier = parser2;
+		parserSQLGeneral = parser1;
 	}
 
 	public String getHint() {
@@ -65,28 +67,19 @@ public class Corrector {
 	public String getCommentaire() {
 		return comment;
 	}
-
+	
 	public boolean correction(String inputUser, String right_Answer, ArrayList<Test> testList, boolean mustOrder, ConnectionSQLite dbconnection) {
 		comment = "";
-		parser.ReInit(new ByteArrayInputStream(inputUser.getBytes()));
-		int reqType;
-		try {
-			reqType = parser.sqlStmtList();
-		} catch (ParseException e1) {
-			comment = e1.getMessage();
-			return false;
-		}
-
 		try {
 			if(dbconnection.connect()){
 				
-				if(!dbconnection.existTable(parser.idTokens.get(0))) {
-					comment = "La table "+parser.idTokens.get(0)+" n'existe pas.";
+				if(!dbconnection.existTable(parserSQLGeneral.getIdTables())) {
+					comment = "La table "+parserSQLGeneral.getIdTables()+" n'existe pas.";
 					return false;
 				}
 				
 				String[] inputs = {inputUser, right_Answer};
-				String select = "SELECT * FROM " + parser.idTokens.get(0);
+				String select = "SELECT * FROM " + parserSQLGeneral.getIdTables();
 				
 				tclist.clear();
 				
@@ -106,20 +99,20 @@ public class Corrector {
 						
 						execManager.addToQueue(t.getPreExecutionScript());
 						
-						switch(reqType) {
+						switch(parserSQLParticulier.getTypeRequete()) {
 						
-						case ParserSQLConstants.SELECT:
+						case "\"SELECT\"":
 							select = inputs[i];
 							break;
 							
-						case ParserSQLConstants.INSERT:
-						case ParserSQLConstants.UPDATE:
-						case ParserSQLConstants.DELETE:
+						case "\"UPDATE\"":
+						case "\"INSERT\"":
+						case "\"DELETE\"":
 							System.out.println(inputs[i]);
 							execManager.addToQueue(inputs[i]);
 							break;
 						
-						case ParserSQLConstants.TRIGGER:
+						case "\"TRIGGER\"":
 							
 							break;
 						}

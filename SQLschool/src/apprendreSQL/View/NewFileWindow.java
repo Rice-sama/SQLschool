@@ -41,7 +41,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import apprendreSQL.Controller.EventManager;
 import apprendreSQL.Controller.JsonManager;
-import apprendreSQL.Model.Test;
+import apprendreSQL.Model.analysisTypeMetier.semantique.Test;
 
 public class NewFileWindow implements ActionListener, GetInformation, SimilarFunctions {
 
@@ -193,7 +193,7 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 					}
 				} else {
 					JOptionPane.showMessageDialog(frmNouveauExercice,
-							"Le fichier spécifié doit finir par \".json\"et contenue au moin un caractere.", "Erreur",
+							"Le fichier spï¿½cifiï¿½ doit finir par \".json\"et contenue au moin un caractere.", "Erreur",
 							JOptionPane.WARNING_MESSAGE);
 					new HighlightListener(textFieldNoExo);
 				}
@@ -319,13 +319,13 @@ public class NewFileWindow implements ActionListener, GetInformation, SimilarFun
 			for(int i = 0 ; i < comboBoxTest.getItemCount() ; i++) tList.add(comboBoxTest.getItemAt(i));
 			if (jsonManager.addQuestion(comboBoxBD.getSelectedItem().toString(), sujet, textField_titre.getText(),
 					textAreaQ.getText(), textAreaR.getText(), tList, true)) { //tochange
-				JOptionPane.showMessageDialog(frmNouveauExercice, "La nouvelle question est ajoutée.",
+				JOptionPane.showMessageDialog(frmNouveauExercice, "La nouvelle question est ajoutï¿½e.",
 						"Nouvelle Question", JOptionPane.INFORMATION_MESSAGE);
 				textAreaQ.setText("");
 				textAreaR.setText("");
 				textField_titre.setText("");
 			} else {
-				JOptionPane.showMessageDialog(null, "Cette question existe déjà (sujet,titre).", "Attention",
+				JOptionPane.showMessageDialog(null, "Cette question existe dï¿½jï¿½ (sujet,titre).", "Attention",
 						JOptionPane.WARNING_MESSAGE);
 			}
 

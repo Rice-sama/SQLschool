@@ -28,7 +28,8 @@ import java.util.ArrayList;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import apprendreSQL.Model.Table;
+import apprendreSQL.Model.analysisTypeMetier.semantique.Table;
+
 
 public class CheckQueryManager {
 
@@ -61,7 +62,7 @@ public class CheckQueryManager {
 		output = "";
 		try {
 			connection.getStatement().execute(query);
-			return output = "La rêquete a été effectuée avec succés";
+			return output = "La rï¿½quete a ï¿½tï¿½ effectuï¿½e avec succï¿½s";
 		} catch (SQLException e) {
 			return output = "Erreur:" + e.getMessage();
 

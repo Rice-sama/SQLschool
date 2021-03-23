@@ -47,7 +47,7 @@ public class FileModificationWindow implements ActionListener, GetInformation, S
 
 	private List<String> questionInfo;
 	private JFrame frmModificationDexercice;
-	private JLabel lblBd, lblSujet, lblEnoncé, lblRponse, lblQuestion, lblTitre, lblPreScript, lvlPostScript;
+	private JLabel lblBd, lblSujet, lblEnonce, lblRponse, lblQuestion, lblTitre, lblPreScript, lvlPostScript;
 	private JComboBox<String> comboBoxJsonFile, comboBoxSubject, comboBoxDB;
 	private JComboBox<Integer> comboBoxIdQuestion;
 	private JTextArea textAreaQuestion, textAreaAnswer, textAreaPreScript, textAreaPostScript;
@@ -95,10 +95,10 @@ public class FileModificationWindow implements ActionListener, GetInformation, S
 		lblSujet.setBounds(104, 257, 69, 28);
 		frmModificationDexercice.getContentPane().add(lblSujet);
 
-		lblEnoncé = new JLabel("Enonc\u00E9 :");
-		lblEnoncé.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblEnoncé.setBounds(104, 357, 69, 28);
-		frmModificationDexercice.getContentPane().add(lblEnoncé);
+		lblEnonce = new JLabel("Enonc\u00E9 :");
+		lblEnonce.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblEnonce.setBounds(104, 357, 69, 28);
+		frmModificationDexercice.getContentPane().add(lblEnonce);
 
 		lblRponse = new JLabel("R\u00E9ponse :");
 		lblRponse.setFont(new Font("Tahoma", Font.BOLD, 12));

@@ -81,7 +81,7 @@ public class EditorPanel extends JPanel {
 		GridBagConstraints theGrid = new GridBagConstraints();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-		Border border = BorderFactory.createLoweredBevelBorder();// ("Entrée(Input)");
+		Border border = BorderFactory.createLoweredBevelBorder();// ("Entrï¿½e(Input)");
 
 		prefferedDimension = new Dimension(screenSize.width / 2 - gap_2, screenSize.height / 2 - gap_1);
 
@@ -116,14 +116,8 @@ public class EditorPanel extends JPanel {
 		inputScrollPane.setBackground(Color.white);
 		inputScrollPane.setPreferredSize(prefferedDimension);
 
-		submit = new JButton("Exécuter");
-		submit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				EventManager.callExecute();
-			}
-		});
+		submit = new JButton("Executer");
+		submit.addActionListener( e -> EventManager.callExecute());
 		hint = new JButton("Aide");
 		hint.addActionListener(new ActionListener() {
 

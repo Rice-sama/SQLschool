@@ -48,7 +48,7 @@ import javax.swing.UIManager;
 import apprendreSQL.Controller.DiagramUtils;
 import apprendreSQL.Controller.EventManager;
 import apprendreSQL.Controller.UtilitiesFactory;
-import apprendreSQL.Model.Table;
+import apprendreSQL.Model.analysisTypeMetier.semantique.Table;
 
 /**
  * This is the main frame that contains all the swing components of the
@@ -93,7 +93,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		tabs = new JTabbedPane();
 
 		tabs.add("Tables", tablesView);
-		tabs.add("Schéma relationnel", diagramsView);
+		tabs.add("Schï¿½ma relationnel", diagramsView);
 
 		panelSpliter = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, windowedPanel, tabs);
 		panelSpliter.setDividerLocation((screenSize.height - gap * 2) / 2);
@@ -155,7 +155,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		});
 		fileMenu.add(fileMenuItem);
 
-		JMenuItem helpMenuItem = new JMenuItem("À propos de SQLschool");
+		JMenuItem helpMenuItem = new JMenuItem("ï¿½ propos de SQLschool");
 		JPanel viewPort = new JPanel();
 		viewPort.setLayout(new GridLayout(0, 1));
 		JButton link = new JButton();
@@ -177,7 +177,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(MainWindow.this, viewPort, "À propos de SQLschool",
+				JOptionPane.showMessageDialog(MainWindow.this, viewPort, "ï¿½ propos de SQLschool",
 						JOptionPane.PLAIN_MESSAGE);
 
 			}

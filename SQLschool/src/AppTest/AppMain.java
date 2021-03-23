@@ -18,31 +18,23 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package apprendreSQL.Model;
+package AppTest;
+
+import java.sql.SQLException;
+
+import apprendreSQL.Controller.EventManager;
 
 /**
- * This class represents a Table on a database.
+ * Launcher class for the application.
  *
  */
-public class Table {
-	String name;
-	String database;
+public class AppMain {
 
-	public Table(String name, String database) {
-		this.name = name;
-		this.database = database;
-	}
+	public static void main(String[] args) throws SQLException {
+		EventManager.printNotice();
+		//UtilitiesFactory.createJsonTemp();
+		new EventManager();
 
-	public String getDatabase() {
-		return database;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 }

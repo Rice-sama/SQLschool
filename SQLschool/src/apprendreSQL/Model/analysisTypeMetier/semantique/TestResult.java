@@ -1,4 +1,4 @@
-package apprendreSQL.Model;
+package apprendreSQL.Model.analysisTypeMetier.semantique;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

@@ -36,7 +36,7 @@ import org.json.simple.parser.JSONParser;
 
 
 import apprendreSQL.Model.Question;
-import apprendreSQL.Model.Test;
+import apprendreSQL.Model.analysisTypeMetier.semantique.Test;
 
 public class JsonManager {
 
@@ -64,7 +64,7 @@ public class JsonManager {
 		try (FileWriter file = new FileWriter(nomFichier)) {
 			file.write(jsonObject.toJSONString());
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Le fichier spécifié est inutilisable.", "Attention",
+			JOptionPane.showMessageDialog(null, "Le fichier spï¿½cifiï¿½ est inutilisable.", "Attention",
 					JOptionPane.WARNING_MESSAGE);
 		}
 
@@ -133,8 +133,8 @@ public class JsonManager {
 			}
 
 		} catch (Exception ex) {
-			System.out.println("Le fichier spécifié est introuvable.j ");
-			JOptionPane.showMessageDialog(null, "Le fichier spécifié est introuvable.", "Attention",
+			System.out.println("Le fichier spï¿½cifiï¿½ est introuvable.j ");
+			JOptionPane.showMessageDialog(null, "Le fichier spï¿½cifiï¿½ est introuvable.", "Attention",
 					JOptionPane.WARNING_MESSAGE);
 		}
 
@@ -160,7 +160,7 @@ public class JsonManager {
 			return false;
 		}
 		if (listQuestions.contains(q)) {
-			System.out.println("Cette question existe déja.");
+			System.out.println("Cette question existe dï¿½ja.");
 			return false;
 		}
 		listQuestions.add(q);

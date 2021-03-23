@@ -22,6 +22,9 @@ package apprendreSQL.Model;
 
 import java.util.ArrayList;
 
+import apprendreSQL.Model.analysisTypeMetier.semantique.Test;
+import apprendreSQL.Model.analysisTypeMetier.semantique.TestSet;
+
 
 /**
  * This class represents a Question object.

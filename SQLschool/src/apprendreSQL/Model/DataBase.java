@@ -23,6 +23,7 @@ package apprendreSQL.Model;
 import java.util.ArrayList;
 
 import apprendreSQL.Controller.EventManager;
+import apprendreSQL.Model.analysisTypeMetier.semantique.Table;
 
 /**
  * This class represents a Database object.

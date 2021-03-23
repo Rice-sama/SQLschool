@@ -29,8 +29,13 @@ import java.util.TreeMap;
 
 import apprendreSQL.Model.DataBase;
 import apprendreSQL.Model.Question;
-import apprendreSQL.Model.Table;
-import apprendreSQL.Model.TestCorrection;
+import apprendreSQL.Model.analysisTypeMetier.semantique.Table;
+import apprendreSQL.Model.analysisTypeMetier.semantique.TestCorrection;
+import apprendreSQL.Model.analysisTypeMetier.syntax.general.ParseException;
+import apprendreSQL.Model.analysisTypeMetier.syntax.general.ParserSQL;
+import apprendreSQL.Model.analysisTypeMetier.syntax.particular.ParserSQL2;
+import apprendreSQL.Model.data.Factory;
+import apprendreSQL.Model.data.Observers;
 import apprendreSQL.View.GetInformation;
 import apprendreSQL.View.MainWindow;
 
@@ -38,7 +43,7 @@ public class EventManager implements GetInformation {
 
 	private static CheckQueryManager checkQuery;
 	private static JsonManager jsonManager;
-
+	private static ParserSQL parserSQLGeneral, parserSQLParticulier;
 	private static MainWindow mainWindow;
 	private static Corrector corrector;
 	private static Question currentQuestion;
@@ -49,16 +54,27 @@ public class EventManager implements GetInformation {
 	private static ConnectionSQLite selectedConnection;
 
 	public EventManager() {
+		initialisationParser();
 		dbConnections();
 		jsonManager = new JsonManager();
 		readJSONFiles();
 		checkQuery = new CheckQueryManager();
-		corrector = new Corrector();
 		mainWindow = new MainWindow(this);
 		new Watcher(this).observe();
 		printNotice();
 	}
+	
+	
+	private void initialisationParser() {
+		parserSQLGeneral      = Factory.makeParserSQL("general");
+		parserSQLParticulier  = Factory.makeParserSQL("particulier");
+		parserSQLParticulier.setcontroller(this);
+		
+		parserSQLGeneral.registerObserver((Observers) parserSQLParticulier);
+		parserSQLGeneral.setDestination("eleve");
+		corrector = new Corrector(parserSQLGeneral,parserSQLParticulier);
 
+	}
 	/**
 	 * A function that connects the database with sqlite.
 	 */
@@ -96,12 +112,12 @@ public class EventManager implements GetInformation {
 				if (!corrector.correction(query, currentQuestion.getAnswer(), currentQuestion.getTestList(), currentQuestion.isMustOrder(), selectedConnection)) {
 
 					output_answer = corrector.getCommentaire();
-
+					
 					//compteurrep++;
 
 				} else {
 					/*
-					output_answer = "Réponse correcte:";
+					output_answer = "Rï¿½ponse correcte:";
 					compteurrep = 1;
 					System.out.println(query);
 					output_answer = output_answer + "<br>" + submit(query, selectedConnection);*/
@@ -113,7 +129,6 @@ public class EventManager implements GetInformation {
 					System.out.println(tc.getCompiledMessage());
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -131,30 +146,39 @@ public class EventManager implements GetInformation {
 
 			return ""; //corrector.definehint(currentQuestion.getAnswer());
 
-		return "Il faut d'abord essayer d'écrire une requête et de l'exécuter ;";
+		return "Il faut d'abord essayer d'ecrire une requete et de l'executer ;";
 	}
+	private static String text;
 
 	/**
-	 * This method is called when the "Exécuter" button is clicked.
+	 * This method is called when the "Executer" button is clicked.
 	 */
 	public static void callExecute() {
 		if(currentQuestion == null) return;
 		clearOutput();
-		String query = mainWindow.getInput();
-		query = query.replaceAll("\n", " ");
-		query = query.toString().trim();
-		String text = ifCorrect(query);
-
-		if (compteurrep == 4) {
-			mainWindow.setOutPut("Vous avez fait 3 tentatives. Voilà la bonne réponse <br> " + currentQuestion.getAnswer().replaceAll("<","&lt;")
-					+ " <br> Essayez de l'écrire et de l'exécuter");
-			compteurrep = 1;
-
-		} else {
-			mainWindow.setOutPut(text + "\n");
+		try {
+//			parserSQLParticulier.reset();
+			parserSQLGeneral.ReInit(Factory.translateToStream(mainWindow.getInput()));
+			parserSQLGeneral.sqlStmtList();
+			mainWindow.setOutPut("correct syntaxiquement ");
+		   //parserSQLParticulier.sqlStmtList();
+		   // text = ifCorrect(query);
+		} catch (ParseException e) {
+			System.out.println("exception "+e.getMessage());
+			mainWindow.setOutPut(e.getMessage() + "\n");
 		}
 
-		mainWindow.updateTableModel();
+		//  tu peux laisser Ã§a aprÃ¨s car c'est le nombre de tentative 
+//		if (compteurrep == 4) {
+//			mainWindow.setOutPut("Vous avez fait 3 tentatives. Voil la bonne reponse <br> " + currentQuestion.getAnswer().replaceAll("<","&lt;")
+//					+ " <br> Essayez de l'ecrire et de l'executer");
+//			compteurrep = 1;
+//
+//		} else {
+//			mainWindow.setOutPut(text + "\n");
+//		}
+//
+     	mainWindow.updateTableModel();
 
 	}
 
@@ -205,7 +229,7 @@ public class EventManager implements GetInformation {
 	public static String submit(String inputQuery, ConnectionSQLite mySelectedConnection) {
 
 		if (mySelectedConnection == null)
-			return "ERR: Pas de base de données";
+			return "ERR: Pas de base de donnï¿½es";
 
 		if (checkQuery.ifSelectQuery(inputQuery)) {
 

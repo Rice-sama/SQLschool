@@ -36,8 +36,8 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
-import apprendreSQL.Model.Table;
 import apprendreSQL.Controller.EventManager;
+import apprendreSQL.Model.analysisTypeMetier.semantique.Table;
 
 /**
  * This is the panel that prints out a preview of the tables for the selected
