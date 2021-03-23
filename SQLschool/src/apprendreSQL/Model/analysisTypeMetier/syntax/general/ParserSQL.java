@@ -1,7 +1,6 @@
 package apprendreSQL.Model.analysisTypeMetier.syntax.general;
 
 import java.io.InputStream;
-import java.util.List;
 
 import apprendreSQL.Controller.EventManager;
 import apprendreSQL.Model.analysisTypeMetier.syntax.particular.Tokens;
@@ -13,7 +12,7 @@ public interface ParserSQL {
 	default  public void ReInit(InputStream stream) {};
 	default public void  registerObserver(Observers o) {};
 	default public void setDestination(String desti) {};
-	default public void updateReponses(List<String> repones) {};
+	default public void updateReponse(String reponse) {};
 	default public void setcontroller(EventManager controller) {};
 	default public void display() {};
 	default public void reset() {};

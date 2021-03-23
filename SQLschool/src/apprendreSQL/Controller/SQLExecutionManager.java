@@ -22,7 +22,12 @@ public class SQLExecutionManager {
 	public void executeQueueOnDB(Connection conn) throws SQLException {
 		
 		Statement stmt = conn.createStatement();
-		for(String sql : executionQueue) stmt.addBatch(sql);
+		for(String sql : executionQueue) {
+			String[] commands = sql.split(";");
+			for(int i = 0; i < commands.length; i++) {
+				stmt.addBatch(commands[i]);
+			}
+		}
 		clearQueue();
 		int[] res = stmt.executeBatch();
 		// get errors from res

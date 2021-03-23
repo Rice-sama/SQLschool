@@ -90,9 +90,7 @@ public class Corrector {
 					sl.add(new ArrayList<String>());
 					
 					TestCorrection tc = new TestCorrection();
-					
 					TestResult[] trlist= {new TestResult(),new TestResult()};
-					
 					boolean test = true;
 					
 					for(int i = 0; i < inputs.length; i++) {
@@ -105,15 +103,9 @@ public class Corrector {
 							select = inputs[i];
 							break;
 							
-						case "\"UPDATE\"":
-						case "\"INSERT\"":
-						case "\"DELETE\"":
+						default:
 							System.out.println(inputs[i]);
 							execManager.addToQueue(inputs[i]);
-							break;
-						
-						case "\"TRIGGER\"":
-							
 							break;
 						}
 						
@@ -141,29 +133,11 @@ public class Corrector {
 						dbconnection.resetDatabase();
 						dbconnection.connect();
 					}
-										
 					tc.setTestResults(trlist[0], trlist[1]);
 										
-					if(sl.get(0).size()==sl.get(1).size()) {
-						if(mustOrder) {
-							for(int i = 0; i < sl.get(0).size() && test; i++) {
-								if(!sl.get(0).get(i).equals(sl.get(1).get(i))) {
-									test = false;
-									boolean orderTest = true;
-									for(int j=0; j<sl.get(0).size() && orderTest; j++) 
-										if(Collections.frequency(sl.get(0),sl.get(0).get(i))!=Collections.frequency(sl.get(1),sl.get(0).get(i))) {
-											tc.setMessage("Ordre des tuples incorrect.");
-											orderTest = false;
-										}
-									else tc.setMessage("Les tuples ne correspondent pas.");
-								}
-							}
-						}
-					} else {
-						test = false;
-						tc.setMessage("Nombre de tuples incorrect.");
-					}
-					
+					String m = compare(sl.get(0),sl.get(1));
+					if(!m.equals("")) test = false;
+					tc.setMessage(m);
 					tc.setCorrect(test);
 					tclist.add(tc);
 				}
@@ -179,6 +153,26 @@ public class Corrector {
 		}
 		return false;
 	}	
+	
+	private String compare(ArrayList<String> r1, ArrayList<String> r2) {
+		String s = "";
+		if(r1.size()==r2.size()) {
+			for(int i = 0; i < r1.size() && s.equals(""); i++) {
+				if(!r1.get(i).equals(r2.get(i))) {
+					boolean orderTest = true;
+					for(int j=0; j<r1.size() && orderTest; j++) 
+						if(Collections.frequency(r1,r1.get(i))!=Collections.frequency(r2,r1.get(i))) {
+							s = "Ordre des tuples incorrect.";
+							orderTest = false;
+						}
+					s = "Les tuples ne correspondent pas.";
+				}
+			}
+		} else {
+			s = "Nombre de tuples incorrect.";
+		}
+		return s;
+	}
 	
 	public ArrayList<TestCorrection> getCorrectionList(){
 		return tclist;

@@ -81,7 +81,7 @@ public class ConnectionSQLite {
 	 */
 	public void close() {
 		try {
-			statement.close();
+			if(!connection.isClosed()) statement.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

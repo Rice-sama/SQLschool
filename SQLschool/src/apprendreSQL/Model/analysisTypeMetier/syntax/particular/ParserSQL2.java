@@ -169,12 +169,13 @@ class TokenFix {
 		    "\".\"",
 		  };
 }
+
 public class ParserSQL2 implements  Observers, ParserSQL {
 	
 	private Stack<Tokens> p_token_eleve;
 	private Stack<Tokens> p_token_prof;
 	private List<Stack<Tokens>>  list_p_token;
-	private List<String> reponses;
+	private String reponse;
 	private ParserSQL parser;
 	private EventManager controller;
 	private int numero_pile = 0;
@@ -189,7 +190,7 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	private int var;
 	private boolean isCorrect;
 	private List<String> token_ID = new ArrayList<>();
-	private Tokens typeRequête;
+	private Tokens typeRequete;
 	
 	
 	public ParserSQL2() {
@@ -208,8 +209,8 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 *  mis à jour de l'attribut reponses et automatiquement la reprise de l'analyse
 	 */
 	@Override
-	public void updateReponses(List<String> repones) {
-		this.reponses = repones;
+	public void updateReponse(String reponse) {
+		this.reponse = reponse;
 		start();
 	}
 	
@@ -218,10 +219,8 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 */
 	private void start() {
 		try {
-			for(String s : reponses) {
-				parser.ReInit(Factory.translateToStream(s));
-				parser.sqlStmtList();
-			}
+			parser.ReInit(Factory.translateToStream(reponse));
+			parser.sqlStmtList();
 		} catch (ParseException e){
 		//	controller.getView().sendMessage(" Requette prof  : "+e.getMessage());
 		}
@@ -410,11 +409,11 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	}
 	
 	/**
-	 *   parseur realtif
+	 *   parseur relatif
 	 */
 	@Override
 	public void sqlStmtList() throws ParseException {
-	    typeRequête = p_token_eleve.firstElement();
+	    typeRequete = p_token_eleve.firstElement();
 		while(!p_token_eleve.isEmpty()) {
 			Tokens tmp = p_token_eleve.firstElement();
 			if(consume(tmp.getTokenImage(), tmp.getToken())) {
@@ -431,7 +430,7 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	
 	@Override
 	public String getTypeRequete() {
-		return ParserSQL.super.getTypeRequete() + typeRequête.getTokenImage();
+		return typeRequete.getTokenImage();
 	}	
 	
 	
@@ -482,7 +481,7 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 		for(Tokens token : p_token_accepted) {
 			if(token.getTokenImage().equals("<ID>")) {
 				if(!isExistID(token.getToken())) 
-					throw new ParseException("error semantique  :=  \n   unkown : "+ token.getToken());
+					throw new ParseException("error semantique  :=  \n   unknown : "+ token.getToken());
 			}
 		}
 		if(ordre) 
@@ -502,207 +501,172 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 			}
 		}
 	}
-	
-
-	
 }
 
-	
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	
-	/*
-	 *  cette classe représente la partie non permutable
-	 */
-	class TokenNoPermutable extends Tokens {
+/*
+ *  cette classe représente la partie non permutable
+ */
+class TokenNoPermutable extends Tokens {
 
 
-		private Paire<String> pair;
-		public TokenNoPermutable(String token) {
-			pair = new Paire<String>(token, "fin");
-			typePArtie = TypePArtie.STATIC;
-		}
-		
-		@Override
-		public String getToken() {
-			return pair.getToken();
-		}
-
-
+	private Paire<String> pair;
+	public TokenNoPermutable(String token) {
+		pair = new Paire<String>(token, "fin");
+		typePArtie = TypePArtie.STATIC;
+	}
 	
+	@Override
+	public String getToken() {
+		return pair.getToken();
+	}
 
-		public TokenNoPermutable(String token, String tokenImage) {
-			addToken(token, tokenImage);
-			typePArtie = TypePArtie.STATIC;
-		}
-		
-		@Override
-		public void addToken(String token, String tokenImage) {
-			pair = new Paire<String>(token, tokenImage);
-		}
-		
-		@Override
-		protected Tokens clone() throws CloneNotSupportedException {
-			return (TokenNoPermutable)super.clone();
-		}
-		
-		@Override
-		public boolean isEmpty() {
-			return false;
-		}
 
-		@Override
-		protected boolean contain(String tokenImage) {	
-			return this.pair.containToken(tokenImage);
-		}
 
-		@Override
-		public boolean isExist(String token) {
-			return false;
-		}
 
-		@Override
-		public void display() {
+	public TokenNoPermutable(String token, String tokenImage) {
+		addToken(token, tokenImage);
+		typePArtie = TypePArtie.STATIC;
+	}
+	
+	@Override
+	public void addToken(String token, String tokenImage) {
+		pair = new Paire<String>(token, tokenImage);
+	}
+	
+	@Override
+	protected Tokens clone() throws CloneNotSupportedException {
+		return (TokenNoPermutable)super.clone();
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
+
+	@Override
+	protected boolean contain(String tokenImage) {	
+		return this.pair.containToken(tokenImage);
+	}
+
+	@Override
+	public boolean isExist(String token) {
+		return false;
+	}
+
+	@Override
+	public void display() {
+		pair.display();
+	}
+
+
+	@Override
+	public String getTokenImage() {
+		return pair.getImageToken();
+	}
+
+	@Override
+	public void remove(String tokenImage, String token) {}
+
+	@Override
+	public Paire<String> getCoupleToken(String tokenImage, String token) {
+		return pair;
+	}
+
+	@Override
+	public int size() {
+		return 0;
+	}
+}
+
+
+/**
+ * 
+ * @author 
+ * cette class represente la partie permutable
+ */
+class TokensPermutables extends Tokens {
+	
+	private List<Paire<String>> tokens;
+	
+	public TokensPermutables() {
+		tokens = new ArrayList<>();
+		typePArtie = TypePArtie.PERMUTABLE;
+	}
+	
+	@Override
+	public void addToken(String token, String tokenImage) {
+		tokens.add(new Paire<String>(token, tokenImage));
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return tokens.isEmpty();
+	}
+
+	@Override
+	protected boolean contain(String tokenImage) {
+		for(Paire<String> pair : tokens){
+			if(pair.containToken(tokenImage)){
+				return true;
+			}
+		}
+		return false;
+	}
+	@Override
+	protected Tokens clone() throws CloneNotSupportedException {
+		return (TokensPermutables)super.clone();
+	}
+	@Override
+	public boolean isExist(String token) {
+		return false;
+	}
+
+	@Override
+	public void display() {
+		for(Paire<String> pair : tokens) 
 			pair.display();
-		}
+	}
 
+	@Override
+	public String getToken() {
+		return tokens.get(0).getToken();
+	}
 
-		@Override
-		public String getTokenImage() {
-			return pair.getImageToken();
-		}
-
-		@Override
-		public void remove(String tokenImage, String token) {}
-
-		@Override
-		public Paire<String> getCoupleToken(String tokenImage, String token) {
-			return pair;
-		}
-
-		@Override
-		public int size() {
-			return 0;
-		}
+	@Override
+	public String getTokenImage() {
+		
+		return tokens.get(0).getImageToken();
 	}
 	
-	
-	/**
-	 * 
-	 * @author 
-	 * cette class represente la partie permutable
-	 */
-	class TokensPermutables extends Tokens {
-		
-		private List<Paire<String>> tokens;
-		
-		public TokensPermutables() {
-			tokens = new ArrayList<>();
-			typePArtie = TypePArtie.PERMUTABLE;
-		}
-		
-		@Override
-		public void addToken(String token, String tokenImage) {
-			tokens.add(new Paire<String>(token, tokenImage));
-		}
+	@Override
+	public void remove(String tokenImage, String token) {
+		tokens.remove(getCoupleToken(tokenImage, token));
+	}
 
-		@Override
-		public boolean isEmpty() {
-			return tokens.isEmpty();
+	@Override   // to do pour l erreur syntaxique 
+	public Paire<String> getCoupleToken(String tokenImage,String token) throws IllegalArgumentException {
+		for(Paire<String> pair : tokens){ 
+			if(pair.containToken(tokenImage) && pair.getToken().equals(token))
+				return pair;
+			else if(pair.containToken(tokenImage))
+				return pair;
 		}
+		throw new IllegalArgumentException("");
+	}
 
-		@Override
-		protected boolean contain(String tokenImage) {
-			for(Paire<String> pair : tokens){
-				if(pair.containToken(tokenImage)){
-					return true;
-				}
-			}
-			return false;
-		}
-		@Override
-		protected Tokens clone() throws CloneNotSupportedException {
-			return (TokensPermutables)super.clone();
-		}
-		@Override
-		public boolean isExist(String token) {
-			return false;
-		}
-
-		@Override
-		public void display() {
-			for(Paire<String> pair : tokens) 
-				pair.display();
-		}
-
-		@Override
-		public String getToken() {
-			return tokens.get(0).getToken();
-		}
-
-		@Override
-		public String getTokenImage() {
-			
-			return tokens.get(0).getImageToken();
-		}
-		
-		@Override
-		public void remove(String tokenImage, String token) {
-			tokens.remove(getCoupleToken(tokenImage, token));
-		}
-
-		@Override   // to do pour l erreur syntaxique 
-		public Paire<String> getCoupleToken(String tokenImage,String token) throws IllegalArgumentException {
-			for(Paire<String> pair : tokens){ 
-				if(pair.containToken(tokenImage) && pair.getToken().equals(token))
-					return pair;
-				else if(pair.containToken(tokenImage))
-					return pair;
-			}
-			throw new IllegalArgumentException("");
-		}
-
-		@Override
-		public int size() {
-			return tokens.size();
-		}
-		
-
+	@Override
+	public int size() {
+		return tokens.size();
 	}
 	
 
-	
+}
+
+
+
 //	/**
 //	 * methode consume un token dans la requête de l'élève si les règles sont satisfaite
 //	 *  les règles : respecte l'une des solutions proposés par le prof
