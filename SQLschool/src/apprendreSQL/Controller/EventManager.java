@@ -157,23 +157,12 @@ public class EventManager implements GetInformation {
 		if(currentQuestion == null) return;
 		clearOutput();
 		try {
-			String query = mainWindow.getInput();
-//			parserSQLParticulier.reset();
-			parserSQLGeneral.ReInit(Factory.translateToStream(query));
-			parserSQLGeneral.sqlStmtList();
-			System.out.println("Syntaxe eleve OK");
-			
-			parserSQLParticulier.sqlStmtList();
-			String reqType = parserSQLParticulier.getTypeRequete();
-			/*
+			parserSQLParticulier.reset();
 			parserSQLParticulier.updateReponse(currentQuestion.getAnswer());
-			if(!parserSQLParticulier.getTypeRequete().equals(reqType)) {
-				System.out.println("different query type");
-				mainWindow.setOutPut("\n");
-				return;
-			}*/
-			
-			System.out.println("");
+			String query = mainWindow.getInput();
+			parserSQLGeneral.ReInit(Factory.translateToStream(query));
+			parserSQLGeneral.sqlStmtList();			
+			parserSQLParticulier.sqlStmtList();		
 			text = ifCorrect(query);
 			mainWindow.setOutPut(text);
 		} catch (ParseException e) {

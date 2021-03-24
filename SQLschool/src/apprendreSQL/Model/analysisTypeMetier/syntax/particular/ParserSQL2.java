@@ -259,6 +259,7 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 */
 	@Override
 	public void notifyEventProf(String token, String tokenImage) {
+		System.out.println("test notif prof ");
 		if(token.equals("fin")) {
 			addQueryInStack();
 		} else {
@@ -408,12 +409,19 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 		p_nu.removeAll(p_nu);
 	}
 	
+	//
+	private void checkSameRequete() throws ParseException {;
+		if(!p_token_eleve.firstElement().getTokenImage().equals(list_p_token.get(0).firstElement().getTokenImage())){
+			throw new ParseException("Attend en premier le mot clès suivant :"+ list_p_token.get(0).firstElement().getToken());
+		}
+	}
 	/**
 	 *   parseur relatif
 	 */
 	@Override
 	public void sqlStmtList() throws ParseException {
 	    typeRequete = p_token_eleve.firstElement();
+	    checkSameRequete();
 		while(!p_token_eleve.isEmpty()) {
 			Tokens tmp = p_token_eleve.firstElement();
 			if(consume(tmp.getTokenImage(), tmp.getToken())) {
