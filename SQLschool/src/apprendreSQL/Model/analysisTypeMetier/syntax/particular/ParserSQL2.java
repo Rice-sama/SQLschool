@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import apprendreSQL.Controller.EventManager;
+import apprendreSQL.Controller.version1.EventManager;
 import apprendreSQL.Model.analysisTypeMetier.syntax.general.ParseException;
 import apprendreSQL.Model.analysisTypeMetier.syntax.general.ParserSQL;
 import apprendreSQL.Model.analysisTypeMetier.syntax.particular.Tokens.TypePArtie;

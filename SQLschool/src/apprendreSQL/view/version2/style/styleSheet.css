@@ -1,0 +1,34 @@
+.sideBar{
+	-fx-background-color:rgb(58,69,88);
+	
+}
+
+
+
+.hover_border:hover{	
+	-fx-border-color: #FAFAFA;
+	-fx-background-color:rgb(240,240,240);
+	-fx-border-width: 0px 0px 0px 2px;
+	-fx-cursor: hand;
+}
+
+.background_color2:hover{
+	-fx-background-color: #FEE8E8
+}
+
+.background_color1:hover {
+ -fx-background-color:  #E1CECE	;
+}
+
+
+
+.header_style {                                         
+	 -fx-background-color: linear-gradient(to top left, #240848, rgba(36, 68, 92, 0));
+		
+}
+
+
+
+
+
+

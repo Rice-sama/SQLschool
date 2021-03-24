@@ -2,7 +2,7 @@ package apprendreSQL.Model.analysisTypeMetier.syntax.general;
 
 import java.io.InputStream;
 
-import apprendreSQL.Controller.EventManager;
+import apprendreSQL.Controller.version1.EventManager;
 import apprendreSQL.Model.analysisTypeMetier.syntax.particular.Tokens;
 import apprendreSQL.Model.data.Observers;
 

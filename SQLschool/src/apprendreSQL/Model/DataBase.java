@@ -22,7 +22,7 @@ package apprendreSQL.Model;
 
 import java.util.ArrayList;
 
-import apprendreSQL.Controller.EventManager;
+import apprendreSQL.Controller.version1.EventManager;
 import apprendreSQL.Model.analysisTypeMetier.semantique.Table;
 
 /**
