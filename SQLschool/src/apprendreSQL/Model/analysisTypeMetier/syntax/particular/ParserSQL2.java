@@ -410,9 +410,9 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	}
 	
 	//
-	private void checkSameRequete() throws ParseException {;
+	private void checkSameRequete() throws ParseException {
 		if(!p_token_eleve.firstElement().getTokenImage().equals(list_p_token.get(0).firstElement().getTokenImage())){
-			throw new ParseException("Attend en premier le mot clès suivant :"+ list_p_token.get(0).firstElement().getToken());
+			throw new ParseException("Attend en premier le mot clef suivant : "+ list_p_token.get(0).firstElement().getToken());
 		}
 	}
 	/**

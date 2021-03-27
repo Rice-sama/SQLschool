@@ -6,6 +6,7 @@ import apprendreSQL.Controller.version1.EventManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
@@ -29,10 +30,12 @@ public class RouterVersion {
 		}
 		if(ChoiceVersion2.isSelected()){
 			System.out.println("choix v2 ");
-			AnchorPane pan = FXMLLoader.load(getClass().getResource("/apprendreSQL/view/version2/fileXml/home.fxml"));
-			Scene scene = new Scene(pan,1000,800);
+			//AnchorPane pan = FXMLLoader.load(getClass().getResource("/apprendreSQL/view/version2/fileXml/home.fxml"));
+			Parent pan = FXMLLoader.load(getClass().getResource("/apprendreSQL/view/version2/fileXml/gui.fxml"));
+			Scene scene = new Scene(pan,1280,800);
 			stage.setScene(scene);
 		}
 
 	}
+
 }

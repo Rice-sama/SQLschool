@@ -9,253 +9,317 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="740.0" prefWidth="899.0" spacing="50.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerEvent">
-   <children>
-      <HBox alignment="CENTER" prefHeight="164.0" prefWidth="900.0" spacing="100.0">
-         <children>
-            <VBox prefHeight="164.0" prefWidth="200.0" style="-fx-background-color: #C6CAF1;" styleClass="background_color1">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0" styleClass="sideBar" stylesheets="@../style/styleSheet.css">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Chapitre 1">
-                           <font>
-                              <Font name="System Bold" size="19.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-                  <VBox fx:id="idChampitre1" alignment="CENTER" onMouseClicked="#openChapitre" prefHeight="76.0" prefWidth="170.0" spacing="5.0" styleClass="background_color2">
-                     <children>
-                        <ImageView fitHeight="77.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../ressources/images/createSQL_chapitre.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="** CREAT **" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="BOTTOM_CENTER" prefHeight="250.0" prefWidth="100.0">
-                     <children>
-                        <Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0" text="20%">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="120.0" />
-                           </VBox.margin>
-                        </Text>
-                        <ProgressBar prefWidth="200.0" progress="0.29" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="10.0" prefHeight="164.0" prefWidth="200.0" style="-fx-background-color: #C6CAF1;">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0" styleClass="sideBar" stylesheets="@../style/styleSheet.css">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Chapitre 2">
-                           <font>
-                              <Font name="System Bold" size="19.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-                  <VBox alignment="CENTER" prefHeight="76.0" prefWidth="170.0" spacing="5.0" styleClass="background_color2">
-                     <children>
-                        <ImageView fitHeight="77.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../ressources/images/insertSQL_chapitre.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="hover_border" text="** INSERT **" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0" text="1%">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="120.0" />
-                           </VBox.margin>
-                        </Text>
-                        <ProgressBar prefWidth="200.0" progress="0.06" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" layoutX="10.0" layoutY="174.0" prefHeight="164.0" prefWidth="900.0" spacing="100.0">
-         <children>
-            <VBox onMouseClicked="#openTraveauPratique" prefHeight="164.0" prefWidth="200.0" style="-fx-background-color: #C6CAF1;">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0" styleClass="sideBar" stylesheets="@../style/styleSheet.css">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="TP 3">
-                           <font>
-                              <Font name="System Bold" size="19.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-                  <VBox alignment="CENTER" prefHeight="76.0" prefWidth="170.0" spacing="5.0" styleClass="background_color2">
-                     <children>
-                        <ImageView fitHeight="77.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="hover_border">
-                           <image>
-                              <Image url="@../../../ressources/images/select_chapitre.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="** SELECT **" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0" text="20%">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="120.0" />
-                           </VBox.margin>
-                        </Text>
-                        <ProgressBar prefWidth="200.0" progress="0.28" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="10.0" prefHeight="164.0" prefWidth="200.0" style="-fx-background-color: #C6CAF1;">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0" styleClass="sideBar" stylesheets="@../style/styleSheet.css">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Chapitre 4">
-                           <font>
-                              <Font name="System Bold" size="19.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-                  <VBox alignment="CENTER" prefHeight="76.0" prefWidth="170.0" spacing="5.0" styleClass="background_color2">
-                     <children>
-                        <ImageView fitHeight="77.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../ressources/images/updateSQL_chapitre.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="** UPDATE **" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0" text="40%">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="120.0" />
-                           </VBox.margin>
-                        </Text>
-                        <ProgressBar prefWidth="200.0" progress="0.57" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" layoutX="10.0" layoutY="338.0" prefHeight="164.0" prefWidth="900.0" spacing="100.0">
-         <children>
-            <VBox prefHeight="164.0" prefWidth="200.0" style="-fx-background-color: #C6CAF1;">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0" styleClass="sideBar" stylesheets="@../style/styleSheet.css">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Chapitre  5">
-                           <font>
-                              <Font name="System Bold" size="19.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-                  <VBox alignment="CENTER" prefHeight="76.0" prefWidth="170.0" spacing="5.0" styleClass="background_color2">
-                     <children>
-                        <ImageView fitHeight="77.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="hover_border">
-                           <image>
-                              <Image url="@../../../ressources/images/delet_chapitre.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="** DELETE **" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="hover_border">
-                     <children>
-                        <Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0" text="40%">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="120.0" />
-                           </VBox.margin>
-                        </Text>
-                        <ProgressBar prefWidth="200.0" progress="0.57" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="10.0" prefHeight="164.0" prefWidth="200.0" style="-fx-background-color: #C6CAF1;">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0" styleClass="sideBar" stylesheets="@../style/styleSheet.css">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Chapitre x">
-                           <font>
-                              <Font name="System Bold" size="19.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-                  <VBox alignment="CENTER" prefHeight="76.0" prefWidth="170.0" spacing="5.0" styleClass="background_color2">
-                     <children>
-                        <ImageView fitHeight="77.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../ressources/images/createSQL_chapitre.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="** xxx **" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0" text="40%">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="120.0" />
-                           </VBox.margin>
-                        </Text>
-                        <ProgressBar prefWidth="200.0" progress="0.57" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </children>
+<VBox alignment="CENTER" prefHeight="740.0" prefWidth="899.0"
+	spacing="50.0" xmlns="http://javafx.com/javafx/15.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.ControllerEvent">
+	<children>
+		<HBox alignment="CENTER" prefHeight="164.0" prefWidth="900.0"
+			spacing="100.0">
+			<children>
+				<VBox prefHeight="164.0" prefWidth="200.0"
+					style="-fx-background-color: #C6CAF1;"
+					styleClass="background_color1">
+					<children>
+						<HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0"
+							styleClass="sideBar" stylesheets="@../style/styleSheet.css">
+							<children>
+								<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="Chapitre 1">
+									<font>
+										<Font name="System Bold" size="19.0" />
+									</font>
+								</Text>
+							</children>
+						</HBox>
+						<VBox fx:id="idChampitre1" alignment="CENTER"
+							onMouseClicked="#openChapitre" prefHeight="76.0"
+							prefWidth="170.0" spacing="5.0" styleClass="background_color2">
+							<children>
+								<ImageView fitHeight="77.0" fitWidth="50.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image
+											url="@../../../ressources/images/createSQL_chapitre.png" />
+									</image>
+									<VBox.margin>
+										<Insets top="20.0" />
+									</VBox.margin>
+								</ImageView>
+								<Text strokeType="OUTSIDE" strokeWidth="0.0"
+									text="** CREAT **" />
+							</children>
+						</VBox>
+						<VBox alignment="BOTTOM_CENTER" prefHeight="250.0"
+							prefWidth="100.0">
+							<children>
+								<Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="20%">
+									<font>
+										<Font name="System Bold" size="21.0" />
+									</font>
+									<VBox.margin>
+										<Insets left="120.0" />
+									</VBox.margin>
+								</Text>
+								<ProgressBar prefWidth="200.0" progress="0.29" />
+							</children>
+						</VBox>
+					</children>
+				</VBox>
+				<VBox layoutX="10.0" layoutY="10.0" prefHeight="164.0"
+					prefWidth="200.0" style="-fx-background-color: #C6CAF1;">
+					<children>
+						<HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0"
+							styleClass="sideBar" stylesheets="@../style/styleSheet.css">
+							<children>
+								<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="Chapitre 2">
+									<font>
+										<Font name="System Bold" size="19.0" />
+									</font>
+								</Text>
+							</children>
+						</HBox>
+						<VBox alignment="CENTER" prefHeight="76.0" prefWidth="170.0"
+							spacing="5.0" styleClass="background_color2">
+							<children>
+								<ImageView fitHeight="77.0" fitWidth="50.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image
+											url="@../../../ressources/images/insertSQL_chapitre.png" />
+									</image>
+									<VBox.margin>
+										<Insets top="20.0" />
+									</VBox.margin>
+								</ImageView>
+								<Text strokeType="OUTSIDE" strokeWidth="0.0"
+									styleClass="hover_border" text="** INSERT **" />
+							</children>
+						</VBox>
+						<VBox alignment="BOTTOM_CENTER" prefHeight="200.0"
+							prefWidth="100.0">
+							<children>
+								<Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="1%">
+									<font>
+										<Font name="System Bold" size="21.0" />
+									</font>
+									<VBox.margin>
+										<Insets left="120.0" />
+									</VBox.margin>
+								</Text>
+								<ProgressBar prefWidth="200.0" progress="0.06" />
+							</children>
+						</VBox>
+					</children>
+				</VBox>
+			</children>
+		</HBox>
+		<HBox alignment="CENTER" layoutX="10.0" layoutY="174.0"
+			prefHeight="164.0" prefWidth="900.0" spacing="100.0">
+			<children>
+				<VBox onMouseClicked="#openTraveauPratique" prefHeight="164.0"
+					prefWidth="200.0" style="-fx-background-color: #C6CAF1;">
+					<children>
+						<HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0"
+							styleClass="sideBar" stylesheets="@../style/styleSheet.css">
+							<children>
+								<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="TP 3">
+									<font>
+										<Font name="System Bold" size="19.0" />
+									</font>
+								</Text>
+							</children>
+						</HBox>
+						<VBox alignment="CENTER" prefHeight="76.0" prefWidth="170.0"
+							spacing="5.0" styleClass="background_color2">
+							<children>
+								<ImageView fitHeight="77.0" fitWidth="50.0"
+									pickOnBounds="true" preserveRatio="true"
+									styleClass="hover_border">
+									<image>
+										<Image
+											url="@../../../ressources/images/select_chapitre.png" />
+									</image>
+									<VBox.margin>
+										<Insets top="20.0" />
+									</VBox.margin>
+								</ImageView>
+								<Text strokeType="OUTSIDE" strokeWidth="0.0"
+									text="** SELECT **" />
+							</children>
+						</VBox>
+						<VBox alignment="BOTTOM_CENTER" prefHeight="200.0"
+							prefWidth="100.0">
+							<children>
+								<Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="20%">
+									<font>
+										<Font name="System Bold" size="21.0" />
+									</font>
+									<VBox.margin>
+										<Insets left="120.0" />
+									</VBox.margin>
+								</Text>
+								<ProgressBar prefWidth="200.0" progress="0.28" />
+							</children>
+						</VBox>
+					</children>
+				</VBox>
+				<VBox layoutX="10.0" layoutY="10.0" prefHeight="164.0"
+					prefWidth="200.0" style="-fx-background-color: #C6CAF1;">
+					<children>
+						<HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0"
+							styleClass="sideBar" stylesheets="@../style/styleSheet.css">
+							<children>
+								<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="Chapitre 4">
+									<font>
+										<Font name="System Bold" size="19.0" />
+									</font>
+								</Text>
+							</children>
+						</HBox>
+						<VBox alignment="CENTER" prefHeight="76.0" prefWidth="170.0"
+							spacing="5.0" styleClass="background_color2">
+							<children>
+								<ImageView fitHeight="77.0" fitWidth="50.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image
+											url="@../../../ressources/images/updateSQL_chapitre.png" />
+									</image>
+									<VBox.margin>
+										<Insets top="20.0" />
+									</VBox.margin>
+								</ImageView>
+								<Text strokeType="OUTSIDE" strokeWidth="0.0"
+									text="** UPDATE **" />
+							</children>
+						</VBox>
+						<VBox alignment="BOTTOM_CENTER" prefHeight="200.0"
+							prefWidth="100.0">
+							<children>
+								<Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="40%">
+									<font>
+										<Font name="System Bold" size="21.0" />
+									</font>
+									<VBox.margin>
+										<Insets left="120.0" />
+									</VBox.margin>
+								</Text>
+								<ProgressBar prefWidth="200.0" progress="0.57" />
+							</children>
+						</VBox>
+					</children>
+				</VBox>
+			</children>
+		</HBox>
+		<HBox alignment="CENTER" layoutX="10.0" layoutY="338.0"
+			prefHeight="164.0" prefWidth="900.0" spacing="100.0">
+			<children>
+				<VBox prefHeight="164.0" prefWidth="200.0"
+					style="-fx-background-color: #C6CAF1;">
+					<children>
+						<HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0"
+							styleClass="sideBar" stylesheets="@../style/styleSheet.css">
+							<children>
+								<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="Chapitre  5">
+									<font>
+										<Font name="System Bold" size="19.0" />
+									</font>
+								</Text>
+							</children>
+						</HBox>
+						<VBox alignment="CENTER" prefHeight="76.0" prefWidth="170.0"
+							spacing="5.0" styleClass="background_color2">
+							<children>
+								<ImageView fitHeight="77.0" fitWidth="50.0"
+									pickOnBounds="true" preserveRatio="true"
+									styleClass="hover_border">
+									<image>
+										<Image
+											url="@../../../ressources/images/delet_chapitre.png" />
+									</image>
+									<VBox.margin>
+										<Insets top="20.0" />
+									</VBox.margin>
+								</ImageView>
+								<Text strokeType="OUTSIDE" strokeWidth="0.0"
+									text="** DELETE **" />
+							</children>
+						</VBox>
+						<VBox alignment="BOTTOM_CENTER" prefHeight="200.0"
+							prefWidth="100.0" styleClass="hover_border">
+							<children>
+								<Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="40%">
+									<font>
+										<Font name="System Bold" size="21.0" />
+									</font>
+									<VBox.margin>
+										<Insets left="120.0" />
+									</VBox.margin>
+								</Text>
+								<ProgressBar prefWidth="200.0" progress="0.57" />
+							</children>
+						</VBox>
+					</children>
+				</VBox>
+				<VBox layoutX="10.0" layoutY="10.0" prefHeight="164.0"
+					prefWidth="200.0" style="-fx-background-color: #C6CAF1;">
+					<children>
+						<HBox alignment="CENTER" prefHeight="39.0" prefWidth="170.0"
+							styleClass="sideBar" stylesheets="@../style/styleSheet.css">
+							<children>
+								<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="Chapitre x">
+									<font>
+										<Font name="System Bold" size="19.0" />
+									</font>
+								</Text>
+							</children>
+						</HBox>
+						<VBox alignment="CENTER" prefHeight="76.0" prefWidth="170.0"
+							spacing="5.0" styleClass="background_color2">
+							<children>
+								<ImageView fitHeight="77.0" fitWidth="50.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image
+											url="@../../../ressources/images/createSQL_chapitre.png" />
+									</image>
+									<VBox.margin>
+										<Insets top="20.0" />
+									</VBox.margin>
+								</ImageView>
+								<Text strokeType="OUTSIDE" strokeWidth="0.0"
+									text="** xxx **" />
+							</children>
+						</VBox>
+						<VBox alignment="BOTTOM_CENTER" prefHeight="200.0"
+							prefWidth="100.0">
+							<children>
+								<Text fill="#dfff0d" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="40%">
+									<font>
+										<Font name="System Bold" size="21.0" />
+									</font>
+									<VBox.margin>
+										<Insets left="120.0" />
+									</VBox.margin>
+								</Text>
+								<ProgressBar prefWidth="200.0" progress="0.57" />
+							</children>
+						</VBox>
+					</children>
+				</VBox>
+			</children>
+		</HBox>
+	</children>
 </VBox>

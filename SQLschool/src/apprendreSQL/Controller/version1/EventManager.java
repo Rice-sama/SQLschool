@@ -125,6 +125,7 @@ public class EventManager implements GetInformation {
 					
 					
 				}
+				
 				for(TestCorrection tc : corrector.getCorrectionList()) {
 					output_answer += tc.getCompiledMessage();
 					System.out.println(tc.getCompiledMessage());
@@ -162,8 +163,8 @@ public class EventManager implements GetInformation {
 			parserSQLParticulier.updateReponse(currentQuestion.getAnswer());
 			String query = mainWindow.getInput();
 			parserSQLGeneral.ReInit(Factory.translateToStream(query));
-			parserSQLGeneral.sqlStmtList();			
-			parserSQLParticulier.sqlStmtList();		
+			parserSQLGeneral.sqlStmtList();
+			parserSQLParticulier.sqlStmtList();
 			text = ifCorrect(query);
 			mainWindow.setOutPut(text);
 		} catch (ParseException e) {

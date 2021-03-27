@@ -15,100 +15,130 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="800.0" minWidth="1000.0" onMouseClicked="#startHomePage" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #64C3E5;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apprendreSQL.Controller.RouterVersion">
-   <children>
-      <Pane fx:id="panLeft1" prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: #35138B;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
-         <effect>
-            <DropShadow height="27.07" radius="19.8675" spread="0.71" width="54.4">
-               <color>
-                  <Color red="0.34437134861946106" green="0.13304093480110168" blue="0.7368420958518982" />
-               </color>
-            </DropShadow>
-         </effect>
-         <children>
-            <VBox alignment="TOP_CENTER" layoutX="-10.0" layoutY="58.0" prefHeight="312.0" prefWidth="359.0">
-               <children>
-                  <Label text="BIENVENUE" textFill="#f7f7f7">
-                     <font>
-                        <Font name="System Bold" size="45.0" />
-                     </font>
-                  </Label>
-                  <Label text="DANS" textFill="#f5ecec">
-                     <font>
-                        <Font name="System Bold" size="17.0" />
-                     </font>
-                  </Label>
-                  <Label text="L'APPLICATION" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="27.0" />
-                     </font>
-                  </Label>
-                  <Label text="POUR" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label text="APPRENDRE" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="40.0" />
-                     </font>
-                  </Label>
-                  <Label text="LANGAGE SQL" textFill="#e8e8e8">
-                     <font>
-                        <Font name="System Bold" size="41.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" layoutX="8.0" layoutY="358.0" prefHeight="305.0" prefWidth="324.0">
-               <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../resource/images/logo.png" />
-                     </image></ImageView>
-               </children>
-            </VBox>
-         </children>
-      </Pane>
-      <HBox alignment="CENTER_RIGHT" layoutX="769.0" layoutY="659.0" prefHeight="100.0" prefWidth="228.0" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="769.0" AnchorPane.rightAnchor="3.0">
-         <children>
-            <Button fx:id="buttonStart" mnemonicParsing="false" onMouseClicked="#startHomePage" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #D3E065;" text="START">
-               <HBox.margin>
-                  <Insets right="50.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-      <VBox alignment="CENTER" layoutX="418.0" layoutY="103.0" prefHeight="238.0" prefWidth="484.0" AnchorPane.bottomAnchor="459.0" AnchorPane.leftAnchor="418.0" AnchorPane.rightAnchor="98.0" AnchorPane.topAnchor="103.0">
-         <children>
-            <ImageView fitHeight="400.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../resource/images/upec.jpg" />
-               </image>
-               <effect>
-                  <DropShadow spread="0.37" />
-               </effect>
-            </ImageView>
-         </children></VBox>
-      <VBox alignment="CENTER" layoutX="407.0" layoutY="574.0" prefHeight="200.0" prefWidth="202.0" spacing="20.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="407.0" AnchorPane.rightAnchor="391.0" AnchorPane.topAnchor="574.0">
-         <children>
-            <RadioButton fx:id="ChoiceVersion1" mnemonicParsing="false" selected="true" text="Version 0.2.3">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-               <toggleGroup>
-                  <ToggleGroup fx:id="buttounGroup1" />
-               </toggleGroup></RadioButton>
-            <RadioButton fx:id="ChoiceVersion2" layoutX="23.0" layoutY="97.0" mnemonicParsing="false" text="Version 1.0.0" toggleGroup="$buttounGroup1">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </RadioButton>
-            <Label text="V1 en cours de construction" />
-         </children>
-      </VBox>
-   </children>
+<AnchorPane minHeight="800.0" minWidth="1000.0"
+	onMouseClicked="#startHomePage" prefHeight="800.0" prefWidth="1000.0"
+	style="-fx-background-color: #64C3E5;"
+	xmlns="http://javafx.com/javafx/15.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="apprendreSQL.Controller.RouterVersion">
+	<children>
+		<Pane fx:id="panLeft1" prefHeight="200.0" prefWidth="350.0"
+			style="-fx-background-color: #35138B;" AnchorPane.bottomAnchor="10.0"
+			AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+			<effect>
+				<DropShadow height="27.07" radius="19.8675" spread="0.71"
+					width="54.4">
+					<color>
+						<Color red="0.34437134861946106" green="0.13304093480110168"
+							blue="0.7368420958518982" />
+					</color>
+				</DropShadow>
+			</effect>
+			<children>
+				<VBox alignment="TOP_CENTER" layoutX="-10.0" layoutY="58.0"
+					prefHeight="312.0" prefWidth="359.0">
+					<children>
+						<Label text="BIENVENUE" textFill="#f7f7f7">
+							<font>
+								<Font name="System Bold" size="45.0" />
+							</font>
+						</Label>
+						<Label text="DANS" textFill="#f5ecec">
+							<font>
+								<Font name="System Bold" size="17.0" />
+							</font>
+						</Label>
+						<Label text="L'APPLICATION" textFill="WHITE">
+							<font>
+								<Font name="System Bold" size="27.0" />
+							</font>
+						</Label>
+						<Label text="POUR" textFill="WHITE">
+							<font>
+								<Font name="System Bold" size="20.0" />
+							</font>
+						</Label>
+						<Label text="APPRENDRE" textFill="WHITE">
+							<font>
+								<Font name="System Bold" size="40.0" />
+							</font>
+						</Label>
+						<Label text="LANGAGE SQL" textFill="#e8e8e8">
+							<font>
+								<Font name="System Bold" size="41.0" />
+							</font>
+						</Label>
+					</children>
+				</VBox>
+				<VBox alignment="CENTER" layoutX="8.0" layoutY="358.0"
+					prefHeight="305.0" prefWidth="324.0">
+					<children>
+						<ImageView fitHeight="150.0" fitWidth="200.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../../../../resource/images/logo.png" />
+							</image>
+						</ImageView>
+					</children>
+				</VBox>
+			</children>
+		</Pane>
+		<HBox alignment="CENTER_RIGHT" layoutX="769.0" layoutY="659.0"
+			prefHeight="100.0" prefWidth="228.0" AnchorPane.bottomAnchor="41.0"
+			AnchorPane.leftAnchor="769.0" AnchorPane.rightAnchor="3.0">
+			<children>
+				<Button fx:id="buttonStart" mnemonicParsing="false"
+					onMouseClicked="#startHomePage" prefHeight="100.0"
+					prefWidth="100.0" style="-fx-background-color: #D3E065;"
+					text="START">
+					<HBox.margin>
+						<Insets right="50.0" />
+					</HBox.margin>
+					<font>
+						<Font name="System Bold" size="17.0" />
+					</font>
+				</Button>
+			</children>
+		</HBox>
+		<VBox alignment="CENTER" layoutX="418.0" layoutY="103.0"
+			prefHeight="238.0" prefWidth="484.0" AnchorPane.bottomAnchor="459.0"
+			AnchorPane.leftAnchor="418.0" AnchorPane.rightAnchor="98.0"
+			AnchorPane.topAnchor="103.0">
+			<children>
+				<ImageView fitHeight="400.0" fitWidth="500.0"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../../../../resource/images/upec.jpg" />
+					</image>
+					<effect>
+						<DropShadow spread="0.37" />
+					</effect>
+				</ImageView>
+			</children>
+		</VBox>
+		<VBox alignment="CENTER" layoutX="407.0" layoutY="574.0"
+			prefHeight="200.0" prefWidth="202.0" spacing="20.0"
+			AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="407.0"
+			AnchorPane.rightAnchor="391.0" AnchorPane.topAnchor="574.0">
+			<children>
+				<RadioButton fx:id="ChoiceVersion1"
+					mnemonicParsing="false" selected="true" text="Version 0.2.3">
+					<font>
+						<Font name="System Bold" size="19.0" />
+					</font>
+					<toggleGroup>
+						<ToggleGroup fx:id="buttounGroup1" />
+					</toggleGroup>
+				</RadioButton>
+				<RadioButton fx:id="ChoiceVersion2" layoutX="23.0"
+					layoutY="97.0" mnemonicParsing="false" text="Version 1.0.0"
+					toggleGroup="$buttounGroup1">
+					<font>
+						<Font name="System Bold" size="19.0" />
+					</font>
+				</RadioButton>
+				<Label text="V1 en cours de construction" />
+			</children>
+		</VBox>
+	</children>
 </AnchorPane>
