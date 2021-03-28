@@ -11,6 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<<<<<<< HEAD
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" styleClass="header_style" stylesheets="@../Bureau/VersionFinal/SQLschool/SQLschool/src/apprendreSQL/view/version2/style/styleSheet.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apprendreSQL.Controller.version2.EventController">
    <children>
       <HBox layoutX="122.0" layoutY="46.0" prefHeight="50.0" prefWidth="1000.0" styleClass="header_style" stylesheets="@../style/styleSheet.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -138,4 +139,152 @@
          </children>
       </VBox>
    </children>
+=======
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0"
+	xmlns:fx="http://javafx.com/fxml/1"
+	xmlns="http://javafx.com/javafx/15.0.1"
+	fx:controller="controller.ControllerEvent">
+	<children>
+		<HBox layoutX="122.0" layoutY="46.0" prefHeight="50.0"
+			prefWidth="1000.0" styleClass="header_style"
+			stylesheets="@../style/styleSheet.css" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<children>
+				<HBox onMouseClicked="#closeAndOpenParametreSideBare"
+					prefHeight="63.0" prefWidth="92.0">
+					<children>
+						<ImageView fitHeight="50.0" fitWidth="50.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image
+									url="@../../../ressources/images/icons8-menu-48.png" />
+							</image>
+						</ImageView>
+					</children>
+				</HBox>
+			</children>
+		</HBox>
+		<VBox layoutX="7.0" layoutY="66.0" prefHeight="750.0"
+			prefWidth="285.0" styleClass="header_style"
+			stylesheets="@../style/styleSheet.css" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
+			<children>
+				<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+					<children>
+						<ImageView fitHeight="150.0" fitWidth="200.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../../ressources/images/parametre.png" />
+							</image>
+						</ImageView>
+						<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+							<children>
+								<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+									text="Paramétre">
+									<font>
+										<Font name="System Bold" size="28.0" />
+									</font>
+								</Text>
+							</children>
+						</HBox>
+					</children>
+					<VBox.margin>
+						<Insets top="15.0" />
+					</VBox.margin>
+				</VBox>
+				<HBox alignment="CENTER_LEFT" prefHeight="101.0"
+					prefWidth="255.0">
+					<children>
+						<ImageView fitHeight="50.0" fitWidth="50.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../../ressources/images/add_Question.png" />
+							</image>
+						</ImageView>
+						<Text fill="#eedfdf" strokeType="OUTSIDE" strokeWidth="0.0"
+							text="Traveaux Pratique">
+							<HBox.margin>
+								<Insets left="10.0" />
+							</HBox.margin>
+							<font>
+								<Font name="System Bold" size="18.0" />
+							</font>
+						</Text>
+					</children>
+					<VBox.margin>
+						<Insets left="10.0" top="50.0" />
+					</VBox.margin>
+				</HBox>
+				<HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="275.0"
+					prefHeight="100.0" prefWidth="269.0">
+					<children>
+						<ImageView fitHeight="50.0" fitWidth="50.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../../ressources/images/add_Question.png" />
+							</image>
+							<HBox.margin>
+								<Insets left="10.0" />
+							</HBox.margin>
+						</ImageView>
+						<Text fill="#eedfdf" strokeType="OUTSIDE" strokeWidth="0.0"
+							text="Test">
+							<HBox.margin>
+								<Insets left="10.0" />
+							</HBox.margin>
+							<font>
+								<Font name="System Bold" size="18.0" />
+							</font>
+						</Text>
+					</children>
+					<opaqueInsets>
+						<Insets left="10.0" />
+					</opaqueInsets>
+				</HBox>
+				<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="375.0"
+					prefHeight="100.0" prefWidth="200.0">
+					<children>
+						<ImageView fitHeight="50.0" fitWidth="50.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../../ressources/images/add_Question.png" />
+							</image>
+							<HBox.margin>
+								<Insets left="10.0" />
+							</HBox.margin>
+						</ImageView>
+						<Text fill="#eedfdf" strokeType="OUTSIDE" strokeWidth="0.0"
+							text="Tutoriel">
+							<HBox.margin>
+								<Insets left="10.0" />
+							</HBox.margin>
+							<font>
+								<Font name="System Bold" size="18.0" />
+							</font>
+						</Text>
+					</children>
+				</HBox>
+				<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0"
+					spacing="5.0">
+					<children>
+						<ImageView fitHeight="60.0" fitWidth="60.0"
+							onMouseClicked="#startHomePage" pickOnBounds="true"
+							preserveRatio="true">
+							<image>
+								<Image url="@../../../ressources/images/home.png" />
+							</image>
+						</ImageView>
+						<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+							text="Home">
+							<font>
+								<Font name="System Bold" size="18.0" />
+							</font>
+						</Text>
+					</children>
+				</VBox>
+			</children>
+		</VBox>
+	</children>
+>>>>>>> 94403e61c9b85c6732ccac968761e4a780b14e58
 </AnchorPane>

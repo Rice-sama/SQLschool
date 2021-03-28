@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="800.0" prefWidth="250.0" styleClass="sideBar"
+	stylesheets="@../style/styleSheet.css"
+	xmlns="http://javafx.com/javafx/15.0.1"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<HBox alignment="TOP_RIGHT" prefHeight="49.0" prefWidth="250.0">
+			<children>
+				<ImageView fitHeight="150.0" fitWidth="50.0"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../../ressources/images/icons8-menu-48.png" />
+					</image>
+				</ImageView>
+			</children>
+		</HBox>
+		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+			<children>
+				<ImageView fitHeight="150.0" fitWidth="200.0"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../../ressources/images/database.png" />
+					</image>
+				</ImageView>
+			</children>
+		</HBox>
+		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+			<children>
+				<Text fill="#c9c1c1" strokeType="OUTSIDE" strokeWidth="0.0"
+					text="DASHBOARD">
+					<font>
+						<Font name="System Bold" size="24.0" />
+					</font>
+				</Text>
+			</children>
+		</HBox>
+		<HBox alignment="CENTER_LEFT" prefHeight="100.0"
+			prefWidth="200.0" spacing="15.0" styleClass="hover_border">
+			<children>
+				<ImageView fitHeight="150.0" fitWidth="60.0"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../../ressources/images/icons8-tutoriel.png" />
+					</image>
+					<HBox.margin>
+						<Insets left="20.0" />
+					</HBox.margin>
+				</ImageView>
+				<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+					text="Tutoriel">
+					<font>
+						<Font name="System Bold" size="22.0" />
+					</font>
+				</Text>
+			</children>
+		</HBox>
+		<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="310.0"
+			prefHeight="100.0" prefWidth="200.0" spacing="15.0"
+			styleClass="hover_border">
+			<children>
+				<ImageView fitHeight="150.0" fitWidth="60.0"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../../ressources/images/icons-exo.png" />
+					</image>
+					<HBox.margin>
+						<Insets left="20.0" />
+					</HBox.margin>
+				</ImageView>
+				<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+					text="Exercice">
+					<font>
+						<Font name="System Bold" size="22.0" />
+					</font>
+				</Text>
+			</children>
+		</HBox>
+		<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="410.0"
+			prefHeight="100.0" prefWidth="200.0" spacing="15.0"
+			styleClass="hover_border">
+			<children>
+				<ImageView fitHeight="150.0" fitWidth="60.0"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../../ressources/images/test.png" />
+					</image>
+					<HBox.margin>
+						<Insets left="20.0" />
+					</HBox.margin>
+				</ImageView>
+				<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+					text="Test">
+					<font>
+						<Font name="System Bold" size="22.0" />
+					</font>
+				</Text>
+			</children>
+		</HBox>
+		<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="510.0"
+			prefHeight="100.0" prefWidth="200.0" spacing="15.0"
+			styleClass="hover_border">
+			<children>
+				<ImageView fitHeight="150.0" fitWidth="60.0"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../../ressources/images/parametre.png" />
+					</image>
+					<HBox.margin>
+						<Insets left="20.0" />
+					</HBox.margin>
+				</ImageView>
+				<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+					text="Paramétre">
+					<font>
+						<Font name="System Bold" size="22.0" />
+					</font>
+				</Text>
+			</children>
+		</HBox>
+		<VBox alignment="CENTER" prefHeight="117.0" prefWidth="250.0">
+			<children>
+				<ImageView fitHeight="150.0" fitWidth="50.0"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../../ressources/images/home.png" />
+					</image>
+				</ImageView>
+				<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+					text="HOME">
+					<font>
+						<Font name="System Bold" size="15.0" />
+					</font>
+					<VBox.margin>
+						<Insets top="5.0" />
+					</VBox.margin>
+				</Text>
+			</children>
+		</VBox>
+	</children>
+</VBox>

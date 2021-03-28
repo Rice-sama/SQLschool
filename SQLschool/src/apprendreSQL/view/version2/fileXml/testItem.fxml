@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.text.Font?>
+
+<TitledPane text="Test name" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <Label text="Label">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding></Label>
+   </content>
+   <font>
+      <Font name="Arial" size="14.0" />
+   </font>
+   <padding>
+      <Insets bottom="8.0" />
+   </padding>
+</TitledPane>

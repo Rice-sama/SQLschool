@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<TitledPane alignment="CENTER" contentDisplay="CENTER" nodeOrientation="RIGHT_TO_LEFT" text="Catégorie" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <font>
+      <Font name="Arial Bold" size="18.0" />
+   </font>
+   <content>
+      <VBox alignment="CENTER" spacing="8.0" />
+   </content>
+   <padding>
+      <Insets bottom="8.0" />
+   </padding>
+</TitledPane>

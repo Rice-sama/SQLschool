@@ -13,6 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<<<<<<< HEAD
 <AnchorPane minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apprendreSQL.Controller.version2.EventController">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="63.0" prefHeight="189.0" prefWidth="1000.0" styleClass="sideBar" stylesheets="@../style/styleSheet.css" AnchorPane.bottomAnchor="611.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -183,4 +184,185 @@
          </children>
       </VBox>
    </children>
+=======
+<AnchorPane prefHeight="800.0" prefWidth="1000.0"
+	xmlns="http://javafx.com/javafx/15.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="apprendreSQL.Controller.version2.EventController">
+	<children>
+		<HBox layoutX="63.0" prefHeight="57.0" prefWidth="1000.0"
+			styleClass="sideBar" stylesheets="@../style/styleSheet.css"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="0.0">
+			<children>
+				<HBox prefHeight="50.0" prefWidth="50.0">
+					<children>
+						<ImageView fitHeight="50.0" fitWidth="50.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image
+									url="@../../../../../resource/images/icons8-menu-48.png" />
+							</image>
+						</ImageView>
+					</children>
+				</HBox>
+			</children>
+		</HBox>
+		<ScrollPane layoutX="111.0" layoutY="127.0"
+			prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="50.0">
+			<content>
+				<AnchorPane prefHeight="750.0" prefWidth="1000.0">
+					<children>
+						<VBox prefHeight="755.0" prefWidth="260.0"
+							styleClass="sideBar" stylesheets="@../style/styleSheet.css"
+							AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+							AnchorPane.topAnchor="0.0">
+							<children>
+								<HBox alignment="CENTER" prefHeight="163.0"
+									prefWidth="260.0">
+									<children>
+										<ImageView fitHeight="150.0" fitWidth="200.0"
+											pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image
+													url="@../../../../../resource/images/database.png" />
+											</image>
+										</ImageView>
+									</children>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="100.0"
+									prefWidth="200.0">
+									<children>
+										<Text fill="#f5f5f5" strokeType="OUTSIDE"
+											strokeWidth="0.0" text="Dashboard">
+											<font>
+												<Font name="System Bold" size="31.0" />
+											</font>
+											<effect>
+												<DropShadow radius="16.83" spread="0.32"
+													width="48.32" />
+											</effect>
+										</Text>
+									</children>
+								</HBox>
+								<HBox alignment="CENTER_LEFT" prefHeight="100.0"
+									prefWidth="200.0" spacing="15.0" styleClass="hover_border">
+									<children>
+										<ImageView fitHeight="50.0" fitWidth="60.0"
+											pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image
+													url="@../../../../../resource/images/icons8-tutoriel.png" />
+											</image>
+										</ImageView>
+										<Text fill="#f2dada" strokeType="OUTSIDE"
+											strokeWidth="0.0" text="Tutoriel">
+											<font>
+												<Font name="System Bold" size="28.0" />
+											</font>
+										</Text>
+									</children>
+									<padding>
+										<Insets left="15.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER_LEFT" layoutX="10.0"
+									layoutY="260.0" prefHeight="100.0" prefWidth="200.0"
+									spacing="15.0" styleClass="hover_border">
+									<children>
+										<ImageView fitHeight="50.0" fitWidth="60.0"
+											pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image
+													url="@../../../../../resource/images/icons-exo.png" />
+											</image>
+										</ImageView>
+										<Text fill="#f2dada" strokeType="OUTSIDE"
+											strokeWidth="0.0" text="Exercice">
+											<font>
+												<Font name="System Bold" size="28.0" />
+											</font>
+										</Text>
+									</children>
+									<padding>
+										<Insets left="15.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER_LEFT" layoutX="10.0"
+									layoutY="260.0" prefHeight="100.0" prefWidth="200.0"
+									spacing="15.0" styleClass="hover_border">
+									<children>
+										<ImageView fitHeight="50.0" fitWidth="60.0"
+											pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image url="@../../../../../resource/images/test.png" />
+											</image>
+										</ImageView>
+										<Text fill="#f2dada" strokeType="OUTSIDE"
+											strokeWidth="0.0" text="Test">
+											<font>
+												<Font name="System Bold" size="28.0" />
+											</font>
+										</Text>
+									</children>
+									<VBox.margin>
+										<Insets left="15.0" />
+									</VBox.margin>
+								</HBox>
+								<HBox alignment="CENTER_LEFT" layoutX="25.0"
+									layoutY="460.0" prefHeight="100.0" prefWidth="200.0"
+									spacing="15.0" styleClass="hover_border">
+									<children>
+										<ImageView fitHeight="50.0" fitWidth="60.0"
+											pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image
+													url="@../../../../../resource/images/parametre.png" />
+											</image>
+										</ImageView>
+										<Text fill="#f2dada" strokeType="OUTSIDE"
+											strokeWidth="0.0" text="Paramétre">
+											<font>
+												<Font name="System Bold" size="28.0" />
+											</font>
+										</Text>
+									</children>
+									<padding>
+										<Insets left="15.0" />
+									</padding>
+								</HBox>
+								<VBox alignment="CENTER" prefHeight="120.0"
+									prefWidth="260.0" spacing="5.0">
+									<children>
+										<ImageView fitHeight="82.0" fitWidth="50.0"
+											pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image url="@../../../../../resource/images/home.png" />
+											</image>
+										</ImageView>
+										<Text fill="#f8f8f8" strokeType="OUTSIDE"
+											strokeWidth="0.0" text="Home">
+											<font>
+												<Font size="19.0" />
+											</font>
+										</Text>
+									</children>
+								</VBox>
+							</children>
+						</VBox>
+						<VBox layoutX="568.0" prefHeight="750.0" prefWidth="743.0"
+							AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0"
+							AnchorPane.topAnchor="0.0">
+							<children>
+								<VBox prefHeight="735.0" prefWidth="743.0" />
+							</children>
+						</VBox>
+					</children>
+				</AnchorPane>
+			</content>
+		</ScrollPane>
+	</children>
+>>>>>>> 94403e61c9b85c6732ccac968761e4a780b14e58
 </AnchorPane>

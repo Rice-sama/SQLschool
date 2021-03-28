@@ -87,6 +87,7 @@ public class Corrector {
 					sl.add(new ArrayList<String>());
 					
 					TestCorrection tc = new TestCorrection();
+					tc.setTest(t);
 					TestResult[] trlist= {new TestResult(),new TestResult()};
 					boolean test = true;
 					
