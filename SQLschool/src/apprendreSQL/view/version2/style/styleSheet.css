@@ -7,17 +7,20 @@
 
 .hover_border:hover{	
 	-fx-border-color: #FAFAFA;
-	-fx-background-color:rgb(240,240,240);
+	-fx-background-color: #72C7F6;
 	-fx-border-width: 0px 0px 0px 2px;
 	-fx-cursor: hand;
 }
 
-.background_color2:hover{
-	-fx-background-color: #FEE8E8
+.bodure {
+	-fx-border-color: #FAFAFA;
+	-fx-border-width: 2px 0px 2px 2px;
 }
 
-.background_color1:hover {
- -fx-background-color:  #E1CECE	;
+
+.bodure2 {
+	-fx-border-color: #FAFAFA;
+	-fx-border-width: 2px 2px 2px 0px;
 }
 
 

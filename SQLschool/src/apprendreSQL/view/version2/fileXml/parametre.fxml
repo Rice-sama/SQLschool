@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,53 +11,63 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="controller.ControllerEvent">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" styleClass="header_style" stylesheets="@../Bureau/VersionFinal/SQLschool/SQLschool/src/apprendreSQL/view/version2/style/styleSheet.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apprendreSQL.Controller.version2.EventController">
    <children>
       <HBox layoutX="122.0" layoutY="46.0" prefHeight="50.0" prefWidth="1000.0" styleClass="header_style" stylesheets="@../style/styleSheet.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox onMouseClicked="#closeAndOpenParametreSideBare" prefHeight="63.0" prefWidth="92.0">
+            <VBox alignment="CENTER" onMousePressed="#backOnHomePage" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                <children>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../ressources/images/icons8-menu-48.png" />
+                        <Image url="@../../../../../resource/images/home.png" />
                      </image>
                   </ImageView>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Home">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
                </children>
-            </HBox>
+            </VBox>
          </children>
       </HBox>
-      <VBox layoutX="7.0" layoutY="66.0" prefHeight="750.0" prefWidth="285.0" styleClass="header_style" stylesheets="@../style/styleSheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <VBox layoutX="97.0" layoutY="100.0" prefHeight="670.0" prefWidth="776.0" spacing="15.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="127.0" AnchorPane.topAnchor="100.0">
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../ressources/images/parametre.png" />
+                        <Image url="@../../../../../resource/images/parametre.png" />
                      </image>
                   </ImageView>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Paramétre">
-                           <font>
-                              <Font name="System Bold" size="28.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
                </children>
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin>
             </VBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="101.0" prefWidth="255.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text fill="#1e1b1b" strokeType="OUTSIDE" strokeWidth="0.0" text="Question">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="184.93" radius="59.33" width="54.39" />
+                     </effect>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" onMousePressed="#openFormulaireCreate" prefHeight="90.0" prefWidth="763.0" stylesheets="@../style/styleSheet.css">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../ressources/images/add_Question.png" />
+                        <Image url="@../../../../../resource/images/add_Question.png" />
                      </image>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
                   </ImageView>
-                  <Text fill="#eedfdf" strokeType="OUTSIDE" strokeWidth="0.0" text="Traveaux Pratique">
+                  <Text fill="#eedfdf" strokeType="OUTSIDE" strokeWidth="0.0" text="Create ">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -65,20 +77,24 @@
                   </Text>
                </children>
                <VBox.margin>
-                  <Insets left="10.0" top="50.0" />
+                  <Insets top="50.0" />
                </VBox.margin>
+               <styleClass>
+                  <String fx:value="sideBar" />
+                  <String fx:value="hover_border" />
+               </styleClass>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="275.0" prefHeight="100.0" prefWidth="269.0">
+            <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="275.0" prefHeight="100.0" prefWidth="269.0" stylesheets="@../style/styleSheet.css">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../ressources/images/add_Question.png" />
+                        <Image url="@../../../../../resource/images/update.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Text fill="#eedfdf" strokeType="OUTSIDE" strokeWidth="0.0" text="Test">
+                  <Text fill="#eedfdf" strokeType="OUTSIDE" strokeWidth="0.0" text="Update ">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -90,18 +106,22 @@
                <opaqueInsets>
                   <Insets left="10.0" />
                </opaqueInsets>
+               <styleClass>
+                  <String fx:value="sideBar" />
+                  <String fx:value="hover_border" />
+               </styleClass>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="375.0" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="375.0" prefHeight="100.0" prefWidth="200.0" stylesheets="@../style/styleSheet.css">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../ressources/images/add_Question.png" />
+                        <Image url="@../../../../../resource/images/delet_chapitre.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Text fill="#eedfdf" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutoriel">
+                  <Text fill="#eedfdf" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete ">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -110,21 +130,11 @@
                      </font>
                   </Text>
                </children>
+               <styleClass>
+                  <String fx:value="sideBar" />
+                  <String fx:value="hover_border" />
+               </styleClass>
             </HBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
-               <children>
-                  <ImageView fitHeight="60.0" fitWidth="60.0" onMouseClicked="#startHomePage" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../ressources/images/home.png" />
-                     </image>
-                  </ImageView>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Home">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Text>
-               </children>
-            </VBox>
          </children>
       </VBox>
    </children>

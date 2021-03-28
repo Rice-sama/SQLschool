@@ -70,8 +70,8 @@ public class Corrector {
 		try {
 			if(dbconnection.connect()){
 				
-				if(!dbconnection.existTable(parserSQLGeneral.getIdTables())) {
-					comment = "La table "+parserSQLGeneral.getIdTables()+" n'existe pas.";
+				if(!dbconnection.existTable(parserSQLGeneral.getIdTables())){
+					comment = "La table " + parserSQLGeneral.getIdTables()+" n ' existe pas.";
 					return false;
 				}
 				
