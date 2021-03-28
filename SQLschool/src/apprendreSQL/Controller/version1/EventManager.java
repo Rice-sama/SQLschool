@@ -39,20 +39,49 @@ import apprendreSQL.Model.data.Factory;
 import apprendreSQL.Model.data.Observers;
 import apprendreSQL.view.version1.GetInformation;
 import apprendreSQL.view.version1.MainWindow;
+import apprendreSQL.view.version2.Gui;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 
 public class EventManager implements GetInformation {
+	
+	
+	@FXML private Accordion exoExplorer;
+	
+	@FXML private Label qTitle;
+	@FXML private Label qText;
+	@FXML private TextArea queryText;
+	
+	@FXML private Label resultDisplay1;
+	@FXML private Label resultDisplay2;
+	
+	@FXML private Label resultText;
+	@FXML private Accordion testExplorer;
+
 
 	private static CheckQueryManager checkQuery;
 	private static JsonManager jsonManager;
 	private static ParserSQL parserSQLGeneral, parserSQLParticulier;
-	private static MainWindow mainWindow;
 	private static Corrector corrector;
 	private static Question currentQuestion;
 	private static int compteurrep = 1;
 	private ArrayList<String> answerColumns = new ArrayList<String>();
 	private TreeMap<String, ConnectionSQLite> connectionsMap = new TreeMap<String, ConnectionSQLite>();
 
-	private static ConnectionSQLite selectedConnection;
+	private static  ConnectionSQLite selectedConnection;
+	
+	
 
 	public EventManager() {
 		initialisationParser();
@@ -60,11 +89,20 @@ public class EventManager implements GetInformation {
 		jsonManager = new JsonManager();
 		readJSONFiles();
 		checkQuery = new CheckQueryManager();
-		mainWindow = new MainWindow(this);
-		new Watcher(this).observe();
+		//new Watcher(this).observe();
 		printNotice();
 	}
 	
+	@FXML public void initialize() {
+		System.out.println(exoExplorer);
+		try {
+			updateExercisesView();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	
 	private void initialisationParser() {
 		parserSQLGeneral      = Factory.makeParserSQL("general");
@@ -105,16 +143,22 @@ public class EventManager implements GetInformation {
 	 * @param query the query inserted by the user
 	 * @return a string that represent the result in the output jText
 	 */
-	private static String ifCorrect(String query) {
-		if(currentQuestion == null) return null;
-		String output_answer = null;
+	private void ifCorrect(String query) {
+		if(currentQuestion == null) return ;
 		if (currentQuestion.getAnswer() != null) {
 			try {
 				if (!corrector.correction(query, currentQuestion.getAnswer(), currentQuestion.getTestList(), currentQuestion.isMustOrder(), selectedConnection)) {
 
-					output_answer = corrector.getCommentaire();
+					//output_answer = corrector.getCommentaire();
+					
+					resultDisplay1.setVisible(false);
+					resultDisplay2.setVisible(true);
 					
 					//compteurrep++;
+					
+					resultText.setText("Une erreur est survenue lors de la correction d'un ou plusieurs tests.\n"
+										+ "Vous avez peut-être oublié : ");
+					resultText.setTextFill(Paint.valueOf("ffc300"));
 
 				} else {
 					/*
@@ -123,19 +167,27 @@ public class EventManager implements GetInformation {
 					System.out.println(query);
 					output_answer = output_answer + "<br>" + submit(query, selectedConnection);*/
 					
+					resultDisplay1.setVisible(true);
+					resultDisplay2.setVisible(false);
 					
+					resultText.setText("Les tests ont été passés avec succès.");
+					resultText.setTextFill(Paint.valueOf("06d6a0"));
 				}
 				
 				for(TestCorrection tc : corrector.getCorrectionList()) {
-					output_answer += tc.getCompiledMessage();
-					System.out.println(tc.getCompiledMessage());
+					FXMLLoader loader = new FXMLLoader();
+					TitledPane testpane = loader.load(Gui.class.getResource("fileXml/testItem.fxml").openStream());
+					testpane.setText(tc.getTest().getName());
+					if(tc.isCorrect()) testpane.setTextFill(Paint.valueOf("06d6a0"));
+					else testpane.setTextFill(Paint.valueOf("ef476f"));
+					((Label)testpane.getContent()).setText(tc.getCompiledMessage());
+					testExplorer.getPanes().add(testpane);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 		}
-		return output_answer;
 	}
 
 	/**
@@ -144,10 +196,11 @@ public class EventManager implements GetInformation {
 	 * @return the hint as a String
 	 */
 	public static String callHint() {
+		/*
 		if (!mainWindow.getInput().isEmpty())
 
 			return ""; //corrector.definehint(currentQuestion.getAnswer());
-
+		*/
 		return "Il faut d'abord essayer d'ecrire une requete et de l'executer ;";
 	}
 	private static String text;
@@ -155,20 +208,24 @@ public class EventManager implements GetInformation {
 	/**
 	 * This method is called when the "Executer" button is clicked.
 	 */
-	public static void callExecute() {
+	
+	@FXML
+	public void callExecute() {
 		if(currentQuestion == null) return;
 		clearOutput();
 		try {
 			parserSQLParticulier.reset();
 			parserSQLParticulier.updateReponse(currentQuestion.getAnswer());
-			String query = mainWindow.getInput();
+			String query = queryText.getText();
 			parserSQLGeneral.ReInit(Factory.translateToStream(query));
 			parserSQLGeneral.sqlStmtList();
 			parserSQLParticulier.sqlStmtList();
-			text = ifCorrect(query);
-			mainWindow.setOutPut(text);
+			ifCorrect(query);
+			//mainWindow.setOutPut(text);
 		} catch (ParseException e) {
-			mainWindow.setOutPut(e.getMessage() + "\n");
+			resultText.setText(e.getMessage());
+			resultText.setTextFill(Paint.valueOf("ef476f"));
+			//mainWindow.setOutPut(e.getMessage() + "\n");
 		}
 
 		//  tu peux laisser Ã§a aprÃ¨s car c'est le nombre de tentative 
@@ -181,7 +238,7 @@ public class EventManager implements GetInformation {
 //			mainWindow.setOutPut(text + "\n");
 //		}
 //
-     	mainWindow.updateTableModel();
+     	//mainWindow.updateTableModel();
 
 	}
 
@@ -203,7 +260,8 @@ public class EventManager implements GetInformation {
 			
 			
 		}
-		mainWindow.setDescription(currentQuestion.getContentQuestion(), exerciceName);
+		qTitle.setText(exerciceName);
+		qText.setText(currentQuestion.getContentQuestion());
 		selectedConnection = connectionsMap.get(dbName);
 
 		answerColumns.clear();
@@ -215,6 +273,15 @@ public class EventManager implements GetInformation {
 			}
 		}
 
+	}
+	
+	public void setQuestion(Question q) {
+		currentQuestion = q;
+		qTitle.setText(q.getTitleQuestion());
+		qText.setText(q.getContentQuestion());
+		selectedConnection = connectionsMap.get(q.getDatabase());
+		clearInput();
+		clearOutput();
 	}
 
 	public ArrayList<Question> getQuestionsList() {
@@ -300,12 +367,14 @@ public class EventManager implements GetInformation {
 
 	}
 
-	public static void clearOutput() {
-		mainWindow.setOutPut("");
+	public void clearOutput() {
+		resultText.setText("");
+		resultText.setTextFill(Paint.valueOf("000000"));
+		testExplorer.getPanes().clear();
 	}
 
 	public void clearInput() {
-		mainWindow.setInput("");
+		queryText.setText("");
 	}
 
 	public JsonManager getJsonManager() {
@@ -325,44 +394,75 @@ public class EventManager implements GetInformation {
 	}
 
 	public void populateTablesView(DataBase database) {
-		ArrayList<Table> tables = database.getTables();
+		/*ArrayList<Table> tables = database.getTables();
 		if (!tables.isEmpty())
-			mainWindow.populateTablesView(tables);
+			mainWindow.populateTablesView(tables);*/
 	}
 
+	@FXML
 	public void updateExercisesView() throws IOException {
 		readJSONFiles();
-		mainWindow.updateExercisesView();
+				
+		exoExplorer.getPanes().clear();
+		
+		ArrayList<TitledPane> catList = new ArrayList<>();
+		for(Question q : jsonManager.getListQuestion()) {
+			FXMLLoader loader1 = new FXMLLoader();
+			Button exoButton = loader1.load(Gui.class.getResource("fileXml/exoButton.fxml").openStream());
+			exoButton.setText(q.getTitleQuestion());
+			exoButton.setOnAction(new EventHandler<ActionEvent>() {
+			    @Override public void handle(ActionEvent e) {
+			    	setQuestion(q);
+			    }
+			});
+			boolean added = false;
+			for(TitledPane cat : catList) {
+				if(cat.getText().equals(q.getSubject())) {
+					((VBox)cat.getContent()).getChildren().add(exoButton);
+					added = true;
+				}
+			}
+			if(!added) {
+				FXMLLoader loader2 = new FXMLLoader();
+				TitledPane cat = loader2.load(Gui.class.getResource("fileXml/categorie.fxml").openStream());
+				cat.setText(q.getSubject());
+				catList.add(cat);
+				((VBox)cat.getContent()).getChildren().add(exoButton);
+			}
+		}
+		
+		exoExplorer.getPanes().addAll(catList);
+		//mainWindow.updateExercisesView();
 
 	}
 
 	public void showEditor() {
-		mainWindow.showEditor();
+		//mainWindow.showEditor();
 
 	}
 
 	public void updateDiagram(boolean isInstalled) {
-		mainWindow.updateDiagram(isInstalled);
+		//mainWindow.updateDiagram(isInstalled);
 
 	}
 
 	public void notifyIncompatible() {
-		mainWindow.notifyIncompatible();
+		//mainWindow.notifyIncompatible();
 
 	}
 
 	public void notifyUnavailableDirectory() {
-		mainWindow.notifyUnavailableDirectory();
+		//mainWindow.notifyUnavailableDirectory();
 
 	}
 
 	public void showProgress() {
-		mainWindow.showProgress();
+		//mainWindow.showProgress();
 
 	}
 
 	public void hideProgress() {
-		mainWindow.hideProgress();
+		//mainWindow.hideProgress();
 
 	}
 

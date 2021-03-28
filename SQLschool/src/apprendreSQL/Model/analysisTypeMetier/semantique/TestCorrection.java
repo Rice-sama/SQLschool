@@ -6,7 +6,7 @@ public class TestCorrection {
 	private TestResult testAnswer;
 	private boolean correct;
 	private String message;
-	
+	private Test test;
 	
 	public TestCorrection() {
 		correct = false;
@@ -36,7 +36,7 @@ public class TestCorrection {
 	
 	public String getCompiledMessage() {
 		String m;
-		if(correct) m = "Correction validï¿½." + message;
+		if(correct) m = "Correction validé." + message;
 		else m = "Correction erreur: \n" + message +"\n"
 											   + ((testUser.getMessage()!=null) ? "Test utilisateur : " + testUser.getMessage() + "\n": "")
 											   + ((testAnswer.getMessage()!=null) ? "Test rï¿½ponse : " + testAnswer.getMessage() + "\n": "");
@@ -49,6 +49,14 @@ public class TestCorrection {
 	
 	public TestResult getAnswerTest() {
 		return testAnswer;
+	}
+
+	public Test getTest() {
+		return test;
+	}
+
+	public void setTest(Test test) {
+		this.test = test;
 	}
 	
 }

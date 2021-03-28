@@ -117,7 +117,7 @@ public class EditorPanel extends JPanel {
 		inputScrollPane.setPreferredSize(prefferedDimension);
 
 		submit = new JButton("Executer");
-		submit.addActionListener( e -> EventManager.callExecute());
+		//submit.addActionListener( e -> EventManager.callExecute());
 		hint = new JButton("Aide");
 		hint.addActionListener(new ActionListener() {
 
