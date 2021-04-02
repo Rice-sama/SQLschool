@@ -2,72 +2,75 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apprendreSQL.Controller.version2.EventController">
+<VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apprendreSQL.Controller.version2.EventController">
    <children>
-      <HBox alignment="CENTER_LEFT" layoutX="63.0" prefHeight="189.0" prefWidth="1000.0" styleClass="sideBar" stylesheets="@../style/styleSheet.css" AnchorPane.bottomAnchor="611.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER_LEFT" styleClass="sideBar" stylesheets="@../style/styleSheet.css">
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="182.0" prefWidth="225.0">
-               <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="361.0" stylesheets="@../style/styleSheet.css">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/resource/image/logo.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="20.0" />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </VBox>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/resource/image/sqlschool.png" />
+               </image>
+            </ImageView>
          </children>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
       </HBox>
-      <VBox alignment="CENTER" layoutX="165.0" layoutY="353.0" prefHeight="458.0" prefWidth="619.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="216.0" AnchorPane.topAnchor="230.0">
+      <VBox alignment="CENTER" prefHeight="458.0" prefWidth="619.0" spacing="15.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="187.0" prefWidth="619.0">
+            <VBox alignment="CENTER">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../resource/images/database.png" />
+                        <Image url="@/resource/image/database.png" />
                      </image>
                   </ImageView>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Text fill="#f5f5f5" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
-                           <font>
-                              <Font name="System Bold" size="31.0" />
-                           </font>
-                           <effect>
-                              <DropShadow radius="16.83" spread="0.32" width="48.32" />
-                           </effect>
-                        </Text>
-                     </children>
-                  </HBox>
+                  <Text fill="#f5f5f5" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
+                     <font>
+                        <Font name="System Bold" size="31.0" />
+                     </font>
+                     <effect>
+                        <DropShadow radius="16.83" spread="0.32" width="48.32" />
+                     </effect>
+                  </Text>
                </children>
             </VBox>
-            <VBox prefHeight="355.0" prefWidth="247.0" spacing="20.0">
+            <VBox alignment="CENTER" spacing="32.0" VBox.vgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER_LEFT" onMousePressed="#openTutoriel" prefHeight="100.0" prefWidth="200.0" spacing="15.0" stylesheets="@../style/styleSheet.css">
+                  <HBox alignment="CENTER_LEFT" onMouseClicked="#openExercice" spacing="16.0" stylesheets="@../style/styleSheet.css">
                      <children>
                         <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../resource/images/icons8-tutoriel.png" />
+                              <Image url="@/resource/image/icons-exo.png" />
+                           </image>
+                        </ImageView>
+                        <Text fill="#f2dada" strokeType="OUTSIDE" strokeWidth="0.0" text="Exercice">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                     <styleClass>
+                        <String fx:value="sideBar" />
+                        <String fx:value="hover_border" />
+                     </styleClass>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" onMouseClicked="#openTutoriel" spacing="16.0" stylesheets="@../style/styleSheet.css">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/resource/image/icons8-tutoriel.png" />
                            </image>
                         </ImageView>
                         <Text fill="#f2dada" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutoriel">
@@ -77,101 +80,28 @@
                         </Text>
                      </children>
                      <padding>
-                        <Insets left="15.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                      <styleClass>
                         <String fx:value="sideBar" />
                         <String fx:value="hover_border" />
                      </styleClass>
                   </HBox>
-                  <VBox alignment="BOTTOM_RIGHT" onMousePressed="#openExcercice" prefHeight="103.0" prefWidth="619.0" stylesheets="@../style/styleSheet.css">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="93.0" prefWidth="619.0" spacing="15.0" stylesheets="@../style/styleSheet.css">
-                           <children>
-                              <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../../resource/images/icons-exo.png" />
-                                 </image>
-                              </ImageView>
-                              <Text fill="#f2dada" strokeType="OUTSIDE" strokeWidth="0.0" text="Exercice">
-                                 <font>
-                                    <Font name="System Bold" size="28.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
-                           <styleClass>
-                              <String fx:value="sideBar" />
-                              <String fx:value="hover_border" />
-                           </styleClass>
-                        </HBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="hover_border" stylesheets="@../style/styleSheet.css">
-                           <children>
-                              <Label prefHeight="16.0" prefWidth="57.0" text="22%" textFill="#fcf306">
-                                 <padding>
-                                    <Insets right="15.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="550.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="587.0">
-                                 <children>
-                                    <ProgressBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="11.0" prefWidth="624.0" progress="0.57" scaleShape="false" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                     <styleClass>
-                        <String fx:value="sideBar" />
-                        <String fx:value="hover_border" />
-                     </styleClass>
-                  </VBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="260.0" onMousePressed="#openTest" prefHeight="94.0" prefWidth="619.0" spacing="15.0" stylesheets="@../style/styleSheet.css">
+                  <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="460.0" onMouseClicked="#openParametre" spacing="16.0" stylesheets="@../style/styleSheet.css">
                      <children>
                         <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../resource/images/test.png" />
-                           </image>
-                           <HBox.margin>
-                              <Insets left="15.0" />
-                           </HBox.margin>
-                        </ImageView>
-                        <Text fill="#f2dada" strokeType="OUTSIDE" strokeWidth="0.0" text="Test">
-                           <font>
-                              <Font name="System Bold" size="28.0" />
-                           </font>
-                        </Text>
-                     </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <styleClass>
-                        <String fx:value="sideBar" />
-                        <String fx:value="hover_border" />
-                     </styleClass>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="460.0" onMousePressed="#openParametre" prefHeight="100.0" prefWidth="200.0" spacing="15.0" stylesheets="@../style/styleSheet.css">
-                     <children>
-                        <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../resource/images/parametre.png" />
+                              <Image url="@/resource/image/parametre.png" />
                            </image>
                         </ImageView>
-                        <Text fill="#f2dada" strokeType="OUTSIDE" strokeWidth="0.0" text="Paramétre">
+                        <Text fill="#f2dada" strokeType="OUTSIDE" strokeWidth="0.0" text="Paramètre">
                            <font>
                               <Font name="System Bold" size="28.0" />
                            </font>
                         </Text>
                      </children>
                      <padding>
-                        <Insets left="15.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                      <styleClass>
                         <String fx:value="sideBar" />
@@ -179,8 +109,14 @@
                      </styleClass>
                   </HBox>
                </children>
+               <VBox.margin>
+                  <Insets left="64.0" right="64.0" />
+               </VBox.margin>
             </VBox>
          </children>
+         <padding>
+            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+         </padding>
       </VBox>
    </children>
-</AnchorPane>
+</VBox>

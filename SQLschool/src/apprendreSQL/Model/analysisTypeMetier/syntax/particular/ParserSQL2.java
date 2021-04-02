@@ -191,7 +191,7 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	private boolean isCorrect;
 	private List<String> token_ID = new ArrayList<>();
 	private Tokens typeRequete;
-	
+	ArrayList<String> idTokensProf = new ArrayList<>();
 	
 	public ParserSQL2() {
 		initiation();
@@ -221,6 +221,7 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 		try {
 			parser.ReInit(Factory.translateToStream(reponse));
 			parser.sqlStmtList();
+			idTokensProf = parser.getIdTokens();
 		} catch (ParseException e){
 		//	controller.getView().sendMessage(" Requette prof  : "+e.getMessage());
 		}
@@ -259,7 +260,6 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 */
 	@Override
 	public void notifyEventProf(String token, String tokenImage) {
-		System.out.println("test notif prof ");
 		if(token.equals("fin")) {
 			addQueryInStack();
 		} else {
@@ -437,6 +437,12 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	}
 	
 	@Override
+	public ArrayList<String> getIdTokens(){
+		return idTokensProf;
+	}
+	
+	
+	@Override
 	public String getTypeRequete() {
 		return typeRequete.getTokenImage();
 	}	
@@ -505,7 +511,7 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 		for(int i = 0; i < tokenswithOrdre.size(); i++) {
 			if( i < token_ID.size()) {
 			  if(!tokenswithOrdre.get(i).equals(token_ID.get(i)))
-				throw new ParseException("Error , l'ordre des colonnes ne respecte pas l'ordre indiquÃ© !!! ");
+				throw new ParseException("Erreur : l'ordre des colonnes ne respecte pas l'ordre indiqué. ");
 			}
 		}
 	}

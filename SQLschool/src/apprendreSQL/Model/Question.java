@@ -41,14 +41,13 @@ public class Question {
 	private boolean mustOrder;
 
 	public Question(String database, String subject, String title_Question, String content_Question,
-			String right_answer, ArrayList<Test> testList, boolean mustOrder) {
+			String right_answer, ArrayList<Test> testList) {
 		this.titleQuestion = title_Question;
 		this.contentQuestion = content_Question;
 		this.answer = right_answer;
 		this.subject = subject;
 		this.database = database;
 		this.testSet = new TestSet(testList);
-		this.mustOrder = mustOrder;
 	}
 
 
@@ -100,11 +99,7 @@ public class Question {
 	public ArrayList<Test> getTestList(){
 		return testSet.getTestList();
 	}
-	
-	public boolean isMustOrder() {
-		return mustOrder;
-	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		

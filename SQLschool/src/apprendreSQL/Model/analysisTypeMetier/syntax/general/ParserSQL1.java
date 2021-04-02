@@ -26,8 +26,8 @@ public final class ParserSQL1 implements ParserSQLConstants, ParserSQL {
 	}
 
 	@Override
-	public String getIdTables() {
-		return ParserSQL.super.getIdTables() + idTokens.get(0);
+	public ArrayList<String> getIdTokens() {
+		return idTokens;
 	}
 	public void registerObserver(Observers o)
 	{

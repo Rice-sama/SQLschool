@@ -136,7 +136,6 @@ public interface GetInformation {
 						break;
 					}
 				}
-
 			}
 		}
 		return db;

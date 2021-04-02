@@ -347,7 +347,7 @@ public class FileModificationWindow implements ActionListener, GetInformation, S
 
 		if ((!question.getSubject().contentEquals(sujet) || !question.getTitleQuestion().contentEquals(titre))
 				&& jsonManager.getListQuestion().contains(new Question(dbname,
-						sujet, titre, null, null, null, true))) { //tochange
+						sujet, titre, null, null, null))) { 
 			JOptionPane.showMessageDialog(null,
 					"la modification rentre en confie avec une autre question.\n(changer de titre)", "Attention",
 					JOptionPane.WARNING_MESSAGE);

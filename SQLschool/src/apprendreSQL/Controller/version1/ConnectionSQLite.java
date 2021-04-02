@@ -28,9 +28,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import apprendreSQL.Model.analysisTypeMetier.semantique.Table;
 
 public class ConnectionSQLite {
 
@@ -41,17 +44,14 @@ public class ConnectionSQLite {
 	private Statement statement = null;
 	private String errorMessage = "";
 	private ResultSet result;
+	
+	ArrayList<Table> tables = new ArrayList<Table>();
 
 	public ConnectionSQLite(String dBPath) {
 		dBPathOrigin = dBPath;
 		resetDatabase();
 		dBPathModif = dBPathOrigin.replace(".db", "") + "_versionReset.db";
-	}
-
-	public ConnectionSQLite(String dBPath, boolean action) {
-		dBPathOrigin = dBPath;
-		resetDatabase();
-		dBPathModif = dBPathOrigin.replace(".db", "") + "_versionReset.db";
+		initTablesList();
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class ConnectionSQLite {
 			Class.forName("org.sqlite.JDBC");
 			this.connection = DriverManager.getConnection("jdbc:sqlite:" + dBPathModif);
 			this.statement = connection.createStatement();
-			System.out.println("Connexion � " + dBPathModif + " avec succ�s");
+			System.out.println("Connected to " + dBPathModif + " successfully.");
 			return true;
 		} catch (ClassNotFoundException notFoundException) {
 			notFoundException.printStackTrace();
@@ -88,18 +88,60 @@ public class ConnectionSQLite {
 		}
 	}
 	
-	
-	public boolean existTable(String table) throws Exception { //verification de l'existence de la table 
-		
-		try {		
-				result = statement.executeQuery("select * from "+table);
-				return true;
+	/**
+	 * Get all the tables' name and their columns' name of the db.
+	 * 
+	 * @param database target database
+	 */
+	public void initTablesList() {
+		if(connect()) {
+			try {
+				ResultSet resultSet = statement.executeQuery("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;");
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("name");
+					tables.add(new Table(tableName));
+				}
 				
-		}catch(Exception e) {
-				System.out.println("Table n'existe pas ");
-				return false;
+				for(Table t : tables) {
+					ArrayList<String> colNames = new ArrayList<>();
+					resultSet = statement.executeQuery("SELECT * FROM "+t.getName()+";");
+					ResultSetMetaData meta = resultSet.getMetaData();
+					int colCount = meta.getColumnCount();
+					for (int i = 1; i <= colCount; i++) {
+						colNames.add(meta.getColumnName(i));
+					}
+					t.setColumnNames(colNames);
+					ResultSet pkColumns= connection.getMetaData().getPrimaryKeys(null,null,t.getName());
+				    while(pkColumns.next()) {
+				    	t.setPrimaryKey(pkColumns.getString("COLUMN_NAME"));
+				    }
+			    	System.out.println("Table info loaded : "+t.getName()+" | "+colNames+" | PK "+t.getPrimaryKey());
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			close();
 		}
-
+	}
+	
+	public ArrayList<Table> getTables(){
+		return tables;
+	}
+	
+	
+	public String existTable(ArrayList<String> tlist) throws Exception { //verification de l'existence de la table 
+			for(String token : tlist) {
+				try {
+					statement.executeQuery("SELECT * FROM "+token+";");
+					System.out.println("ID: "+token+" is a table");
+					return token;
+				} catch(SQLException e) {
+					System.out.println("ID: "+token+" isn't a table");
+				}
+				
+			}
+			System.out.println("Err : no valid table");
+			return "";
 	}
 		 
 	public ArrayList<String> getSelectResult(String request) throws SQLException{

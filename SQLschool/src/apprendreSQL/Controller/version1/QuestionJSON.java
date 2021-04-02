@@ -47,7 +47,6 @@ public class QuestionJSON {
 		objQuestion.put("titre", question.getTitleQuestion());
 		objQuestion.put("contenu", question.getContentQuestion());
 		objQuestion.put("bonne_reponse", question.getAnswer());
-		objQuestion.put("respect_ordre", question.isMustOrder());
 		if(question.hasTest()) {
 			JSONObject testList = new JSONObject();
 			for(Test t : question.getTestList()) {
@@ -92,7 +91,7 @@ public class QuestionJSON {
  			 
  		}
  		boolean mustOrder = (jsonObjectA.get("respect_ordre")!=null) ? (boolean)jsonObjectA.get("respect_ordre") : true;
-		return new Question(bd, sujet, titre, contenu, bonn_reponse, tl, mustOrder);
+		return new Question(bd, sujet, titre, contenu, bonn_reponse, tl);
 
 	}
 

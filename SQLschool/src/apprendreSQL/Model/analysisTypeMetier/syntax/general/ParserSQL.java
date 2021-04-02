@@ -1,6 +1,7 @@
 package apprendreSQL.Model.analysisTypeMetier.syntax.general;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import apprendreSQL.Controller.version1.EventManager;
 import apprendreSQL.Model.analysisTypeMetier.syntax.particular.Tokens;
@@ -17,7 +18,7 @@ public interface ParserSQL {
 	default public void setcontroller(EventManager controller) {};
 	default public void display() {};
 	default public void reset() {};
-	default public String getIdTables() {return "";};
+	default public ArrayList<String> getIdTokens() {return new ArrayList<>();};
 	default public String getTypeRequete() {return "" ;};
 	default  public void startAnalyseSemantic(boolean ordre) throws  ParseException {};
 	

@@ -171,12 +171,12 @@ public class TablesView extends JPanel {
 	public void updateTableModel() {
 		if (tablesList.getSelectedItem() != null) {
 			System.out.println("Table: " + tablesList.getSelectedItem().toString());
-			if (!tableObjects.isEmpty()) {
+			/*if (!tableObjects.isEmpty()) {
 			table.setModel(getTableModel(
 					manager.getTable(
 							tableObjects.get(0).getDatabase(),
 							tablesList.getSelectedItem().toString())));
-			}
+			}*/
 		}
 	}
 }

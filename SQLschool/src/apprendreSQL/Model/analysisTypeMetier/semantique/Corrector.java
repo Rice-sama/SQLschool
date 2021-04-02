@@ -65,21 +65,26 @@ public class Corrector {
 		return comment;
 	}
 	
-	public boolean correction(String inputUser, String right_Answer, ArrayList<Test> testList, boolean mustOrder, ConnectionSQLite dbconnection) {
+	public boolean correction(String inputUser, String right_Answer, ArrayList<Test> testList, ConnectionSQLite dbconnection) {
 		comment = "";
 		try {
 			if(dbconnection.connect()){
-				
-				if(!dbconnection.existTable(parserSQLGeneral.getIdTables())){
-					comment = "La table " + parserSQLGeneral.getIdTables()+" n ' existe pas.";
+				String tableEleve = dbconnection.existTable(parserSQLGeneral.getIdTokens()).toLowerCase();
+				if(tableEleve.equals("")){
+					comment = "La table n'existe pas.";
+					return false;
+				}
+				if(!tableEleve.equals(dbconnection.existTable(parserSQLParticulier.getIdTokens()).toLowerCase())){
+					comment = "La table ne correspond pas.";
+					System.out.println("Err : tables don't match");
 					return false;
 				}
 				
 				String[] inputs = {inputUser, right_Answer};
-				String select = "SELECT * FROM " + parserSQLGeneral.getIdTables();
+				String select = "SELECT * FROM " + tableEleve;
 				
 				tclist.clear();
-				
+				if(testList.isEmpty()) testList.add(new Test("Résultat", "", ""));
 				for(Test t : testList) {
 					
 					ArrayList<ArrayList<String>> sl = new ArrayList<>();
@@ -92,7 +97,6 @@ public class Corrector {
 					boolean test = true;
 					
 					for(int i = 0; i < inputs.length; i++) {
-						
 						execManager.addToQueue(t.getPreExecutionScript());
 						
 						switch(parserSQLParticulier.getTypeRequete()) {

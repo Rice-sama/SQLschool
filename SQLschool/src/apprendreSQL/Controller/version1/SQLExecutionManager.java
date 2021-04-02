@@ -11,7 +11,7 @@ public class SQLExecutionManager {
 	private ArrayList<String> executionQueue = new ArrayList<>();
 
 	public void addToQueue(String script) {
-		executionQueue.add(script);
+		if(!script.isBlank()) executionQueue.add(script);
 	}
 	
 	

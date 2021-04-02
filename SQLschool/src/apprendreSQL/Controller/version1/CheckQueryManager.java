@@ -191,7 +191,7 @@ public class CheckQueryManager {
 		try {
 			while (resultSet.next()) {
 				String tableName = resultSet.getString("name");
-				tables.add(new Table(tableName, database));
+				//tables.add(new Table(tableName, database));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

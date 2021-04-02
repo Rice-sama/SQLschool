@@ -43,7 +43,7 @@ public class DataBase {
 	public DataBase(String name, EventManager manager) {
 		this.nameDatabase = name;
 		this.tables = new ArrayList<Table>();
-		this.tables = manager.getTables(name);
+		//this.tables = manager.getTables(name);
 	}
 
 	public Long getId_database() {

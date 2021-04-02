@@ -20,21 +20,35 @@
  *******************************************************************************/
 package apprendreSQL.Model.analysisTypeMetier.semantique;
 
+import java.util.ArrayList;
+
 /**
  * This class represents a Table on a database.
  *
  */
 public class Table {
 	String name;
-	String database;
+	ArrayList<String> columnNames;
+	String primaryKey;
 
-	public Table(String name, String database) {
-		this.name = name;
-		this.database = database;
+	public String getPrimaryKey() {
+		return primaryKey;
 	}
 
-	public String getDatabase() {
-		return database;
+	public void setPrimaryKey(String primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+	public Table(String name) {
+		this.name = name;
+	}
+
+	public ArrayList<String> getColumnNames() {
+		return columnNames;
+	}
+
+	public void setColumnNames(ArrayList<String> columnNames) {
+		this.columnNames = columnNames;
 	}
 
 	public String getName() {

@@ -151,7 +151,7 @@ public class JsonManager {
 	 * @return
 	 */
 	public boolean addQuestion(String database, String subject, String titre, String contenu, String bonne_reponse, ArrayList<Test> testList, boolean mustOrder) {
-		Question q = new Question(database, subject, titre, contenu, bonne_reponse, testList, mustOrder);
+		Question q = new Question(database, subject, titre, contenu, bonne_reponse, testList);
 		if (listQuestions.size() + 1 > MAX) {
 			JOptionPane.showMessageDialog(null, "Il y a trop de question (MAX=" + MAX + ") dans ce fichier JSON.",
 					"Attention", JOptionPane.WARNING_MESSAGE);

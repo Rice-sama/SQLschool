@@ -36,10 +36,10 @@ public class TestCorrection {
 	
 	public String getCompiledMessage() {
 		String m;
-		if(correct) m = "Correction validé." + message;
+		if(correct) m = "Correction validé" + message;
 		else m = "Correction erreur: \n" + message +"\n"
 											   + ((testUser.getMessage()!=null) ? "Test utilisateur : " + testUser.getMessage() + "\n": "")
-											   + ((testAnswer.getMessage()!=null) ? "Test rï¿½ponse : " + testAnswer.getMessage() + "\n": "");
+											   + ((testAnswer.getMessage()!=null) ? "Test réponse : " + testAnswer.getMessage() + "\n": "");
 		return m;
 	}
 	

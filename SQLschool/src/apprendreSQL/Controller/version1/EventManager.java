@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -40,25 +42,44 @@ import apprendreSQL.Model.data.Observers;
 import apprendreSQL.view.version1.GetInformation;
 import apprendreSQL.view.version1.MainWindow;
 import apprendreSQL.view.version2.Gui;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 public class EventManager implements GetInformation {
 	
 	
 	@FXML private Accordion exoExplorer;
 	
+	@FXML private VBox inputBox;
 	@FXML private Label qTitle;
 	@FXML private Label qText;
 	@FXML private TextArea queryText;
@@ -68,14 +89,19 @@ public class EventManager implements GetInformation {
 	
 	@FXML private Label resultText;
 	@FXML private Accordion testExplorer;
+	
+	@FXML private VBox tableView;
 
+	private static final Paint GREEN_PAINT = Paint.valueOf("06d6a0");
+	private static final Paint YELLOW_PAINT = Paint.valueOf("ffc300");
+	private static final Paint RED_PAINT = Paint.valueOf("ef476f");
+	private static final Paint BLACK_PAINT = Paint.valueOf("000000");
 
 	private static CheckQueryManager checkQuery;
 	private static JsonManager jsonManager;
 	private static ParserSQL parserSQLGeneral, parserSQLParticulier;
 	private static Corrector corrector;
 	private static Question currentQuestion;
-	private static int compteurrep = 1;
 	private ArrayList<String> answerColumns = new ArrayList<String>();
 	private TreeMap<String, ConnectionSQLite> connectionsMap = new TreeMap<String, ConnectionSQLite>();
 
@@ -93,8 +119,8 @@ public class EventManager implements GetInformation {
 		printNotice();
 	}
 	
-	@FXML public void initialize() {
-		System.out.println(exoExplorer);
+	@FXML 
+	public void initialize() {
 		try {
 			updateExercisesView();
 		} catch (IOException e) {
@@ -144,43 +170,54 @@ public class EventManager implements GetInformation {
 	 * @return a string that represent the result in the output jText
 	 */
 	private void ifCorrect(String query) {
-		if(currentQuestion == null) return ;
 		if (currentQuestion.getAnswer() != null) {
 			try {
-				if (!corrector.correction(query, currentQuestion.getAnswer(), currentQuestion.getTestList(), currentQuestion.isMustOrder(), selectedConnection)) {
-
-					//output_answer = corrector.getCommentaire();
-					
+				if (!corrector.correction(query, currentQuestion.getAnswer(), currentQuestion.getTestList(), selectedConnection)) {
 					resultDisplay1.setVisible(false);
 					resultDisplay2.setVisible(true);
 					
-					//compteurrep++;
-					
-					resultText.setText("Une erreur est survenue lors de la correction d'un ou plusieurs tests.\n"
-										+ "Vous avez peut-être oublié : ");
-					resultText.setTextFill(Paint.valueOf("ffc300"));
-
-				} else {
-					/*
-					output_answer = "Rï¿½ponse correcte:";
-					compteurrep = 1;
-					System.out.println(query);
-					output_answer = output_answer + "<br>" + submit(query, selectedConnection);*/
-					
+					String msg = corrector.getCommentaire();
+					if(msg.isEmpty()) 
+						resultText.setText("Une erreur est survenue lors de la correction d'un ou plusieurs tests.\n"
+										/*+ "Vous avez peut-être oublié : "*/);
+					else resultText.setText(msg);
+					resultText.setTextFill(YELLOW_PAINT);
+				} else {			
 					resultDisplay1.setVisible(true);
 					resultDisplay2.setVisible(false);
 					
 					resultText.setText("Les tests ont été passés avec succès.");
-					resultText.setTextFill(Paint.valueOf("06d6a0"));
+					resultText.setTextFill(GREEN_PAINT);
 				}
 				
 				for(TestCorrection tc : corrector.getCorrectionList()) {
-					FXMLLoader loader = new FXMLLoader();
-					TitledPane testpane = loader.load(Gui.class.getResource("fileXml/testItem.fxml").openStream());
+					TitledPane testpane = FXMLLoader.load(Gui.class.getResource("fileXml/testItem.fxml"));
 					testpane.setText(tc.getTest().getName());
-					if(tc.isCorrect()) testpane.setTextFill(Paint.valueOf("06d6a0"));
-					else testpane.setTextFill(Paint.valueOf("ef476f"));
-					((Label)testpane.getContent()).setText(tc.getCompiledMessage());
+					if(tc.isCorrect()) testpane.setTextFill(GREEN_PAINT);
+					else testpane.setTextFill(RED_PAINT);
+					VBox content = (VBox) testpane.getContent();
+					((Label) content.getChildren().get(0)).setText(tc.getCompiledMessage());
+					
+					ArrayList<LinkedHashMap<String, Object>> res = tc.getUserTest().getResult();
+					@SuppressWarnings("unchecked")
+					TableView<Map<String,Object>> tv = (TableView<Map<String,Object>>) content.getChildren().get(1);
+					
+					if(!res.isEmpty()) {
+						for(String colname : res.get(0).keySet()) {
+							TableColumn<Map<String,Object>, String> col = new TableColumn<>(colname);
+							col.setSortable(false);
+							col.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(colname).toString()));
+					        tv.getColumns().add(col);
+						}
+
+						ObservableList<Map<String, Object>> items = FXCollections.<Map<String, Object>>observableArrayList();					
+						
+						for(LinkedHashMap<String, Object> row : res) {
+							items.add(row);
+						}
+						
+						tv.getItems().addAll(items);
+					}
 					testExplorer.getPanes().add(testpane);
 				}
 			} catch (Exception e) {
@@ -211,7 +248,13 @@ public class EventManager implements GetInformation {
 	
 	@FXML
 	public void callExecute() {
-		if(currentQuestion == null) return;
+		if(currentQuestion == null) {
+			setText("Veuillez selectionner une question.", YELLOW_PAINT);
+			return;
+		}else if(selectedConnection == null) {
+			setText("Base de données introuvable.", RED_PAINT);
+			return;
+		}
 		clearOutput();
 		try {
 			parserSQLParticulier.reset();
@@ -223,8 +266,7 @@ public class EventManager implements GetInformation {
 			ifCorrect(query);
 			//mainWindow.setOutPut(text);
 		} catch (ParseException e) {
-			resultText.setText(e.getMessage());
-			resultText.setTextFill(Paint.valueOf("ef476f"));
+			setText(e.getMessage(),Paint.valueOf("ef476f"));
 			//mainWindow.setOutPut(e.getMessage() + "\n");
 		}
 
@@ -250,7 +292,6 @@ public class EventManager implements GetInformation {
 	 * @param exerciceName
 	 */
 	public void callQuestion(String dbName, String sujetName, String exerciceName) {
-		compteurrep = 1;
 		clearOutput();
 		corrector.setHint(callHint());
 		int id = getIdExercise(dbName, sujetName, exerciceName, jsonManager);
@@ -276,18 +317,46 @@ public class EventManager implements GetInformation {
 	}
 	
 	public void setQuestion(Question q) {
+		clearInput();
+		clearOutput();
+		if(!inputBox.isVisible()) inputBox.setVisible(true);
 		currentQuestion = q;
 		qTitle.setText(q.getTitleQuestion());
 		qText.setText(q.getContentQuestion());
 		selectedConnection = connectionsMap.get(q.getDatabase());
-		clearInput();
-		clearOutput();
+		drawTables();
+		
 	}
 
 	public ArrayList<Question> getQuestionsList() {
 		return jsonManager.getListQuestion();
 	}
 
+	
+	private void drawTables() {
+		tableView.getChildren().clear();
+		ArrayList<Table> tables = selectedConnection.getTables();
+		for(Table t : tables) {
+			try {
+				VBox tableBox = FXMLLoader.load(Gui.class.getResource("fileXml/table.fxml"));
+				Label name = (Label) tableBox.getChildren().get(0);
+				HBox cols = (HBox) tableBox.getChildren().get(1);
+				name.setText(t.getName());
+				for(String colName : t.getColumnNames()) {
+					Label col = new Label(colName);
+					Paint p = BLACK_PAINT;
+					if(t.getPrimaryKey()!=null) if(colName.toLowerCase().equals(t.getPrimaryKey().toLowerCase())) p = RED_PAINT;
+					col.setBorder(new Border(new BorderStroke(p, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+					col.setPadding(new Insets(4));
+					cols.getChildren().add(col);
+				}
+				tableView.getChildren().add(tableBox);
+			} catch (IOException e) {
+				System.out.println("Error while loading the table view : "+ e);
+			}
+
+		}
+	}
 	/**
 	 * This method check if there is any semicolon ";"at the end of our query and
 	 * then call other method as depending on the the type of the query
@@ -311,23 +380,7 @@ public class EventManager implements GetInformation {
 
 	}
 
-	/**
-	 * Runs a query similar to '.tables'.
-	 * 
-	 * @param database target database
-	 * @return a list of Table objects present in the database
-	 */
-	public ArrayList<Table> getTables(String database) {
-		String inputQuery = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;";
-		ArrayList<Table> tables = new ArrayList<Table>();
-		ConnectionSQLite s;
-		if ((s = connectionsMap.get(database)) != null) {
-			s.connect();
-			tables = checkQuery.getTables(inputQuery, s, database);
-		}
-		return tables;
 
-	}
 
 	/**
 	 * Returns a ResultSet object of the table from the database passed as
@@ -366,10 +419,14 @@ public class EventManager implements GetInformation {
 		}
 
 	}
+	
+	public void setText(String msg, Paint p) {
+		resultText.setText(msg);
+		resultText.setTextFill(p);
+	}
 
 	public void clearOutput() {
-		resultText.setText("");
-		resultText.setTextFill(Paint.valueOf("000000"));
+		setText("",Paint.valueOf("000000"));
 		testExplorer.getPanes().clear();
 	}
 
@@ -407,8 +464,7 @@ public class EventManager implements GetInformation {
 		
 		ArrayList<TitledPane> catList = new ArrayList<>();
 		for(Question q : jsonManager.getListQuestion()) {
-			FXMLLoader loader1 = new FXMLLoader();
-			Button exoButton = loader1.load(Gui.class.getResource("fileXml/exoButton.fxml").openStream());
+			Button exoButton = FXMLLoader.load(Gui.class.getResource("fileXml/exoButton.fxml"));
 			exoButton.setText(q.getTitleQuestion());
 			exoButton.setOnAction(new EventHandler<ActionEvent>() {
 			    @Override public void handle(ActionEvent e) {
@@ -423,8 +479,7 @@ public class EventManager implements GetInformation {
 				}
 			}
 			if(!added) {
-				FXMLLoader loader2 = new FXMLLoader();
-				TitledPane cat = loader2.load(Gui.class.getResource("fileXml/categorie.fxml").openStream());
+				TitledPane cat = FXMLLoader.load(Gui.class.getResource("fileXml/categorie.fxml"));
 				cat.setText(q.getSubject());
 				catList.add(cat);
 				((VBox)cat.getContent()).getChildren().add(exoButton);
