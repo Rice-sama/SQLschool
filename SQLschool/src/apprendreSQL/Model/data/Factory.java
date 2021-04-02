@@ -23,9 +23,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import apprendreSQL.Model.analysisTypeMetier.syntax.general.ParserSQL;
-import apprendreSQL.Model.analysisTypeMetier.syntax.general.ParserSQL1;
-import apprendreSQL.Model.analysisTypeMetier.syntax.particular.ParserSQL2;
+import apprendreSQL.Model.job.syntaxique.general.ParserSQL;
+import apprendreSQL.Model.job.syntaxique.general.ParserSQL1;
+import apprendreSQL.Model.job.syntaxique.particular.ParserSQL2;
 
 public class Factory  {
 	
@@ -67,37 +67,6 @@ public class Factory  {
 	
 	public static <T> List<T> makeList(){
 		return new ArrayList<T>();
-	}
-	
-	public static JLabel makeJLabel(String title){
-		return new JLabel(title);
-	}
-	public static Button makeButton(String title) {
-		return new Button(title);
-	}
-	public static  JPanel makePanel() {
-		return new JPanel();
-	}
-	
-	public static Dimension makeDimension(int x, int y) {
-		return new Dimension(x, y);
-	}
-	
-	public static JTextPane makeJTextPane() {
-		return new JTextPane();
-	}
-	
-	
-	public static Color makeColor(int r, int b, int v ) {
-		return new Color(r,b,v);
-	}
-	
-	public static FlowLayout makeFlowLayout() {
-		return new FlowLayout();
-	}
-	
-	public static BorderLayout makeBorderLayout() {
-		return new BorderLayout();
 	}
 	
 	public static  <T> Stack<T> makeStack() {

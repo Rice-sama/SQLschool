@@ -22,8 +22,8 @@ package apprendreSQL.Model;
 
 import java.util.ArrayList;
 
-import apprendreSQL.Model.analysisTypeMetier.semantique.Test;
-import apprendreSQL.Model.analysisTypeMetier.semantique.TestSet;
+import apprendreSQL.Model.job.semantique.Test;
+import apprendreSQL.Model.job.semantique.TestSet;
 
 
 /**
