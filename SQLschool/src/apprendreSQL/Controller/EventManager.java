@@ -74,20 +74,15 @@ import javafx.util.StringConverter;
 
 public class EventManager implements GetInformation {
 	
-	
 	@FXML private Accordion exoExplorer;
-	
 	@FXML private VBox inputBox;
 	@FXML private Label qTitle;
 	@FXML private Label qText;
 	@FXML private TextArea queryText;
-	
 	@FXML private Label resultDisplay1;
 	@FXML private Label resultDisplay2;
-	
 	@FXML private Label resultText;
 	@FXML private Accordion testExplorer;
-	
 	@FXML private VBox tableView;
 
 	private static final Paint GREEN_PAINT = Paint.valueOf("06d6a0");
@@ -95,26 +90,19 @@ public class EventManager implements GetInformation {
 	private static final Paint RED_PAINT = Paint.valueOf("ef476f");
 	private static final Paint BLACK_PAINT = Paint.valueOf("000000");
 
-	private static CheckQueryManager checkQuery;
 	private static JsonManager jsonManager;
 	private static ParserSQL parserSQLGeneral, parserSQLParticulier;
 	private static Corrector corrector;
 	private static Question currentQuestion;
-	private ArrayList<String> answerColumns = new ArrayList<String>();
+	private static  ConnectionSQLite selectedConnection;
+
 	private TreeMap<String, ConnectionSQLite> connectionsMap = new TreeMap<String, ConnectionSQLite>();
 
-	private static  ConnectionSQLite selectedConnection;
-	
-	
-
 	public EventManager() {
-		initialisationParser();
+		initializeParser();
 		dbConnections();
 		jsonManager = new JsonManager();
 		readJSONFiles();
-		checkQuery = new CheckQueryManager();
-		//new Watcher(this).observe();
-		printNotice();
 	}
 	
 	@FXML 
@@ -122,13 +110,12 @@ public class EventManager implements GetInformation {
 		try {
 			updateExercisesView();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 	
-	private void initialisationParser() {
+	private void initializeParser() {
 		parserSQLGeneral      = Factory.makeParserSQL("general");
 		parserSQLParticulier  = Factory.makeParserSQL("particulier");
 		parserSQLParticulier.setcontroller(this);
@@ -165,10 +152,7 @@ public class EventManager implements GetInformation {
 	 * This method tests if the query is correct or not.
 	 * 
 	 * @param query the query inserted by the user
-	 * @return a string that represent the result in the output jText
 	 */
-	
-	
 
 	private void ifCorrect(String query) {
 		if (currentQuestion.getAnswer() != null) {
@@ -177,7 +161,7 @@ public class EventManager implements GetInformation {
 					resultDisplay1.setVisible(false);
 					resultDisplay2.setVisible(true);
 					
-					String msg = corrector.getCommentaire();
+					String msg = corrector.getComment();
 					if(msg.isEmpty()) {
 						resultText.setText(
 								"Une erreur est survenue lors de la correction d'un ou plusieurs tests : \n"
@@ -190,7 +174,7 @@ public class EventManager implements GetInformation {
 					resultDisplay1.setVisible(true);
 					resultDisplay2.setVisible(false);
 					
-					resultText.setText("Les tests ont Ã©te passÃ©s avec succÃ©s.");
+					resultText.setText("Les tests ont été passés avec succès.");
 					resultText.setTextFill(GREEN_PAINT);
 				}
 				
@@ -231,20 +215,6 @@ public class EventManager implements GetInformation {
 		}
 	}
 
-	/**
-	 * Give the user a hint based on the his input.
-	 * 
-	 * @return the hint as a String
-	 */
-	public static String callHint() {
-		/*
-		if (!mainWindow.getInput().isEmpty())
-
-			return ""; //corrector.definehint(currentQuestion.getAnswer());
-		*/
-		return "Il faut d'abord essayer d'ecrire une requete et de l'executer ;";
-	}
-	private static String text;
 
 	/**
 	 * This method is called when the "Executer" button is clicked.
@@ -256,7 +226,7 @@ public class EventManager implements GetInformation {
 			setText("Veuillez selectionner une question.", YELLOW_PAINT);
 			return;
 		}else if(selectedConnection == null) {
-			setText("Base de donnÃ©es introuvable.", RED_PAINT);
+			setText("Base de données introuvable.", RED_PAINT);
 			return;
 		}
 		clearOutput();
@@ -268,56 +238,9 @@ public class EventManager implements GetInformation {
 			parserSQLGeneral.parserStart();
 			parserSQLParticulier.parserStart();
 			ifCorrect(query);
-			//mainWindow.setOutPut(text);
 		} catch (ParseException e) {
 			setText(e.getMessage(),Paint.valueOf("ef476f"));
-			//mainWindow.setOutPut(e.getMessage() + "\n");
 		}
-
-		//  tu peux laisser Ã§a aprÃ¨s car c'est le nombre de tentative 
-//		if (compteurrep == 4) {
-//			mainWindow.setOutPut("Vous avez fait 3 tentatives. Voil la bonne reponse <br> " + currentQuestion.getAnswer().replaceAll("<","&lt;")
-//					+ " <br> Essayez de l'ecrire et de l'executer");
-//			compteurrep = 1;
-//
-//		} else {
-//			mainWindow.setOutPut(text + "\n");
-//		}
-//
-     	//mainWindow.updateTableModel();
-
-	}
-
-	/**
-	 * This method is called when we click on a specific exercise.
-	 * 
-	 * @param dbName
-	 * @param sujetName
-	 * @param exerciceName
-	 */
-	public void callQuestion(String dbName, String sujetName, String exerciceName) {
-		clearOutput();
-		corrector.setHint(callHint());
-		int id = getIdExercise(dbName, sujetName, exerciceName, jsonManager);
-
-		if (id < getQuestionsList().size() && id >= 0) {
-			currentQuestion = getQuestionsList().get(id);
-			
-			
-		}
-		qTitle.setText(exerciceName);
-		qText.setText(currentQuestion.getContentQuestion());
-		selectedConnection = connectionsMap.get(dbName);
-
-		answerColumns.clear();
-		for (int i = 0; i < checkQuery.getTableColumns().size(); i++) {
-			String column = checkQuery.getTableColumns().get(i);
-			if (currentQuestion.getAnswer().contains(column)) {
-				answerColumns.add(column);
-				System.out.println(column);
-			}
-		}
-
 	}
 	
 	public void setQuestion(Question q) {
@@ -363,33 +286,6 @@ public class EventManager implements GetInformation {
 	}
 
 	/**
-	 * Returns a ResultSet object of the table from the database passed as
-	 * arguments.
-	 * 
-	 * @param database the database where the table exists
-	 * @param table    the table we want to retrieve
-	 * @return
-	 */
-	public ResultSet getTable(String database, String table) {
-		String inputQuery = "SELECT * FROM " + table;
-		ResultSet rs = null;
-		ConnectionSQLite connectionSQLite;
-		if ((connectionSQLite = connectionsMap.get(database)) != null) {
-			connectionSQLite.connect();
-			rs = connectionSQLite.queryExecution(inputQuery);
-		}
-		return rs;
-	}
-
-	public ConnectionSQLite getSelectedConnection() {
-		return selectedConnection;
-	}
-
-	public void setselectedConnection(ConnectionSQLite selectedConnection) {
-		EventManager.selectedConnection = selectedConnection;
-	}
-
-	/**
 	 * Closes all open database connections.
 	 */
 	public void close() {
@@ -397,7 +293,6 @@ public class EventManager implements GetInformation {
 		while (iterator.hasNext()) {
 			iterator.next().getValue().close();
 		}
-
 	}
 	
 	public void setText(String msg, Paint p) {
@@ -416,14 +311,6 @@ public class EventManager implements GetInformation {
 
 	public JsonManager getJsonManager() {
 		return jsonManager;
-	}
-
-	public ArrayList<String> getAnswerColumns() {
-		return answerColumns;
-	}
-
-	public void setAnswerColumns(ArrayList<String> answerColumns) {
-		this.answerColumns = answerColumns;
 	}
 
 	public TreeMap<String, ConnectionSQLite> getConnectionsMap() {
@@ -466,46 +353,4 @@ public class EventManager implements GetInformation {
 		//mainWindow.updateExercisesView();
 
 	}
-
-	public void showEditor() {
-		//mainWindow.showEditor();
-
-	}
-
-	public void updateDiagram(boolean isInstalled) {
-		//mainWindow.updateDiagram(isInstalled);
-
-	}
-
-	public void notifyIncompatible() {
-		//mainWindow.notifyIncompatible();
-
-	}
-
-	public void notifyUnavailableDirectory() {
-		//mainWindow.notifyUnavailableDirectory();
-
-	}
-
-	public void showProgress() {
-		//mainWindow.showProgress();
-
-	}
-
-	public void hideProgress() {
-		//mainWindow.hideProgress();
-
-	}
-
-	public static void printNotice() {
-		System.out.println("############################################################################################## \r\n"
-				+ "    Sqlschool  Copyright (C) 2020  Bayad Nasr-eddine, Bayol Thibaud, Benazzi Naima, \r\n"
-				+ "    Douma Fatima Ezzahra, Chaouche Sonia, Kanyamibwa Blandine \r\n"
-				+ "    (thesqlschool@hotmail.com) \r\n\n"
-				+ "    This program comes with ABSOLUTELY NO WARRANTY; \r\n"
-				+ "    This is free software, and you are welcome to redistribute it \r\n"
-				+ "    under certain conditions; refer to the GNU General Public License for details. \r\n"
-				+ "############################################################################################## \n\n\n\n");
-	}
-
 }

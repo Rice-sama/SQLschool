@@ -45,9 +45,9 @@
                   <DropShadow height="184.93" radius="59.33" width="54.39" />
                </effect>
             </Text>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="16.0" VBox.vgrow="ALWAYS">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="32.0" VBox.vgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER_LEFT" onMouseClicked="#openFormulaireCreate" stylesheets="@../style/styleSheet.css">
+                  <HBox alignment="CENTER_LEFT" onMouseClicked="#openCreate" stylesheets="@../style/styleSheet.css">
                      <children>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -77,7 +77,7 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" stylesheets="@../style/styleSheet.css">
+                  <HBox alignment="CENTER_LEFT" onMouseClicked="#openModify" stylesheets="@../style/styleSheet.css">
                      <children>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -107,39 +107,18 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" stylesheets="@../style/styleSheet.css">
-                     <children>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/resource/image/delete.png" />
-                           </image>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </ImageView>
-                        <Text fill="#eedfdf" strokeType="OUTSIDE" strokeWidth="0.0" text="Supprimer">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Text>
-                     </children>
-                     <styleClass>
-                        <String fx:value="sideBar" />
-                        <String fx:value="hover_border" />
-                     </styleClass>
-                     <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </padding>
-                  </HBox>
                </children>
+               <padding>
+                  <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+               </padding>
             </VBox>
          </children>
          <padding>
             <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
          </padding>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
       </VBox>
    </children>
 </VBox>

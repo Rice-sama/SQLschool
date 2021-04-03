@@ -62,7 +62,7 @@ public class JsonManager {
 		try (FileWriter file = new FileWriter(nomFichier)) {
 			file.write(jsonObject.toJSONString());
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Le fichier spï¿½cifiï¿½ est inutilisable.", "Attention",
+			JOptionPane.showMessageDialog(null, "Le fichier spécifié est inutilisable.", "Attention",
 					JOptionPane.WARNING_MESSAGE);
 		}
 
@@ -131,8 +131,8 @@ public class JsonManager {
 			}
 
 		} catch (Exception ex) {
-			System.out.println("Le fichier spï¿½cifiï¿½ est introuvable.j ");
-			JOptionPane.showMessageDialog(null, "Le fichier spï¿½cifiï¿½ est introuvable.", "Attention",
+			System.out.println("Le fichier spécifié est introuvable. ");
+			JOptionPane.showMessageDialog(null, "Le fichier spécifié est introuvable.", "Attention",
 					JOptionPane.WARNING_MESSAGE);
 		}
 

@@ -419,19 +419,19 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	public String analysID() {
 		if(pileIDEleve.size() > pileIDProf.size()) {
 			billanID.addIDEQ(pileIDEleve, pileIDProf);
-			return "vous avez beaucoup des identifiants dans votre requête, il faut enlever  "+ billanID.toString();
+			return "Vous avez beaucoup d'identifiants dans votre requ�te, essayez d'enlever : "+ billanID.toString();
 		}else if(pileIDEleve.size() < pileIDProf.size()) {
 			billanID.addIDEQ(pileIDProf, pileIDEleve);
-			return " vous avez moins des identifiants dans votre requête, il vous manque : " + billanID.toString(); 
+			return "Il manque peut-�tre dans votre requ�te : " + billanID.toString(); 
 		}
-		return "il y a des identifiants pas demandée à ecrire dans votre requête " + billanID.toString();
+		return "";/*"Ses identifiants" + billanID.toString();*/
 	}
 
 	
 	// methode qui vérifier est ce que les deux requête (éléve, prof) ont le même debut concernant la requete 
 	private void checkSameRequete() throws ParseException {
 		if(!pileTokenEleve.firstElement().getTokenImage().equals(listPileToken.get(0).firstElement().getTokenImage())){
-			throw new ParseException("Attention ! la requête doit commencer par : "+ listPileToken.get(0).firstElement().getToken());
+			throw new ParseException("Attention ! la requ�te doit commencer par : "+ listPileToken.get(0).firstElement().getToken());
 		}
 	}
 	

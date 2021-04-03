@@ -50,7 +50,7 @@ public class QuestionViewController {
 		else {
 			ParserSQL1 parser = new ParserSQL1(new ByteArrayInputStream(answer.getText().getBytes()));
 			try {
-				parser.sqlStmtList();
+				parser.parserStart();
 			} catch (ParseException e) {
 				throw new Exception(title.getText()+" n'a pas une réponde valide.");
 			}
@@ -65,6 +65,10 @@ public class QuestionViewController {
 	@FXML
 	private void addTest() {
 		if(testName.getText().isBlank()) return;
+		addTest(testName.getText(),"","");
+	}
+	
+	public void addTest(String s, String s1, String s2) {
 		try {
      		FXMLLoader loader = new FXMLLoader();
 			Tab tab = loader.load(getClass().getResource(Config.setFileName("testTab")).openStream());
@@ -77,14 +81,17 @@ public class QuestionViewController {
 			        tests.remove(tvc);
 			    }
 			});
-			tvc.initTitle(testName.getText());
-			testName.setText("");
+			tvc.initTitle(s);
+			tvc.setS1(s1);
+			tvc.setS2(s2);
 			tests.add(tvc);
 			testExplorer.getTabs().add(tab);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	@FXML
 	private void delete() {
 		if(deleteConfirm.getText().isBlank()) deleteConfirm.setText("Supprimer?");
@@ -131,5 +138,21 @@ public class QuestionViewController {
 			tl.add(tvc.toTest());
 		}
 		return tl;
+	}
+
+	public void setSubject(String s) {
+		subject.setValue(s);
+	}
+	
+	public void setDb(String s) {
+		db.setValue(s);
+	}
+
+	public void setContent(String s) {
+		question.setText(s);
+	}
+
+	public void setAnswer(String s) {
+		answer.setText(s);
 	}
 }

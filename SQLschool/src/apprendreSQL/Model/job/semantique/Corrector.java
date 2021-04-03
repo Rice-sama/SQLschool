@@ -32,30 +32,18 @@ import apprendreSQL.Model.job.syntaxique.general.ParserSQL;
 
 public class Corrector {
 
-	String hint = "";
-
-	String type = "none";
-	String table = "none";
-
-	String comment = "";
-	String commentO = "";
+	private SQLExecutionManager execManager = new SQLExecutionManager();
+	private ArrayList<TestCorrection> tclist = new ArrayList<>();
 	private ParserSQL parserSQLParticulier;
 	private ParserSQL parserSQLGeneral;
+	private String comment = "";
 	
-	SQLExecutionManager execManager = new SQLExecutionManager();
-	
-	ArrayList<TestCorrection> tclist = new ArrayList<>();
-
 	public Corrector(ParserSQL parser1, ParserSQL parser2) {
 		parserSQLParticulier = parser2;
 		parserSQLGeneral = parser1;
 	}
 
-	public String getHint() {
-		return hint;
-	}
-
-	public String getCommentaire() {
+	public String getComment() {
 		return comment;
 	}
 	
@@ -78,7 +66,7 @@ public class Corrector {
 				String select = "SELECT * FROM " + tableEleve;
 				
 				tclist.clear();
-				if(testList.isEmpty()) testList.add(new Test("Rï¿½sultat", "", ""));
+				if(testList.isEmpty()) testList.add(new Test("Résultat", "", ""));
 				for(Test t : testList) {
 					
 					ArrayList<ArrayList<String>> sl = new ArrayList<>();
@@ -172,9 +160,5 @@ public class Corrector {
 	
 	public ArrayList<TestCorrection> getCorrectionList(){
 		return tclist;
-	}
-
-	public void setHint(String hint) {
-		this.hint = hint;
 	}
 }

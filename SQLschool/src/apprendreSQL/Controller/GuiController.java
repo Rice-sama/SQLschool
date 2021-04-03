@@ -49,13 +49,24 @@ public class GuiController {
 	}	
 	
 	@FXML
-	public void openFormulaireCreate(MouseEvent event) throws IOException {
+	public void openCreate(MouseEvent event) throws IOException {
 		Stage stage =   (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent pan = FXMLLoader.load(getClass().getResource(Config.setFileName("fileView")));
+		FXMLLoader loader  = new FXMLLoader(getClass().getResource(Config.setFileName("fileView")));
+		loader.setController(new FileViewController(0));
+		Parent pan = loader.load();
 		Scene scene = new Scene(pan);
      	stage.setScene(scene);
 	}
 	
+	@FXML
+	public void openModify(MouseEvent event) throws IOException {
+		Stage stage =   (Stage) ((Node) event.getSource()).getScene().getWindow();
+		FXMLLoader loader  = new FXMLLoader(getClass().getResource(Config.setFileName("fileView")));
+		loader.setController(new FileViewController(1));
+		Parent pan = loader.load();
+		Scene scene = new Scene(pan);
+     	stage.setScene(scene);
+	}
 	
 	
 	

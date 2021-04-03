@@ -19,4 +19,12 @@ public class TestViewController {
 	public Test toTest(){
 		return new Test(tab.getText(),s1.getText(),s2.getText());
 	}
+
+	public void setS1(String s) {
+		s1.setText(s);
+	}
+	
+	public void setS2(String s) {
+		s2.setText(s);
+	}
 }

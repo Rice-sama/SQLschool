@@ -63,8 +63,8 @@ public interface GetInformation {
 					subjects.add(subject);
 			}
 		} catch (Exception ex) {
-			System.out.println("Le fichier spï¿½cifiï¿½ est introuvable.");
-			JOptionPane.showMessageDialog(null, "Le fichier spï¿½cifiï¿½ est introuvable.", "Attention",
+			System.out.println("Le fichier spécifié est introuvable.");
+			JOptionPane.showMessageDialog(null, "Le fichier spécifié est introuvable.", "Attention",
 					JOptionPane.WARNING_MESSAGE);
 		}
 		return subjects;
@@ -89,8 +89,8 @@ public interface GetInformation {
 					tests.add(test);
 			}
 		} catch (Exception ex) {
-			System.out.println("Le fichier spï¿½cifiï¿½ est introuvable.");
-			JOptionPane.showMessageDialog(null, "Le fichier spï¿½cifiï¿½ est introuvable.", "Attention",
+			System.out.println("Le fichier spécifié est introuvable.");
+			JOptionPane.showMessageDialog(null, "Le fichier spécifié est introuvable.", "Attention",
 					JOptionPane.WARNING_MESSAGE);
 		}
 		return tests;

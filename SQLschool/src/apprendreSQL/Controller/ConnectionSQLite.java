@@ -89,7 +89,7 @@ public class ConnectionSQLite {
 	}
 	
 	/**
-	 * Get all the tables' name and their columns' name of the db.
+	 * Get all the tables' name and their columns' name from this db connection.
 	 * 
 	 * @param database target database
 	 */
@@ -142,79 +142,6 @@ public class ConnectionSQLite {
 			}
 			System.out.println("Err : no valid table");
 			return "";
-	}
-		 
-	public ArrayList<String> getSelectResult(String request) throws SQLException{
-		
-		ArrayList<String> data = new ArrayList<String>();	
-		result = statement.executeQuery(request);
-
-		int n = result.getMetaData().getColumnCount();
-		while(result.next()) {	
-			String row = "";
-			for(int i=1;i<=n;i++) {
-				row += result.getString(i)+" ";
-			}				
-		    data.add(row);
-		}
-		return data;
-
-	}
-	
-	public ArrayList<String> getUpdateResult(String request, String table) throws SQLException{
-		statement.executeUpdate(request);
-		return getResultFromTable(table);
-	}
-
-	public ArrayList<String> getResultFromTable(String tableName) throws SQLException{
-		ArrayList<String> data = new ArrayList<String>();	
-		result = statement.executeQuery("select * from "+tableName);
-		int n = result.getMetaData().getColumnCount();
-		while(result.next()) {
-			String row = "";
-			for(int i=1;i<=n;i++) {
-				row += result.getString(i)+" ";
-			}
-		    data.add(row);
-		}
-		return data;
-	}
-
-	/**
-	 * 
-	 * @param requete
-	 * @return
-	 * @throws SQLException
-	 */
-	
-	public String requestTable(String requete) throws SQLException {
-		try {
-			PreparedStatement ps = connection.prepareStatement(requete);
-			ps.executeUpdate();
-			result = ps.getGeneratedKeys();
-			return result.getMetaData().getTableName(1);
-		} catch(Exception e) {
-			System.out.println(e);
-			return "";
-		}
-	}
-
-	/**
-	 * Executes a query and returns the result as a ResultSet object.
-	 * 
-	 * @param query
-	 * @return
-	 */
-	public ResultSet queryExecution(String query) {
-		ResultSet result = null;
-		errorMessage = "";
-		try {
-			result = statement.executeQuery(query);
-		} catch (SQLException e) {
-			errorMessage = e.getMessage();
-		}
-		return result;
-
 	}
 
 	/**
