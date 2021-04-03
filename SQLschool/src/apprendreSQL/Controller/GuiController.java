@@ -24,10 +24,10 @@ public class GuiController {
 	
 	@FXML 
 	public void openTutoriel(MouseEvent event) throws IOException {
-		Stage stage =   (Stage) ((Node) event.getSource()).getScene().getWindow();
+		/*Stage stage =   (Stage) ((Node) event.getSource()).getScene().getWindow();
      	Parent pan = FXMLLoader.load(getClass().getResource(Config.setFileName("chapitre")));
      	Scene scene = new Scene(pan);
-     	stage.setScene(scene);
+     	stage.setScene(scene);*/
 	}	
 	
 	
