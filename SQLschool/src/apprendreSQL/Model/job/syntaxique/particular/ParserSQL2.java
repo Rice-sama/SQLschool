@@ -7,20 +7,21 @@ import java.util.Stack;
 import apprendreSQL.Controller.EventManager;
 import apprendreSQL.Model.data.Factory;
 import apprendreSQL.Model.data.Observers;
+import apprendreSQL.Model.data.Question;
 import apprendreSQL.Model.job.syntaxique.general.ParseException;
 import apprendreSQL.Model.job.syntaxique.general.ParserSQL;
 import apprendreSQL.Model.job.syntaxique.particular.Tokens.TypePArtie;
 
+
+
 /**
+ * c'est une classe interne 
  * 
- *  Cette a comme responsabilité la compilation d'une requête relativement à une question
  *
  */
-
-
 class TokenFix {
 
-	private static boolean compteurIDAfterAS = false;
+	private static boolean isIDAfterAS = false;
 
 	public static  boolean isFix(String token) {
 		for(String tkn : tokenImage) {
@@ -33,12 +34,12 @@ class TokenFix {
 
 	public static boolean ignorer(String tokenImage) {
 		if(tokenImage.equals("\"AS\"")){
-			compteurIDAfterAS = true;
+			isIDAfterAS = true;
 			return true;
 		}
-		if(compteurIDAfterAS) {
+		if(isIDAfterAS) {
 			System.out.println("check id as "+tokenImage);
-			compteurIDAfterAS = false;
+			isIDAfterAS = false;
 			return true;
 		}
 		for(String s : tokenIgnorer) {
@@ -170,28 +171,39 @@ class TokenFix {
 		  };
 }
 
+/**
+ * 
+ *  Cette a comme responsabilité la compilation d'une requête relativement à une question
+ *
+ */
 public class ParserSQL2 implements  Observers, ParserSQL {
 	
-	private Stack<Tokens> p_token_eleve;
-	private Stack<Tokens> p_token_prof;
-	private List<Stack<Tokens>>  list_p_token;
-	private String reponse;
+	private Question question;
 	private ParserSQL parser;
-	private EventManager controller;
-	private int numero_pile = 0;
-	private Tokens pairToken = new TokensPermutables();
-	private Stack<Tokens> p_token_accepted;
-	private Stack<Paire<String>> p_ID = new Stack<Paire<String>>();
+	
+	private Stack<Tokens> pileTokenEleve;
+	private Stack<Tokens> pileTokenProf;
+	private List<Stack<Tokens>>  listPileToken; 
+    private Tokens pairToken = new TokensPermutables();
+	private BillanID billanID;
+	private Stack<Tokens> pileTokenAcceptedEleve;
+	private Stack<Paire<String>> pileIDConsumedProf = Factory.makeStack();
+	
 	private boolean flag = false;
-    private boolean debut = false;
-    private Stack<Paire<String>> p_projecttion_id = new Stack<>();
-	private List<String> tokenswithOrdre = new ArrayList<String>();
-	private List<Integer> p_nu = new ArrayList<>();
-	private int var;
+    private boolean debutAttribut = false;
+    
+    private Stack<Paire<String>> pileAttributIDProf = Factory.makeStack();
+    private Stack<Paire<String>> pileAttributIDElev = Factory.makeStack();
+    private Stack<String> pileIDEleve = Factory.makeStack();
+    private Stack<String> pileIDProf = Factory.makeStack();
+
+
+	private List<String> tokenswithOrdre = Factory.makeList(); 
 	private boolean isCorrect;
-	private List<String> token_ID = new ArrayList<>();
+	private List<String> envAttributIDProf = Factory.makeList();
 	private Tokens typeRequete;
-	ArrayList<String> idTokensProf = new ArrayList<>();
+	private List<String> idTokensProf = Factory.makeList();
+
 	
 	public ParserSQL2() {
 		initiation();
@@ -201,45 +213,40 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 *  setter 
 	 */
 	@Override
-	public void setcontroller(EventManager controller) {
-			this.controller = controller;
-	}
+	public void setcontroller(EventManager controller) {}
 	
 	/**
 	 *  mis à jour de l'attribut reponses et automatiquement la reprise de l'analyse
 	 */
 	@Override
-	public void updateReponse(String reponse) {
-		this.reponse = reponse;
-		start();
+	public void updateReponse(Question question) {
+		this.question = question;
+		startParserReponsesProf();
 	}
 	
 	/**
 	 *  analyse de la requête du prof
 	 */
-	private void start() {
+	private void startParserReponsesProf() {
 		try {
-			parser.ReInit(Factory.translateToStream(reponse));
-			parser.sqlStmtList();
+			parser.ReInit(Factory.translateToStream(question.getAnswer()));
+			parser.parserStart();
 			idTokensProf = parser.getIdTokens();
-		} catch (ParseException e){
-		//	controller.getView().sendMessage(" Requette prof  : "+e.getMessage());
-		}
+		} catch (ParseException e){}
 	}
 	
 	/**
 	 *  initiation des attributes
 	 */
 	private void initiation() {
-		
-		this.p_token_eleve = Factory.makeStack();
-		this.p_token_prof = Factory.makeStack();
-		this.p_token_accepted = Factory.makeStack();
-		
-		this.list_p_token =  Factory.makeList();
+		this.pileTokenEleve = Factory.makeStack();
+		this.pileTokenProf = Factory.makeStack();
+		this.pileTokenAcceptedEleve = Factory.makeStack();
+		this.listPileToken =  Factory.makeList();
 		this.parser = Factory.makeParserSQL("general");
 		this.parser.registerObserver(this);
 		this.parser.setDestination("prof");
+		billanID = new BillanID();
 	}
 	
 	/**
@@ -248,9 +255,11 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 */
 	@Override
 	public void notifyEventEleve(String token, String tokenImage) {
-
+		 if(tokenImage.equals("<ID>")) {
+			pileIDEleve.add(token);
+		}
 		if(!TokenFix.ignorer(tokenImage)) {
-			this.p_token_eleve.add(new TokenNoPermutable(token, tokenImage));
+			this.pileTokenEleve.add(new TokenNoPermutable(token, tokenImage));
 		}
 	}
 	
@@ -260,6 +269,9 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 */
 	@Override
 	public void notifyEventProf(String token, String tokenImage) {
+		if(tokenImage.equals("<ID>")) {
+				pileIDProf.add(token);
+		}
 		if(token.equals("fin")) {
 			addQueryInStack();
 		} else {
@@ -272,15 +284,22 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	}
 	
 	@Override
-	public void notifyEventProjection(boolean b) {
-		debut = b;		
+	public ArrayList<String> getIdTokens(){
+		return (ArrayList<String>) idTokensProf;
+	}
+	
+	
+	@Override
+	public void notifyEventProjection(boolean firstEnd) {
+		debutAttribut = firstEnd;		
 	}
 	
 	private void addPartyFix(String token, String tokenImage) throws CloneNotSupportedException {
 		if(flag) 
-			p_token_prof.add(pairToken.clone());
-		p_token_prof.add(new TokenNoPermutable(token, tokenImage));
+			pileTokenProf.add(pairToken.clone());
+		pileTokenProf.add(new TokenNoPermutable(token, tokenImage));
 	}
+	
 	private void addPartyVariable(String token, String tokenImage) {
 		if(!flag) 
 			pairToken = new TokensPermutables();
@@ -295,8 +314,8 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 				flag = false;
 			}
 		} else {
-			if(debut) 
-				p_projecttion_id.add(new Paire<String>(token, tokenImage));			
+			if(debutAttribut) 
+				pileAttributIDProf.add(new Paire<String>(token, tokenImage));			
 			addPartyVariable(token, tokenImage);
 			flag = true;
 		}
@@ -307,34 +326,38 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 */
 	@SuppressWarnings("unchecked")
 	private void addQueryInStack() {
-		p_token_prof.add(new TokenNoPermutable("fin"));
-		list_p_token.add((Stack<Tokens>) p_token_prof.clone());
-		p_token_prof.removeAllElements();
+		pileTokenProf.add(new TokenNoPermutable("fin"));
+		listPileToken.add((Stack<Tokens>) pileTokenProf.clone());
+		pileTokenProf.removeAllElements();
 	}
 	/**
 	 *  renitialisation des atttributs 
 	 */	
 	@Override
 	public void reset() {
-		debut = false;
-		p_ID.removeAllElements();
+		debutAttribut = false;
+		pileIDConsumedProf.removeAllElements();
 		tokenswithOrdre.removeAll(tokenswithOrdre);
-		p_projecttion_id.removeAllElements();
-		token_ID.removeAll(token_ID);
-		this.p_token_eleve.removeAllElements();
-		this.p_token_prof.removeAllElements();
-		this.p_token_accepted.removeAllElements();
-		this.list_p_token.removeAll(list_p_token);
-		p_nu.removeAll(p_nu);
+		this.pileIDEleve.removeAllElements();
+		this.pileIDProf.removeAllElements();
+		this.pileAttributIDProf.removeAllElements();
+		envAttributIDProf.removeAll(envAttributIDProf);
+		pileAttributIDElev.removeAllElements();
+		this.pileTokenEleve.removeAllElements();
+		this.pileTokenProf.removeAllElements();
+		this.pileTokenAcceptedEleve.removeAllElements();
+		this.listPileToken.removeAll(listPileToken);
 		initiation();
 	}
+	
+	
 	
 	/**
 	 *  affichage en console  [  utile pour le test ]
 	 */
 	@Override
 	public void display() {
-		for(Tokens t :p_token_accepted){
+		for(Tokens t :pileTokenAcceptedEleve){
 			t.display();
 		}
 	}
@@ -343,10 +366,10 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	private void consumeStaticToken(Paire<String> pair,  Stack<Tokens> p) {
 		p.remove(p.firstElement());	
 		if(pair.containToken("\"SELECT\"")) {
-			debut = true; 
+			debutAttribut = true; 
 		}
 		else if(pair.containToken("\"FROM\"")) {
-			debut = false;
+			debutAttribut = false;
 		}
 	}
 	
@@ -354,11 +377,11 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 		p.firstElement().remove(pair.getImageToken(), pair.getToken());
 		if(p.firstElement().isEmpty()) 
 			p.remove(p.firstElement());
-		if(debut) {
-			token_ID.add(t);
+		if(debutAttribut) {
+			envAttributIDProf.add(t);
 		}
 		if(pair.getImageToken().equals("<ID>")) {
-			p_ID.add(pair);
+			pileIDConsumedProf.add(pair);
 		}
 	}
 	
@@ -370,78 +393,70 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 * @return
 	 */
 	private boolean consume(String tokenImage, String token) {
-		update(false, 0);
-		for(Stack<Tokens> pileToken : list_p_token){
+		update(false);
+		for(Stack<Tokens> pileToken : listPileToken){
 			if(!pileToken.isEmpty()){
-				if(pileToken.firstElement().contain(tokenImage)) { 
-					check(tokenImage, var, pileToken.firstElement(), pileToken, token);
-					numero_pile = var;
-					p_nu.add(var);
-				}
-				var++;
+				if(pileToken.firstElement().contain(tokenImage)) 
+					check(tokenImage,pileToken.firstElement(), pileToken, token);
 			}	
 		}
 		return isCorrect;
 	}
 	
-	private void update(boolean isCorrect, int va) {
+	private void update(boolean isCorrect) {
 		this.isCorrect = isCorrect;
-		this.var = va; 
 	}
 	
 	
-	private void check(String tokenImage, int v, Tokens tokenTmp, Stack<Tokens> pileToken, String token) {
-		update(true, var);
+	private void check(String tokenImage,Tokens tokenTmp, Stack<Tokens> pileToken, String token) {
+		update(true);
 		if(tokenTmp.getTypeToken().equals(TypePArtie.STATIC)) 					
 			consumeStaticToken(tokenTmp.getCoupleToken("",""), pileToken);
 		 else 
 			consumePermutableToken(tokenTmp.getCoupleToken(tokenImage, token), pileToken, token);
 	}
 	
-	
-	private void updatelistePile() {
-		if(list_p_token.size() != p_nu.size()){
-			for(int i = 0; i < list_p_token.size(); i++){
-				if(!p_nu.contains(i))
-					list_p_token.remove(list_p_token.get(i));
-			}
+	public String analysID() {
+		if(pileIDEleve.size() > pileIDProf.size()) {
+			billanID.addIDEQ(pileIDEleve, pileIDProf);
+			return "vous avez beaucoup des identifiants dans votre requête, il faut enlever  "+ billanID.toString();
+		}else if(pileIDEleve.size() < pileIDProf.size()) {
+			billanID.addIDEQ(pileIDProf, pileIDEleve);
+			return " vous avez moins des identifiants dans votre requête, il vous manque : " + billanID.toString(); 
 		}
-		p_nu.removeAll(p_nu);
+		return "il y a des identifiants pas demandée à ecrire dans votre requête " + billanID.toString();
 	}
+
 	
-	//
+	// methode qui vérifier est ce que les deux requête (éléve, prof) ont le même debut concernant la requete 
 	private void checkSameRequete() throws ParseException {
-		if(!p_token_eleve.firstElement().getTokenImage().equals(list_p_token.get(0).firstElement().getTokenImage())){
-			throw new ParseException("Attention la requ�te doit commencer par : "+ list_p_token.get(0).firstElement().getToken());
+		if(!pileTokenEleve.firstElement().getTokenImage().equals(listPileToken.get(0).firstElement().getTokenImage())){
+			throw new ParseException("Attention ! la requête doit commencer par : "+ listPileToken.get(0).firstElement().getToken());
 		}
 	}
+	
 	/**
 	 *   parseur relatif
 	 */
 	@Override
-	public void sqlStmtList() throws ParseException {
-	    typeRequete = p_token_eleve.firstElement();
+	public void parserStart() throws ParseException {
+	    typeRequete = pileTokenEleve.firstElement();
 	    checkSameRequete();
-		while(!p_token_eleve.isEmpty()) {
-			Tokens tmp = p_token_eleve.firstElement();
+		while(!pileTokenEleve.isEmpty()) {
+			Tokens tmp = pileTokenEleve.firstElement();
 			if(consume(tmp.getTokenImage(), tmp.getToken())) {
 				updatePile(tmp);
-				updatelistePile();
 			} else {
-				//dans le cas où il y a pas une décision
-				break;
-				//manageError();
+				return;  			   	//dans le cas où il y a pas une décision
 			}
 		}
-		checkID();
+		if(typeRequete.getTokenImage().equals("\"SELECT\"")){
+			checkID();		   
+			startAnalyseSemantic(true);
+		}
 	}
 	
-	@Override
-	public ArrayList<String> getIdTokens(){
-		return idTokensProf;
-	}
-	
-	
+
 	@Override
 	public String getTypeRequete() {
 		return typeRequete.getTokenImage();
@@ -449,32 +464,20 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	
 	
 	
-	/**
-	 *  gestion d'erreur
-	 * @throws ParseException
-	 */
-	private void manageError() throws ParseException  {
-		Tokens nextToken = list_p_token.get(numero_pile).firstElement();
-		Tokens lastToken = p_token_accepted.lastElement();
-		throw new ParseException(nextToken.getTokenImage(), lastToken.getToken(), numero_pile, list_p_token.get(numero_pile).size());
-	}
+
 	
-	private void checkID(){
-		for(Paire<String> p : p_projecttion_id){
-			if(token_ID.contains(p.getToken())) 
-				tokenswithOrdre.add(p.getToken());
-		}	
-	}
-	
+
 	/**
 	 *   mis à jour de la pile des token de l'eleve
 	 *   
 	 * @param tokenEleve
 	 */
 	private void updatePile(Tokens tokenEleve) {
-		p_token_eleve.remove(tokenEleve);
-		p_token_accepted.add(new TokenNoPermutable(tokenEleve.getToken(), tokenEleve.getTokenImage()));
+		pileTokenEleve.remove(tokenEleve);
+		pileTokenAcceptedEleve.add(new TokenNoPermutable(tokenEleve.getToken(), tokenEleve.getTokenImage()));
 	}
+	
+	
 	
 	/**
 	 *  check l'exitance des ids dans le l'espace des id 
@@ -482,7 +485,7 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 * @return
 	 */
 	private boolean isExistID(String token) {
-		for(Paire<String> pair : p_ID) {
+		for(Paire<String> pair : pileIDConsumedProf) {
 			if(pair.getToken().equals(token))
 				return true;
 		}
@@ -492,7 +495,7 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 *   analyse  sémantique des ID s  
 	 */
 	public void startAnalyseSemantic(boolean ordre) throws  ParseException {
-		for(Tokens token : p_token_accepted) {
+		for(Tokens token : pileTokenAcceptedEleve) {
 			if(token.getTokenImage().equals("<ID>")) {
 				if(!isExistID(token.getToken())) 
 					throw new ParseException("error semantique  :=  \n   unknown : "+ token.getToken());
@@ -500,7 +503,6 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 		}
 		if(ordre) 
 			checkOrdre();
-	
 	}
 	
 	/**
@@ -509,13 +511,68 @@ public class ParserSQL2 implements  Observers, ParserSQL {
 	 */
 	private void checkOrdre() throws ParseException {
 		for(int i = 0; i < tokenswithOrdre.size(); i++) {
-			if( i < token_ID.size()) {
-			  if(!tokenswithOrdre.get(i).equals(token_ID.get(i)))
-				throw new ParseException("Erreur : l'ordre des colonnes ne respecte pas l'ordre indiqu�. ");
+			if( i < envAttributIDProf.size()) {
+			  if(!tokenswithOrdre.get(i).equals(envAttributIDProf.get(i)))
+				throw new ParseException("Erreur : l'ordre des colonnes ne respecte pas l'ordre indiqué dans la question ?. ");
 			}
 		}
 	}
+	private void checkID(){
+		for(Paire<String> p : pileAttributIDProf){
+			if(envAttributIDProf.contains(p.getToken())) 
+				tokenswithOrdre.add(p.getToken());
+		}	
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -679,6 +736,56 @@ class TokensPermutables extends Tokens {
 
 }
 
+class Paire<T> {
+	private T token;
+	private T imageToken;
+	public Paire (T token, T imageToken){
+		this.token      = token;
+		this.imageToken = imageToken;
+	}
+	
+	public T getToken() {
+		return token;
+	}
+	
+	public T getImageToken() {
+		return imageToken;
+	}
+	
+	public void display() {
+		System.out.print("( "+token+" , "+imageToken+" )");
+	}
+	
+	public boolean containToken(T tokenIm) {
+		return this.imageToken == tokenIm;
+	}
+	
+	
+}
+abstract class Tokens implements Cloneable {
+	
+	protected TypePArtie typePArtie;
+	
+	static enum TypePArtie {STATIC, PERMUTABLE};
+	public abstract void addToken(String imageToken, String token) ;
+	public abstract boolean isEmpty() ;
+	protected abstract boolean contain(String token) ;		
+	public abstract boolean isExist(String token) ;
+	public abstract void display();
+	public abstract String getToken();
+	public abstract String getTokenImage();
+	public abstract void remove(String tokenImage, String token);
+	public abstract Paire<String> getCoupleToken(String tokenImahe, String token);
+	public abstract int size();
+	public TypePArtie getTypeToken() {
+		return typePArtie;
+	}
+	@Override
+	protected Tokens clone() throws CloneNotSupportedException {
+		return (Tokens) super.clone();
+	}
+
+}
 
 
 //	/**

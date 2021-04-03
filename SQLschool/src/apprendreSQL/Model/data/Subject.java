@@ -18,7 +18,7 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package apprendreSQL.Model;
+package apprendreSQL.Model.data;
 
 /**
  * The Subject object that represents the different subjects of the application.
@@ -28,11 +28,9 @@ public class Subject {
 
 	private long id_Subject;
 	private String titleSubject;
-	private DataBase database;
 
-	public Subject(String name, DataBase database) {
+	public Subject(String name) {
 		this.titleSubject = name;
-		this.setDatabase(database);
 	}
 
 	public long getId_Subject() {
@@ -50,13 +48,4 @@ public class Subject {
 	public void setTitleSubject(String title_Subject) {
 		this.titleSubject = title_Subject;
 	}
-
-	public DataBase getDatabase() {
-		return database;
-	}
-
-	public void setDatabase(DataBase database) {
-		this.database = database;
-	}
-
 }

@@ -33,7 +33,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import apprendreSQL.Model.Question;
+import apprendreSQL.Model.data.Question;
 import apprendreSQL.Model.job.semantique.Test;
 
 public class JsonManager {

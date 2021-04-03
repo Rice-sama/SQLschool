@@ -33,7 +33,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import apprendreSQL.Controller.JsonManager;
-import apprendreSQL.Model.Question;
+import apprendreSQL.Model.data.Question;
 
 public interface GetInformation {
 
@@ -97,6 +97,7 @@ public interface GetInformation {
 	}
 
 	/**
+	 * 
 	 * A function that gets the available json files
 	 * 
 	 * @return List<String>

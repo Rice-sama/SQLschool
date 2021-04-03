@@ -20,21 +20,15 @@
  *******************************************************************************/
 package apprendreSQL.Model.job.semantique;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import apprendreSQL.Controller.ConnectionSQLite;
 import apprendreSQL.Controller.SQLExecutionManager;
 import apprendreSQL.Model.job.syntaxique.general.ParserSQL;
-import apprendreSQL.Model.job.syntaxique.general.ParserSQL1;
-import apprendreSQL.Model.job.syntaxique.particular.ParserSQL2;
 
 public class Corrector {
 
@@ -84,7 +78,7 @@ public class Corrector {
 				String select = "SELECT * FROM " + tableEleve;
 				
 				tclist.clear();
-				if(testList.isEmpty()) testList.add(new Test("Résultat", "", ""));
+				if(testList.isEmpty()) testList.add(new Test("Rï¿½sultat", "", ""));
 				for(Test t : testList) {
 					
 					ArrayList<ArrayList<String>> sl = new ArrayList<>();

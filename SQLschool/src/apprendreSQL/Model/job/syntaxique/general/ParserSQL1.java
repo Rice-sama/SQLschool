@@ -58,7 +58,7 @@ public final class ParserSQL1 implements ParserSQLConstants, ParserSQL {
 	
 	
 /* Grammar */
-  final public void sqlStmtList() throws ParseException {
+  final public void parserStart() throws ParseException {
     sqlStmt();
     jj_consume_token(SEMICOLON);
     notifyEvent("fin","fin");
