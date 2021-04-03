@@ -29,10 +29,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import apprendreSQL.Model.DataBase;
-import apprendreSQL.Model.Question;
 import apprendreSQL.Model.data.Factory;
 import apprendreSQL.Model.data.Observers;
+import apprendreSQL.Model.data.Question;
 import apprendreSQL.Model.job.semantique.Corrector;
 import apprendreSQL.Model.job.semantique.Table;
 import apprendreSQL.Model.job.semantique.TestCorrection;
@@ -168,6 +167,9 @@ public class EventManager implements GetInformation {
 	 * @param query the query inserted by the user
 	 * @return a string that represent the result in the output jText
 	 */
+	
+	
+
 	private void ifCorrect(String query) {
 		if (currentQuestion.getAnswer() != null) {
 			try {
@@ -177,17 +179,18 @@ public class EventManager implements GetInformation {
 					
 					String msg = corrector.getCommentaire();
 					if(msg.isEmpty()) {
-						resultText.setText("Une erreur est survenue lors de la correction d'un ou plusieurs tests.\n");
-						//if(!parserParticulier.getDifference().isEmpty()) resultText.setText(resultText.getText()+"Vous avez peut-être oublié : " + difflist);
+						resultText.setText(
+								"Une erreur est survenue lors de la correction d'un ou plusieurs tests : \n"
+								+ parserSQLParticulier.analysID());
 					}
 					
 					else resultText.setText(msg);
 					resultText.setTextFill(YELLOW_PAINT);
-				} else {			
+				} else {	
 					resultDisplay1.setVisible(true);
 					resultDisplay2.setVisible(false);
 					
-					resultText.setText("Les tests ont été passés avec succès.");
+					resultText.setText("Les tests ont Ã©te passÃ©s avec succÃ©s.");
 					resultText.setTextFill(GREEN_PAINT);
 				}
 				
@@ -253,17 +256,17 @@ public class EventManager implements GetInformation {
 			setText("Veuillez selectionner une question.", YELLOW_PAINT);
 			return;
 		}else if(selectedConnection == null) {
-			setText("Base de données introuvable.", RED_PAINT);
+			setText("Base de donnÃ©es introuvable.", RED_PAINT);
 			return;
 		}
 		clearOutput();
 		try {
 			parserSQLParticulier.reset();
-			parserSQLParticulier.updateReponse(currentQuestion.getAnswer());
+			parserSQLParticulier.updateReponse(currentQuestion);
 			String query = queryText.getText();
 			parserSQLGeneral.ReInit(Factory.translateToStream(query));
-			parserSQLGeneral.sqlStmtList();
-			parserSQLParticulier.sqlStmtList();
+			parserSQLGeneral.parserStart();
+			parserSQLParticulier.parserStart();
 			ifCorrect(query);
 			//mainWindow.setOutPut(text);
 		} catch (ParseException e) {
@@ -427,11 +430,7 @@ public class EventManager implements GetInformation {
 		return connectionsMap;
 	}
 
-	public void populateTablesView(DataBase database) {
-		/*ArrayList<Table> tables = database.getTables();
-		if (!tables.isEmpty())
-			mainWindow.populateTablesView(tables);*/
-	}
+
 
 	@FXML
 	public void updateExercisesView() throws IOException {

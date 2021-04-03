@@ -60,7 +60,7 @@ public class Factory  {
 	}
 	
 	public static InputStream translateToStream(String str) {
-		return  new ByteArrayInputStream(str.getBytes());
+		return  new ByteArrayInputStream(str.toLowerCase().getBytes());
 	}
 	
 

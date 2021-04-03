@@ -28,6 +28,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import apprendreSQL.Model.*;
+import apprendreSQL.Model.data.Question;
 import apprendreSQL.Model.job.semantique.Test;
 
 public class QuestionJSON {
