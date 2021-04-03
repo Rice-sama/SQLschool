@@ -6,7 +6,7 @@ public interface Config {
 	public static String setFileName(String name) {
 		return pathToXml + name+ ".fxml";
 	}
-	public static String getHomaPage() {
+	public static String getHomePage() {
 		return "fileXml/home.fxml";
 	}
 	

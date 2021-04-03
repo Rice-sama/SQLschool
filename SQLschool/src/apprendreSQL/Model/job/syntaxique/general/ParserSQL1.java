@@ -19,7 +19,7 @@ public final class ParserSQL1 implements ParserSQLConstants, ParserSQL {
 	
 	private ArrayList<String> idTokens = new ArrayList<String>();
 	private List<Observers> observers = new ArrayList<Observers>();
-	private String destination ;
+	private String destination ="";
 	@Override
 	public void setDestination(String desti) {
 		this.destination = desti;

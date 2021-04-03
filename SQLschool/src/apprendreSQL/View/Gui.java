@@ -13,7 +13,7 @@ public class Gui extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-        Parent parent = FXMLLoader.load(getClass().getResource(Config.getHomaPage()));       
+        Parent parent = FXMLLoader.load(getClass().getResource(Config.getHomePage()));       
         Scene scene = new Scene(parent,Config.WIDTH, Config.HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setTitle(title);
