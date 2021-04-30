@@ -21,7 +21,6 @@
 package apprendreSQL.Controller;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -37,30 +36,23 @@ import apprendreSQL.Model.job.semantique.Table;
 import apprendreSQL.Model.job.semantique.TestCorrection;
 import apprendreSQL.Model.job.syntaxique.general.ParseException;
 import apprendreSQL.Model.job.syntaxique.general.ParserSQL;
-import apprendreSQL.Model.job.syntaxique.particular.ParserSQL2;
 import apprendreSQL.View.GetInformation;
 import apprendreSQL.View.Gui;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.cell.MapValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -69,8 +61,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 public class EventManager implements GetInformation {
 	
@@ -114,6 +104,11 @@ public class EventManager implements GetInformation {
 		}
 
 	}
+	
+	/**
+	 * initialize parsers
+	 * 
+	 */
 	
 	private void initializeParser() {
 		parserSQLGeneral      = Factory.makeParserSQL("general");
@@ -243,6 +238,11 @@ public class EventManager implements GetInformation {
 		}
 	}
 	
+	/**
+	 * Set the current question to q
+	 * 
+	 * @param question to change into
+	 */
 	public void setQuestion(Question q) {
 		clearInput();
 		clearOutput();
@@ -259,6 +259,11 @@ public class EventManager implements GetInformation {
 		return jsonManager.getListQuestion();
 	}
 
+	
+	/**
+	 * draw the tables' info view 
+	 * 
+	 */
 	
 	private void drawTables() {
 		tableView.getChildren().clear();
@@ -318,7 +323,10 @@ public class EventManager implements GetInformation {
 	}
 
 
-
+	/**
+	 * update the exercises explorer
+	 * 
+	 */
 	@FXML
 	public void updateExercisesView() throws IOException {
 		readJSONFiles();
@@ -350,7 +358,5 @@ public class EventManager implements GetInformation {
 		}
 		
 		exoExplorer.getPanes().addAll(catList);
-		//mainWindow.updateExercisesView();
-
 	}
 }

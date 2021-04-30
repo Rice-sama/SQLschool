@@ -25,7 +25,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -44,7 +43,7 @@ public class JsonManager {
 	private Boolean overCapacity = false;
 
 	/**
-	 * This method create a JSON file with the liste of Question
+	 * This method create a JSON file with the list of Question
 	 * 
 	 * @param nomFichier name of the JSON file create
 	 * @return void

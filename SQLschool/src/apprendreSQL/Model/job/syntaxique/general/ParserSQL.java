@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import apprendreSQL.Controller.EventManager;
 import apprendreSQL.Model.data.Observers;
 import apprendreSQL.Model.data.Question;
-import apprendreSQL.Model.job.syntaxique.particular.BillanID;
 
 public interface ParserSQL {
 	

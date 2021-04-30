@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="SQLschool/src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-13.0.2">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="executable/graphs/schemaSpy.jar"/>
-	<classpathentry kind="lib" path="executable/graphs/sqlite-jdbc.jar"/>
-	<classpathentry kind="lib" path="executable/sqlSchool.jar" sourcepath="executable/sqlSchool.jar"/>
-	<classpathentry kind="lib" path="SQLschool/graphs/schemaSpy.jar"/>
-	<classpathentry kind="lib" path="SQLschool/graphs/sqlite-jdbc.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
+	<classpathentry exported="true" kind="lib" path="SQLschool/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="SQLschool/lib/sqlite-jdbc-3.27.2.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

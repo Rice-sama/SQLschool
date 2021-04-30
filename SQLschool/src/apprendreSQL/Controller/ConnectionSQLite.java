@@ -1,23 +1,3 @@
-/*******************************************************************************
- * 	Java tool with a GUI to help learn SQL
- * 	
- *     Copyright (C) 2020  Bayad Nasr-eddine, Bayol Thibaud, Benazzi Naima, 
- *     Douma Fatima Ezzahra, Chaouche Sonia, Kanyamibwa Blandine
- *     (thesqlschool@hotmail.com)
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- *******************************************************************************/
 package apprendreSQL.Controller;
 
 import java.io.File;
@@ -26,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -43,7 +22,7 @@ public class ConnectionSQLite {
 	private Connection connection = null;
 	private Statement statement = null;
 	private String errorMessage = "";
-	private ResultSet result;
+
 	
 	ArrayList<Table> tables = new ArrayList<Table>();
 
@@ -128,7 +107,12 @@ public class ConnectionSQLite {
 		return tables;
 	}
 	
-	
+	/**
+	 * get the table from the token list.
+	 * 
+	 * @param token list
+	 * @return existing table
+	 */
 	public String existTable(ArrayList<String> tlist) throws Exception { //verification de l'existence de la table 
 			for(String token : tlist) {
 				try {

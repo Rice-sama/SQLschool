@@ -40,13 +40,17 @@ public class QuestionViewController {
 		db.getItems().addAll(FileViewController.retrieveDBs());
 	}
 	
+	/**
+	 * check if all inputs are valid
+	 * 
+	 */
 	@FXML 
 	public void checkValid() throws Exception {
-		if(title.getText().isBlank()) throw new Exception("Une question n'a pas de titre.");
+		if(title.getText().equals("")) throw new Exception("Une question n'a pas de titre.");
 		if(db.getValue()==null) throw new Exception(title.getText()+" n'a pas de base de données.");
 		if(subject.getValue()==null) throw new Exception(title.getText()+" n'a pas de catégorie.");
-		if(question.getText().isBlank()) throw new Exception(title.getText()+" n'a pas d'énoncé.");
-		if(answer.getText().isBlank()) throw new Exception(title.getText()+" n'a pas de réponse.");
+		if(question.getText().equals("")) throw new Exception(title.getText()+" n'a pas d'énoncé.");
+		if(answer.getText().equals("")) throw new Exception(title.getText()+" n'a pas de réponse.");
 		else {
 			ParserSQL1 parser = new ParserSQL1(new ByteArrayInputStream(answer.getText().getBytes()));
 			try {
@@ -64,10 +68,17 @@ public class QuestionViewController {
 	
 	@FXML
 	private void addTest() {
-		if(testName.getText().isBlank()) return;
+		if(testName.getText().equals("")) return;
 		addTest(testName.getText(),"","");
 	}
 	
+	/**
+	 * add a test to the test view
+	 * 
+	 * @param name
+	 * @param script1
+	 * @param script2
+	 */
 	public void addTest(String s, String s1, String s2) {
 		try {
      		FXMLLoader loader = new FXMLLoader();
@@ -94,7 +105,7 @@ public class QuestionViewController {
 	
 	@FXML
 	private void delete() {
-		if(deleteConfirm.getText().isBlank()) deleteConfirm.setText("Supprimer?");
+		if(deleteConfirm.getText().equals("")) deleteConfirm.setText("Supprimer?");
 		else {
 			FileViewController.removeQuestion(this);
 			((Accordion) pane.getParent()).getPanes().remove(pane);
@@ -106,6 +117,11 @@ public class QuestionViewController {
 		title.setText(s);
 	}
 
+	/**
+	 * update the subjects' combobox with the new list
+	 * 
+	 * @param subject list
+	 */
 	public void updateSubjectList(ArrayList<String> subjects) {
 		String current = subject.getValue();
 		subject.getItems().setAll(subjects);

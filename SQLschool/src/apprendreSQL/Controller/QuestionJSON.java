@@ -27,7 +27,6 @@ import java.util.Map.Entry;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import apprendreSQL.Model.*;
 import apprendreSQL.Model.data.Question;
 import apprendreSQL.Model.job.semantique.Test;
 
@@ -91,7 +90,6 @@ public class QuestionJSON {
  			}
  			 
  		}
- 		boolean mustOrder = (jsonObjectA.get("respect_ordre")!=null) ? (boolean)jsonObjectA.get("respect_ordre") : true;
 		return new Question(bd, sujet, titre, contenu, bonn_reponse, tl);
 
 	}

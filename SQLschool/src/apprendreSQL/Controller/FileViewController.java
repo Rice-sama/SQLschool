@@ -80,11 +80,12 @@ public class FileViewController implements GetInformation{
 			addQuestion(q);
 		}
 		updateSubjectLists();
+		jsonManager.clear();
 	}
 	
 	@FXML
 	private void addSubject() {
-		if(subjectName.getText().isBlank()) return;
+		if(subjectName.getText().equals("")) return;
 		addSubject(subjectName.getText());
 	}
 	
@@ -118,7 +119,7 @@ public class FileViewController implements GetInformation{
 
 	@FXML
 	private void addQuestion() {
-     	if(questionName.getText().isBlank()) return;
+     	if(questionName.getText().equals("")) return;
      	addQuestion(questionName.getText());
 	}
 	
@@ -159,7 +160,7 @@ public class FileViewController implements GetInformation{
 	
 	@FXML
 	private void onSave() {
-		String name = fileName.getText();
+		String name = (operationMode == 0) ? fileName.getText() : (fileChosen.getValue()!=null) ? fileChosen.getValue() : "";
 		if(!name.endsWith(".json")) name +=".json";
 		if(name.length() > 5) {
 			try {

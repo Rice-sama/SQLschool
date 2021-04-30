@@ -1,27 +1,10 @@
 package apprendreSQL.Model.data;
 
-import static java.util.stream.Collectors.toList;
-
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextPane;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import apprendreSQL.Model.job.syntaxique.general.ParserSQL;
 import apprendreSQL.Model.job.syntaxique.general.ParserSQL1;
